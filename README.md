@@ -189,15 +189,12 @@ Ejecutar: `flutter test`
 
 - [ ] Notificaciones diarias a las 9:00 AM
 - [ ] Widget de Android para pantalla de inicio
-- [ ] Temas predefinidos (Oscuro, Naturaleza, Minimalista)
+- [ ] Temas predefinidos (Oscuro, Naturaleza, Minimalista, etc)
 - [ ] Animaciones de transición entre frases
-- [ ] Compartir a redes sociales específicas
-- [ ] Modo offline completo
-- [ ] Categorías personalizadas
 
 ## 📄 Licencia
 
-Este proyecto es de uso personal y educativo.
+Este proyecto es de uso personal y portafolio.
 
 ## 👨‍💻 Desarrollo
 
