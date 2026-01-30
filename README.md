@@ -191,6 +191,7 @@ Ejecutar: `flutter test`
 - [ ] Widget de Android para pantalla de inicio
 - [ ] Temas predefinidos (Oscuro, Naturaleza, Minimalista, etc)
 - [ ] Animaciones de transición entre frases
+- [ ] reducir peso de la apk
 
 ## 📄 Licencia
 
