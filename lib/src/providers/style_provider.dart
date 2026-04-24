@@ -275,6 +275,7 @@ class StyleProvider extends ChangeNotifier {
       textShadowBlur: _style.textShadowBlur,
       textOutlineColor: _style.textOutlineColor,
       textOutlineWidth: _style.textOutlineWidth,
+      fontSize: _style.fontSize,
     );
     notifyListeners();
     _saveStyle();

@@ -203,7 +203,7 @@ class _StyledText extends StatelessWidget {
                   : style.textColor,
               shadows: style.textShadowColor != null
                   ? [
-                      BoxShadow(
+                      Shadow(
                         color: style.textShadowColor!,
                         blurRadius: style.textShadowBlur,
                         offset: const Offset(2, 2),
@@ -226,7 +226,7 @@ class _StyledText extends StatelessWidget {
             : style.textColor,
         shadows: style.textShadowColor != null
             ? [
-                BoxShadow(
+                Shadow(
                   color: style.textShadowColor!,
                   blurRadius: style.textShadowBlur,
                   offset: const Offset(2, 2),

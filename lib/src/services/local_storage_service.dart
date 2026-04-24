@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalStorageService {
   static const String _favKey = 'favorites';
   static const String _lastIndexKey = 'last_quote_index';
+  static const String _dailyShownKey = 'daily_shown_date';
 
   SharedPreferences? _prefs;
 
@@ -59,5 +60,26 @@ class LocalStorageService {
     await prefs.remove(_favKey);
     await prefs.remove(_lastIndexKey);
     debugPrint('Datos locales limpiados');
+  }
+
+  // ── Frase del día ──────────────────────────────────────────────────────────
+
+  /// Devuelve `true` si la pantalla de frase del día aún no se ha mostrado hoy.
+  Future<bool> shouldShowDailyQuote() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    final stored = prefs.getString(_dailyShownKey);
+    final today = _todayString();
+    return stored != today;
+  }
+
+  /// Marca la frase del día como ya mostrada en la fecha de hoy.
+  Future<void> markDailyQuoteShown() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(_dailyShownKey, _todayString());
+  }
+
+  String _todayString() {
+    final t = DateTime.now().toUtc();
+    return '${t.year}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
   }
 }

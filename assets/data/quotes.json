@@ -1,1153 +1,1781 @@
 [
     {
+        "id": 0,
         "text": "No cuentes los días; haz que los días cuenten.",
         "author": "Muhammad Ali",
         "publish_date": "2025-10-30",
         "context": "Sobre aprovechar el tiempo",
-        "source": "Entrevista"
+        "source": "Entrevista",
+        "tags": ["tiempo"]
     },
     {
+        "id": 1,
         "text": "La paz comienza con una sonrisa.",
         "author": "Madre Teresa",
         "publish_date": "2025-11-20",
         "context": "Discurso de aceptación del Nobel",
-        "source": "Vida y obra"
+        "source": "Vida y obra",
+        "tags": [
+                     "paz",
+                     "vida"
+                 ]
     },
     {
+        "id": 2,
         "text": "No hay camino para la paz, la paz es el camino.",
         "author": "Mahatma Gandhi",
         "publish_date": "2025-11-21",
         "context": "Filosofía de la no violencia",
-        "source": "Escritos"
+        "source": "Escritos",
+        "tags": ["paz"]
     },
     {
+        "id": 3,
         "text": "La felicidad no es algo hecho. Proviene de tus propias acciones.",
         "author": "Dalai Lama",
         "publish_date": "2025-11-22",
         "context": "Enseñanzas sobre la vida",
-        "source": "El Arte de la Felicidad"
+        "source": "El Arte de la Felicidad",
+        "tags": [
+                     "felicidad",
+                     "vida",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 4,
         "text": "Si quieres cambiar el mundo, cámbiate a ti mismo.",
         "author": "Mahatma Gandhi",
         "publish_date": "2025-11-23",
         "context": "Sobre la responsabilidad personal",
-        "source": "Citas célebres"
+        "source": "Citas célebres",
+        "tags": ["superación"]
     },
     {
+        "id": 5,
         "text": "La única forma de hacer un gran trabajo es amar lo que haces.",
         "author": "Steve Jobs",
         "publish_date": "2025-11-24",
         "context": "Discurso en Stanford",
-        "source": "Discurso de graduación 2005"
+        "source": "Discurso de graduación 2005",
+        "tags": ["reflexión"]
     },
-        {
+    {
+        "id": 6,
         "text": "Cuando deseas algo con todo tu corazón, el universo entero conspira para ayudarte a conseguirlo.",
         "author": "Paulo Coelho",
         "publish_date": "2025-11-25",
         "context": "Perseguir los sueños personales",
-        "source": "El alquimista"
+        "source": "El alquimista",
+        "tags": [
+                     "amor",
+                     "creatividad",
+                     "superación"
+                 ]
     },
     {
+        "id": 7,
         "text": "Cuando ya no somos capaces de cambiar una situación, tenemos el desafío de cambiarnos a nosotros mismos.",
         "author": "Viktor Frankl",
         "publish_date": "2025-11-26",
         "context": "Resiliencia y sentido de vida",
-        "source": "El hombre en busca de sentido"
+        "source": "El hombre en busca de sentido",
+        "tags": [
+                     "vida",
+                     "propósito"
+                 ]
     },
     {
+        "id": 8,
         "text": "El obstáculo que se interpone en el camino se convierte en el camino.",
         "author": "Marco Aurelio",
         "publish_date": "2025-11-27",
         "context": "Convertir dificultades en oportunidades",
-        "source": "Meditaciones"
+        "source": "Meditaciones",
+        "tags": ["paz"]
     },
     {
+        "id": 9,
         "text": "Podrán cortar todas las flores, pero no podrán detener la primavera.",
         "author": "Pablo Neruda",
         "publish_date": "2025-11-28",
         "context": "Esperanza y resistencia",
-        "source": "Obra poética"
+        "source": "Obra poética",
+        "tags": ["esperanza"]
     },
     {
+        "id": 10,
         "text": "No te rindas, por favor no cedas, aunque el frío queme, aunque el miedo muerda.",
         "author": "Mario Benedetti",
         "publish_date": "2025-11-29",
         "context": "Persistencia ante la adversidad",
-        "source": "Poema \"No te rindas\""
+        "source": "Poema \"No te rindas\"",
+        "tags": [
+                     "valentía",
+                     "perseverancia"
+                 ]
     },
     {
+        "id": 11,
         "text": "La vida no se mide por las veces que respiras, sino por los momentos que te dejan sin aliento.",
         "author": "Maya Angelou",
         "publish_date": "2025-11-30",
         "context": "Valorar los momentos significativos",
-        "source": "Cartas a mi hija"
+        "source": "Cartas a mi hija",
+        "tags": [
+                     "valentía",
+                     "tiempo",
+                     "vida"
+                 ]
     },
     {
+        "id": 12,
         "text": "Ladran, Sancho, señal que cabalgamos.",
         "author": "Miguel de Cervantes",
         "publish_date": "2025-12-01",
         "context": "Avanzar pese a las críticas",
-        "source": "Don Quijote de la Mancha"
+        "source": "Don Quijote de la Mancha",
+        "tags": ["reflexión"]
     },
     {
+        "id": 13,
         "text": "Lo esencial es invisible a los ojos.",
         "author": "Antoine de Saint-Exupéry",
         "publish_date": "2025-12-02",
         "context": "El valor de lo verdaderamente importante",
-        "source": "El principito"
+        "source": "El principito",
+        "tags": [
+                     "valentía",
+                     "mentalidad",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 14,
         "text": "¿Qué es la vida? Una ilusión, una sombra, una ficción.",
         "author": "Pedro Calderón de la Barca",
         "publish_date": "2025-12-03",
         "context": "Reflexión sobre la existencia",
-        "source": "La vida es sueño"
+        "source": "La vida es sueño",
+        "tags": [
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 15,
         "text": "El amor no se piensa, se siente o no se siente.",
         "author": "Laura Esquivel",
         "publish_date": "2025-12-04",
         "context": "Naturaleza del amor",
-        "source": "Como agua para chocolate"
+        "source": "Como agua para chocolate",
+        "tags": ["amor"]
     },
     {
+        "id": 16,
         "text": "Hay momentos para recitar poesías y momentos para boxear.",
         "author": "Roberto Bolaño",
         "publish_date": "2025-12-05",
         "context": "Saber cuándo actuar",
-        "source": "2666"
+        "source": "2666",
+        "tags": [
+                     "tiempo",
+                     "acción"
+                 ]
     },
     {
+        "id": 17,
         "text": "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
         "author": "Robert Collier",
         "publish_date": "2025-12-06",
         "context": "Constancia y disciplina",
-        "source": "El secreto de la edad de oro"
+        "source": "El secreto de la edad de oro",
+        "tags": [
+                     "perseverancia",
+                     "disciplina",
+                     "éxito",
+                     "tiempo"
+                 ]
     },
     {
+        "id": 18,
         "text": "No esperes. El tiempo nunca será el adecuado.",
         "author": "Napoleon Hill",
         "publish_date": "2025-12-07",
         "context": "Tomar acción inmediata",
-        "source": "Piense y hágase rico"
+        "source": "Piense y hágase rico",
+        "tags": [
+                     "tiempo",
+                     "acción"
+                 ]
     },
     {
+        "id": 19,
         "text": "Somos lo que hacemos repetidamente. La excelencia no es un acto, es un hábito.",
         "author": "Aristóteles",
         "publish_date": "2025-12-08",
         "context": "Formación del carácter",
-        "source": "Ética a Nicómaco"
+        "source": "Ética a Nicómaco",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 20,
         "text": "Haz cada día una obra maestra.",
         "author": "John Wooden",
         "publish_date": "2025-12-09",
         "context": "Excelencia diaria",
-        "source": "Wooden on Leadership"
+        "source": "Wooden on Leadership",
+        "tags": ["tiempo"]
     },
     {
+        "id": 21,
         "text": "No es lo que miras lo que importa, es lo que ves.",
         "author": "Henry David Thoreau",
         "publish_date": "2025-12-10",
         "context": "Perspectiva personal",
-        "source": "Walden"
+        "source": "Walden",
+        "tags": ["superación"]
     },
-        {
+    {
+        "id": 22,
         "text": "No hay nada como volver a un lugar que permanece igual para descubrir cuánto has cambiado tú.",
         "author": "Nelson Mandela",
         "publish_date": "2025-12-11",
         "context": "Reflexión sobre el crecimiento personal",
-        "source": "Un largo camino hacia la libertad"
+        "source": "Un largo camino hacia la libertad",
+        "tags": ["superación"]
     },
     {
+        "id": 23,
         "text": "El hombre que mueve montañas comienza cargando pequeñas piedras.",
         "author": "Confucio",
         "publish_date": "2025-12-12",
         "context": "Constancia y paciencia",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 24,
         "text": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
         "author": "Marco Aurelio",
         "publish_date": "2025-12-13",
         "context": "Dominio de la mente",
-        "source": "Meditaciones"
+        "source": "Meditaciones",
+        "tags": [
+                     "paz",
+                     "felicidad",
+                     "mentalidad",
+                     "vida",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 25,
         "text": "No podemos resolver problemas pensando de la misma manera que cuando los creamos.",
         "author": "Albert Einstein",
         "publish_date": "2025-12-14",
         "context": "Cambio de mentalidad",
-        "source": "Escritos y conferencias"
+        "source": "Escritos y conferencias",
+        "tags": [
+                     "cambio",
+                     "mentalidad",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 26,
         "text": "El verdadero viaje de descubrimiento no consiste en buscar nuevos paisajes, sino en tener nuevos ojos.",
         "author": "Marcel Proust",
         "publish_date": "2025-12-15",
         "context": "Nueva forma de ver la vida",
-        "source": "En busca del tiempo perdido"
+        "source": "En busca del tiempo perdido",
+        "tags": [
+                     "tiempo",
+                     "vida"
+                 ]
     },
     {
+        "id": 27,
         "text": "La disciplina es el puente entre las metas y los logros.",
         "author": "Jim Rohn",
         "publish_date": "2025-12-16",
         "context": "Autodisciplina y éxito",
-        "source": "Las estaciones de la vida"
+        "source": "Las estaciones de la vida",
+        "tags": [
+                     "disciplina",
+                     "éxito",
+                     "vida"
+                 ]
     },
     {
+        "id": 28,
         "text": "No fracases por miedo a fracasar.",
         "author": "Robin Sharma",
         "publish_date": "2025-12-17",
         "context": "Superar el miedo",
-        "source": "El monje que vendió su Ferrari"
+        "source": "El monje que vendió su Ferrari",
+        "tags": [
+                     "valentía",
+                     "aprendizaje",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 29,
         "text": "Haz lo mejor que puedas hasta que sepas más. Cuando sepas más, hazlo mejor.",
         "author": "Maya Angelou",
         "publish_date": "2025-12-18",
         "context": "Aprendizaje y mejora continua",
-        "source": "Cartas a mi hija"
+        "source": "Cartas a mi hija",
+        "tags": ["aprendizaje"]
     },
     {
+        "id": 30,
         "text": "El éxito no es definitivo, el fracaso no es fatal: lo que cuenta es el valor para continuar.",
         "author": "Winston Churchill",
         "publish_date": "2025-12-19",
         "context": "Persistencia ante la adversidad",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": [
+                     "valentía",
+                     "perseverancia",
+                     "éxito",
+                     "aprendizaje"
+                 ]
     },
     {
+        "id": 31,
         "text": "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.",
         "author": "Friedrich Nietzsche",
         "publish_date": "2025-12-20",
         "context": "Propósito y sentido",
-        "source": "El ocaso de los ídolos"
+        "source": "El ocaso de los ídolos",
+        "tags": [
+                     "vida",
+                     "propósito"
+                 ]
     },
     {
+        "id": 32,
         "text": "La acción es la clave fundamental de todo éxito.",
         "author": "Pablo Picasso",
         "publish_date": "2025-12-21",
         "context": "Importancia de actuar",
-        "source": "Entrevistas y escritos"
+        "source": "Entrevistas y escritos",
+        "tags": [
+                     "éxito",
+                     "acción"
+                 ]
     },
     {
+        "id": 33,
         "text": "El miedo llama a la puerta, la confianza responde, y nadie está allí.",
         "author": "Louise L. Hay",
         "publish_date": "2025-12-22",
         "context": "Confianza personal",
-        "source": "Usted puede sanar su vida"
+        "source": "Usted puede sanar su vida",
+        "tags": [
+                     "valentía",
+                     "vida",
+                     "esperanza",
+                     "superación"
+                 ]
     },
     {
+        "id": 34,
         "text": "Cada día sabemos más y entendemos menos.",
         "author": "Albert Einstein",
         "publish_date": "2025-12-23",
         "context": "Reflexión sobre conocimiento y sabiduría",
-        "source": "Escritos y conferencias"
+        "source": "Escritos y conferencias",
+        "tags": [
+                     "tiempo",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 35,
         "text": "Nunca es demasiado tarde para ser la persona que podrías haber sido.",
         "author": "George Eliot",
         "publish_date": "2025-12-24",
         "context": "Segundas oportunidades",
-        "source": "Ensayos y cartas"
+        "source": "Ensayos y cartas",
+        "tags": ["reflexión"]
     },
     {
+        "id": 36,
         "text": "El que tiene imaginación, con qué facilidad saca de la nada un mundo.",
         "author": "Gustavo Adolfo Bécquer",
         "publish_date": "2025-12-25",
         "context": "Creatividad e imaginación",
-        "source": "Rimas y leyendas"
+        "source": "Rimas y leyendas",
+        "tags": [
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 37,
         "text": "No es la montaña lo que conquistamos, sino a nosotros mismos.",
         "author": "Edmund Hillary",
         "publish_date": "2025-12-26",
         "context": "Superación personal",
-        "source": "Alto riesgo"
+        "source": "Alto riesgo",
+        "tags": ["superación"]
     },
     {
+        "id": 38,
         "text": "El mayor descubrimiento de todos los tiempos es que una persona puede cambiar su futuro simplemente cambiando su actitud.",
         "author": "Oprah Winfrey",
         "publish_date": "2025-12-27",
         "context": "Cambio interior y actitud",
-        "source": "Lo que sé con certeza"
+        "source": "Lo que sé con certeza",
+        "tags": [
+                     "tiempo",
+                     "cambio",
+                     "mentalidad",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 39,
         "text": "No es más rico quien más tiene, sino quien menos necesita.",
         "author": "Epicuro",
         "publish_date": "2025-12-28",
         "context": "Sencillez y verdadera riqueza",
-        "source": "Máximas y sentencias"
+        "source": "Máximas y sentencias",
+        "tags": ["simplicidad"]
     },
     {
+        "id": 40,
         "text": "El secreto de salir adelante es comenzar.",
         "author": "Mark Twain",
         "publish_date": "2025-12-29",
         "context": "Iniciar sin esperar perfección",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": [
+                     "acción",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 41,
         "text": "Haz de tu vida un sueño, y de tu sueño una realidad.",
         "author": "Antoine de Saint-Exupéry",
         "publish_date": "2025-12-30",
         "context": "Soñar y actuar",
-        "source": "Tierra de hombres"
+        "source": "Tierra de hombres",
+        "tags": [
+                     "acción",
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 42,
         "text": "El futuro pertenece a quienes creen en la belleza de sus sueños.",
         "author": "Eleanor Roosevelt",
         "publish_date": "2025-12-31",
         "context": "Esperanza y visión de futuro",
-        "source": "Aprendes viviendo"
+        "source": "Aprendes viviendo",
+        "tags": [
+                     "aprendizaje",
+                     "creatividad",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 43,
         "text": "Actúa como si lo que haces marcara la diferencia. Porque la marca.",
         "author": "William James",
         "publish_date": "2026-01-01",
         "context": "Responsabilidad personal",
-        "source": "Pragmatismo"
+        "source": "Pragmatismo",
+        "tags": [
+                     "esperanza",
+                     "superación"
+                 ]
     },
     {
+        "id": 44,
         "text": "Un viaje de mil millas comienza con un solo paso.",
         "author": "Lao Tsé",
         "publish_date": "2026-01-02",
         "context": "Comenzar grandes proyectos",
-        "source": "Tao Te Ching"
+        "source": "Tao Te Ching",
+        "tags": ["acción"]
     },
     {
+        "id": 45,
         "text": "La felicidad no es algo hecho. Proviene de tus propias acciones.",
         "author": "Dalái Lama",
         "publish_date": "2026-01-03",
         "context": "Construcción de la felicidad",
-        "source": "El arte de la felicidad"
+        "source": "El arte de la felicidad",
+        "tags": [
+                     "felicidad",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 46,
         "text": "No dejes que el ruido de las opiniones ajenas silencie tu voz interior.",
         "author": "Steve Jobs",
         "publish_date": "2026-01-04",
         "context": "Autenticidad personal",
-        "source": "Discurso en Stanford"
+        "source": "Discurso en Stanford",
+        "tags": ["superación"]
     },
     {
+        "id": 47,
         "text": "Todo lo que siempre has querido está al otro lado del miedo.",
         "author": "George Addair",
         "publish_date": "2026-01-05",
         "context": "Superar el miedo",
-        "source": "Escritos motivacionales"
+        "source": "Escritos motivacionales",
+        "tags": ["valentía"]
     },
     {
+        "id": 48,
         "text": "La mejor manera de predecir el futuro es crearlo.",
         "author": "Peter Drucker",
         "publish_date": "2026-01-06",
         "context": "Proactividad y liderazgo",
-        "source": "La práctica de la administración"
+        "source": "La práctica de la administración",
+        "tags": ["vida"]
     },
     {
+        "id": 49,
         "text": "Sé tú mismo; todos los demás ya están ocupados.",
         "author": "Oscar Wilde",
         "publish_date": "2026-01-07",
         "context": "Autenticidad",
-        "source": "Frases y pensamientos"
+        "source": "Frases y pensamientos",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 50,
         "text": "El éxito consiste en ir de fracaso en fracaso sin perder el entusiasmo.",
         "author": "Winston Churchill",
         "publish_date": "2026-01-08",
         "context": "Persistencia",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": [
+                     "perseverancia",
+                     "éxito",
+                     "aprendizaje"
+                 ]
     },
     {
+        "id": 51,
         "text": "Nuestra mayor gloria no está en no caer nunca, sino en levantarnos cada vez que caemos.",
         "author": "Confucio",
         "publish_date": "2026-01-09",
         "context": "Resiliencia",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 52,
         "text": "La vida es realmente simple, pero insistimos en hacerla complicada.",
         "author": "Confucio",
         "publish_date": "2026-01-10",
         "context": "Simplicidad y claridad",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": [
+                     "mentalidad",
+                     "vida",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 53,
         "text": "Nunca eres demasiado viejo para fijarte otra meta o soñar un nuevo sueño.",
         "author": "C. S. Lewis",
         "publish_date": "2026-01-11",
         "context": "Renovación personal",
-        "source": "Ensayos y cartas"
+        "source": "Ensayos y cartas",
+        "tags": [
+                     "éxito",
+                     "creatividad",
+                     "superación"
+                 ]
     },
-        {
+    {
+        "id": 54,
         "text": "Lo que no nos mata, nos hace más fuertes.",
         "author": "Friedrich Nietzsche",
         "publish_date": "2026-01-12",
         "context": "Fortaleza a través de la adversidad",
-        "source": "El ocaso de los ídolos"
+        "source": "El ocaso de los ídolos",
+        "tags": ["reflexión"]
     },
     {
+        "id": 55,
         "text": "El hombre se descubre cuando se mide con un obstáculo.",
         "author": "Antoine de Saint-Exupéry",
         "publish_date": "2026-01-13",
         "context": "Crecimiento personal ante desafíos",
-        "source": "Tierra de hombres"
+        "source": "Tierra de hombres",
+        "tags": ["superación"]
     },
     {
+        "id": 56,
         "text": "No es que tengamos poco tiempo, sino que perdemos mucho.",
         "author": "Séneca",
         "publish_date": "2026-01-14",
         "context": "Valor del tiempo",
-        "source": "Sobre la brevedad de la vida"
+        "source": "Sobre la brevedad de la vida",
+        "tags": [
+                     "valentía",
+                     "tiempo",
+                     "vida"
+                 ]
     },
     {
+        "id": 57,
         "text": "El éxito es aprender a ir de fracaso en fracaso sin desesperarse.",
         "author": "Winston Churchill",
         "publish_date": "2026-01-15",
         "context": "Aprender del fracaso",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": [
+                     "éxito",
+                     "aprendizaje"
+                 ]
     },
     {
+        "id": 58,
         "text": "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.",
         "author": "Viktor Frankl",
         "publish_date": "2026-01-16",
         "context": "Sentido de vida",
-        "source": "El hombre en busca de sentido"
+        "source": "El hombre en busca de sentido",
+        "tags": [
+                     "vida",
+                     "propósito"
+                 ]
     },
     {
+        "id": 59,
         "text": "Haz siempre lo que te da miedo hacer.",
         "author": "Ralph Waldo Emerson",
         "publish_date": "2026-01-17",
         "context": "Superación del miedo",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": [
+                     "valentía",
+                     "superación"
+                 ]
     },
     {
+        "id": 60,
         "text": "La confianza en uno mismo es el primer secreto del éxito.",
         "author": "Ralph Waldo Emerson",
         "publish_date": "2026-01-18",
         "context": "Autoconfianza",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": [
+                     "éxito",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 61,
         "text": "No cuentes los días, haz que los días cuenten.",
         "author": "Muhammad Ali",
         "publish_date": "2026-01-19",
         "context": "Aprovechar el tiempo",
-        "source": "Autobiografía y entrevistas"
+        "source": "Autobiografía y entrevistas",
+        "tags": ["tiempo"]
     },
     {
+        "id": 62,
         "text": "La mejor manera de empezar es dejar de hablar y comenzar a hacer.",
         "author": "Walt Disney",
         "publish_date": "2026-01-20",
         "context": "Acción y ejecución",
-        "source": "Discursos y entrevistas"
+        "source": "Discursos y entrevistas",
+        "tags": ["acción"]
     },
     {
+        "id": 63,
         "text": "El éxito no es definitivo, el fracaso no es fatal: lo que cuenta es el coraje para continuar.",
         "author": "Winston Churchill",
         "publish_date": "2026-01-21",
         "context": "Coraje y perseverancia",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": [
+                     "valentía",
+                     "perseverancia",
+                     "éxito",
+                     "aprendizaje"
+                 ]
     },
     {
+        "id": 64,
         "text": "Haz de tu vida un sueño, y de tu sueño una realidad.",
         "author": "Antoine de Saint-Exupéry",
         "publish_date": "2026-01-22",
         "context": "Soñar y actuar",
-        "source": "Tierra de hombres"
+        "source": "Tierra de hombres",
+        "tags": [
+                     "acción",
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 65,
         "text": "El mayor placer de la vida es hacer lo que la gente dice que no puedes hacer.",
         "author": "Walter Bagehot",
         "publish_date": "2026-01-23",
         "context": "Superar expectativas ajenas",
-        "source": "Ensayos literarios"
+        "source": "Ensayos literarios",
+        "tags": ["vida"]
     },
     {
+        "id": 66,
         "text": "La felicidad depende más de la disposición interior de la mente que de las circunstancias externas.",
         "author": "Benjamin Franklin",
         "publish_date": "2026-01-24",
         "context": "Felicidad y mentalidad",
-        "source": "Autobiografía"
+        "source": "Autobiografía",
+        "tags": [
+                     "felicidad",
+                     "mentalidad",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 67,
         "text": "No es valiente quien no siente miedo, sino quien sabe conquistarlo.",
         "author": "Nelson Mandela",
         "publish_date": "2026-01-25",
         "context": "Valentía auténtica",
-        "source": "Un largo camino hacia la libertad"
+        "source": "Un largo camino hacia la libertad",
+        "tags": ["valentía"]
     },
     {
+        "id": 68,
         "text": "El secreto de la felicidad no es hacer siempre lo que se quiere, sino querer siempre lo que se hace.",
         "author": "León Tolstói",
         "publish_date": "2026-01-26",
         "context": "Aceptación y propósito",
-        "source": "Confesión"
+        "source": "Confesión",
+        "tags": [
+                     "felicidad",
+                     "esperanza",
+                     "propósito"
+                 ]
     },
     {
+        "id": 69,
         "text": "No basta con saber, se debe también aplicar. No es suficiente querer, se debe también hacer.",
         "author": "Johann Wolfgang von Goethe",
         "publish_date": "2026-01-27",
         "context": "Acción y compromiso",
-        "source": "Máximas y reflexiones"
+        "source": "Máximas y reflexiones",
+        "tags": ["acción"]
     },
     {
+        "id": 70,
         "text": "La perseverancia es la madre del éxito.",
         "author": "Napoleon Hill",
         "publish_date": "2026-01-28",
         "context": "Constancia",
-        "source": "Piense y hágase rico"
+        "source": "Piense y hágase rico",
+        "tags": [
+                     "perseverancia",
+                     "éxito"
+                 ]
     },
     {
+        "id": 71,
         "text": "Todo parece imposible hasta que se hace.",
         "author": "Nelson Mandela",
         "publish_date": "2026-01-29",
         "context": "Superar lo imposible",
-        "source": "Discursos y escritos"
+        "source": "Discursos y escritos",
+        "tags": ["reflexión"]
     },
     {
+        "id": 72,
         "text": "El sentido de la vida es encontrar tu don. El propósito de la vida es compartirlo.",
         "author": "Pablo Picasso",
         "publish_date": "2026-01-30",
         "context": "Propósito y contribución",
-        "source": "Cartas y reflexiones"
+        "source": "Cartas y reflexiones",
+        "tags": [
+                     "vida",
+                     "propósito"
+                 ]
     },
-        {
+    {
+        "id": 73,
         "text": "El verdadero viaje de descubrimiento no consiste en buscar nuevos paisajes, sino en mirar con nuevos ojos.",
         "author": "Marcel Proust",
         "publish_date": "2026-01-31",
         "context": "Cambio de perspectiva",
-        "source": "En busca del tiempo perdido"
+        "source": "En busca del tiempo perdido",
+        "tags": [
+                     "tiempo",
+                     "cambio"
+                 ]
     },
     {
+        "id": 74,
         "text": "La disciplina es el puente entre metas y logros.",
         "author": "Jim Rohn",
         "publish_date": "2026-02-01",
         "context": "Disciplina personal",
-        "source": "Las estaciones de la vida"
+        "source": "Las estaciones de la vida",
+        "tags": [
+                     "disciplina",
+                     "éxito",
+                     "vida",
+                     "superación"
+                 ]
     },
     {
+        "id": 75,
         "text": "No hay nada noble en ser superior a otros hombres. La verdadera nobleza es ser superior a tu yo anterior.",
         "author": "Ernest Hemingway",
         "publish_date": "2026-02-02",
         "context": "Superación personal",
-        "source": "Escritos y reflexiones"
+        "source": "Escritos y reflexiones",
+        "tags": ["superación"]
     },
     {
+        "id": 76,
         "text": "El carácter es la virtud probada por la tentación.",
         "author": "Séneca",
         "publish_date": "2026-02-03",
         "context": "Formación del carácter",
-        "source": "Cartas a Lucilio"
+        "source": "Cartas a Lucilio",
+        "tags": ["reflexión"]
     },
     {
+        "id": 77,
         "text": "Todo crecimiento comienza al final de tu zona de confort.",
         "author": "Roy T. Bennett",
         "publish_date": "2026-02-04",
         "context": "Crecimiento personal",
-        "source": "La luz en el corazón"
+        "source": "La luz en el corazón",
+        "tags": [
+                     "amor",
+                     "superación"
+                 ]
     },
     {
+        "id": 78,
         "text": "La libertad no es la ausencia de compromisos, sino la capacidad de elegirlos.",
         "author": "Paulo Coelho",
         "publish_date": "2026-02-05",
         "context": "Libertad y decisión",
-        "source": "Manuscrito encontrado en Accra"
+        "source": "Manuscrito encontrado en Accra",
+        "tags": ["reflexión"]
     },
     {
+        "id": 79,
         "text": "El éxito llega para todos aquellos que están ocupados buscándolo.",
         "author": "Henry David Thoreau",
         "publish_date": "2026-02-06",
         "context": "Acción constante",
-        "source": "Walden"
+        "source": "Walden",
+        "tags": [
+                     "éxito",
+                     "acción"
+                 ]
     },
     {
+        "id": 80,
         "text": "La simplicidad es la máxima sofisticación.",
         "author": "Leonardo da Vinci",
         "publish_date": "2026-02-07",
         "context": "Valor de lo esencial",
-        "source": "Cuadernos"
+        "source": "Cuadernos",
+        "tags": [
+                     "valentía",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 81,
         "text": "Nunca es demasiado tarde para ser quien podrías haber sido.",
         "author": "George Eliot",
         "publish_date": "2026-02-08",
         "context": "Segundas oportunidades",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": ["reflexión"]
     },
     {
+        "id": 82,
         "text": "La acción es la clave fundamental de todo éxito.",
         "author": "Pablo Picasso",
         "publish_date": "2026-02-09",
         "context": "Creatividad y acción",
-        "source": "Cartas y reflexiones"
+        "source": "Cartas y reflexiones",
+        "tags": [
+                     "éxito",
+                     "acción",
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 83,
         "text": "El hábito es más fuerte que la razón.",
         "author": "William James",
         "publish_date": "2026-02-10",
         "context": "Formación de hábitos",
-        "source": "Principios de psicología"
+        "source": "Principios de psicología",
+        "tags": ["reflexión"]
     },
     {
+        "id": 84,
         "text": "No esperes. El momento nunca será el adecuado.",
         "author": "Napoleon Hill",
         "publish_date": "2026-02-11",
         "context": "Iniciativa personal",
-        "source": "Piense y hágase rico"
+        "source": "Piense y hágase rico",
+        "tags": [
+                     "tiempo",
+                     "superación"
+                 ]
     },
     {
+        "id": 85,
         "text": "El que tiene paciencia, obtendrá lo que desea.",
         "author": "Benjamin Franklin",
         "publish_date": "2026-02-12",
         "context": "Paciencia y constancia",
-        "source": "Autobiografía"
+        "source": "Autobiografía",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 86,
         "text": "Las grandes almas tienen voluntades; las débiles tan solo deseos.",
         "author": "Proverbio adaptado por autores clásicos",
         "publish_date": "2026-02-13",
         "context": "Fuerza de voluntad",
-        "source": "Compilaciones filosóficas"
+        "source": "Compilaciones filosóficas",
+        "tags": ["reflexión"]
     },
     {
+        "id": 87,
         "text": "La vida se encoge o se expande en proporción a tu coraje.",
         "author": "Anaïs Nin",
         "publish_date": "2026-02-14",
         "context": "Valentía personal",
-        "source": "Diarios"
+        "source": "Diarios",
+        "tags": [
+                     "valentía",
+                     "vida",
+                     "superación"
+                 ]
     },
     {
+        "id": 88,
         "text": "Un objetivo sin un plan es solo un deseo.",
         "author": "Antoine de Saint-Exupéry",
         "publish_date": "2026-02-15",
         "context": "Planificación",
-        "source": "Escritos"
+        "source": "Escritos",
+        "tags": ["éxito"]
     },
     {
+        "id": 89,
         "text": "La mejor inversión que puedes hacer es en ti mismo.",
         "author": "Warren Buffett",
         "publish_date": "2026-02-16",
         "context": "Desarrollo personal",
-        "source": "Cartas a los accionistas"
+        "source": "Cartas a los accionistas",
+        "tags": ["superación"]
     },
     {
+        "id": 90,
         "text": "El cambio es doloroso, pero nada es tan doloroso como quedarse atrapado donde no perteneces.",
         "author": "Mandy Hale",
         "publish_date": "2026-02-17",
         "context": "Transformación personal",
-        "source": "The Single Woman"
+        "source": "The Single Woman",
+        "tags": [
+                     "cambio",
+                     "superación"
+                 ]
     },
     {
+        "id": 91,
         "text": "La experiencia es simplemente el nombre que damos a nuestros errores.",
         "author": "Oscar Wilde",
         "publish_date": "2026-02-18",
         "context": "Aprender del error",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": [
+                     "aprendizaje",
+                     "mentalidad",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 92,
         "text": "No vivas el mismo año setenta y cinco veces y lo llames vida.",
         "author": "Robin Sharma",
         "publish_date": "2026-02-19",
         "context": "Vida consciente",
-        "source": "El monje que vendió su Ferrari"
+        "source": "El monje que vendió su Ferrari",
+        "tags": [
+                     "vida",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 93,
         "text": "La motivación te pone en marcha, el hábito te mantiene.",
         "author": "Jim Ryun",
         "publish_date": "2026-02-20",
         "context": "Constancia",
-        "source": "Reflexiones deportivas"
+        "source": "Reflexiones deportivas",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 94,
         "text": "Nada grande se ha hecho en el mundo sin una gran pasión.",
         "author": "Georg Wilhelm Friedrich Hegel",
         "publish_date": "2026-02-21",
         "context": "Pasión y propósito",
-        "source": "Lecciones sobre la filosofía de la historia"
+        "source": "Lecciones sobre la filosofía de la historia",
+        "tags": ["propósito"]
     },
     {
+        "id": 95,
         "text": "El que domina a otros es fuerte; el que se domina a sí mismo es poderoso.",
         "author": "Lao-Tsé",
         "publish_date": "2026-02-22",
         "context": "Autodominio",
-        "source": "Tao Te Ching"
+        "source": "Tao Te Ching",
+        "tags": ["reflexión"]
     },
     {
+        "id": 96,
         "text": "No puedes cambiar tu destino de la noche a la mañana, pero puedes cambiar tu dirección.",
         "author": "Jim Rohn",
         "publish_date": "2026-02-23",
         "context": "Decisiones diarias",
-        "source": "Las estaciones de la vida"
+        "source": "Las estaciones de la vida",
+        "tags": ["vida"]
     },
     {
+        "id": 97,
         "text": "La perseverancia no es una carrera larga, son muchas carreras cortas una tras otra.",
         "author": "Walter Elliot",
         "publish_date": "2026-02-24",
         "context": "Persistencia",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 98,
         "text": "La felicidad no es una meta, es una forma de viajar.",
         "author": "Margaret Lee Runbeck",
         "publish_date": "2026-02-25",
         "context": "Disfrutar el proceso",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": [
+                     "felicidad",
+                     "éxito",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 99,
         "text": "No temas avanzar lentamente, teme quedarte quieto.",
         "author": "Proverbio chino",
         "publish_date": "2026-02-26",
         "context": "Progreso constante",
-        "source": "Sabiduría oriental"
+        "source": "Sabiduría oriental",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 100,
         "text": "El conocimiento no es poder, es potencial. La acción es poder.",
         "author": "Tony Robbins",
         "publish_date": "2026-02-27",
         "context": "Acción transformadora",
-        "source": "Poder sin límites"
+        "source": "Poder sin límites",
+        "tags": [
+                     "cambio",
+                     "acción"
+                 ]
     },
     {
+        "id": 101,
         "text": "Sé tú mismo; todos los demás ya están ocupados.",
         "author": "Oscar Wilde",
         "publish_date": "2026-02-28",
         "context": "Autenticidad",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": ["reflexión"]
     },
     {
+        "id": 102,
         "text": "El alma se fortalece cuando se enfrenta a la dificultad.",
         "author": "Epicteto",
         "publish_date": "2026-03-01",
         "context": "Fortaleza interior",
-        "source": "Enquiridión"
+        "source": "Enquiridión",
+        "tags": ["reflexión"]
     },
     {
+        "id": 103,
         "text": "La excelencia no es un acto, es un hábito.",
         "author": "Aristóteles",
         "publish_date": "2026-03-02",
         "context": "Virtud y constancia",
-        "source": "Ética a Nicómaco"
+        "source": "Ética a Nicómaco",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 104,
         "text": "No puedes cruzar el mar solo mirando el agua.",
         "author": "Rabindranath Tagore",
         "publish_date": "2026-03-03",
         "context": "Acción decidida",
-        "source": "Pensamientos"
+        "source": "Pensamientos",
+        "tags": [
+                     "acción",
+                     "mentalidad"
+                 ]
     },
     {
+        "id": 105,
         "text": "La vida no se mide por las veces que respiras, sino por los momentos que te dejan sin aliento.",
         "author": "Maya Angelou",
         "publish_date": "2026-03-04",
         "context": "Vivir plenamente",
-        "source": "Cartas y ensayos"
+        "source": "Cartas y ensayos",
+        "tags": [
+                     "tiempo",
+                     "mentalidad",
+                     "vida"
+                 ]
     },
     {
+        "id": 106,
         "text": "Haz hoy lo que otros no quieren, para vivir mañana como otros no pueden.",
         "author": "Jerry Rice",
         "publish_date": "2026-03-05",
         "context": "Esfuerzo a largo plazo",
-        "source": "Reflexiones personales"
+        "source": "Reflexiones personales",
+        "tags": [
+                     "vida",
+                     "superación"
+                 ]
     },
     {
+        "id": 107,
         "text": "La mente lo es todo. En lo que piensas, te conviertes.",
         "author": "Buda",
         "publish_date": "2026-03-06",
         "context": "Poder del pensamiento",
-        "source": "Dhammapada"
+        "source": "Dhammapada",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 108,
         "text": "Cree que puedes y ya estás a medio camino.",
         "author": "Theodore Roosevelt",
         "publish_date": "2026-03-07",
         "context": "Confianza personal",
-        "source": "Discursos"
+        "source": "Discursos",
+        "tags": [
+                     "esperanza",
+                     "superación"
+                 ]
     },
     {
+        "id": 109,
         "text": "No es la carga lo que te rompe, sino la forma en que la llevas.",
         "author": "Lou Holtz",
         "publish_date": "2026-03-08",
         "context": "Actitud ante la dificultad",
-        "source": "Reflexiones"
+        "source": "Reflexiones",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 110,
         "text": "La autodisciplina es el poder de hacer lo que debes hacer, cuando debes hacerlo.",
         "author": "Brian Tracy",
         "publish_date": "2026-03-09",
         "context": "Disciplina personal",
-        "source": "Tráguese ese sapo"
+        "source": "Tráguese ese sapo",
+        "tags": [
+                     "disciplina",
+                     "superación"
+                 ]
     },
     {
+        "id": 111,
         "text": "El progreso ocurre fuera de la zona cómoda.",
         "author": "Michael John Bobak",
         "publish_date": "2026-03-10",
         "context": "Crecimiento continuo",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": ["superación"]
     },
-        {
+    {
+        "id": 112,
         "text": "Actúa como si lo que haces marcara la diferencia. Porque la marca.",
         "author": "William James",
         "publish_date": "2026-03-11",
         "context": "Influencia personal",
-        "source": "Pragmatismo"
+        "source": "Pragmatismo",
+        "tags": [
+                     "esperanza",
+                     "superación"
+                 ]
     },
     {
+        "id": 113,
         "text": "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
         "author": "Robert Collier",
         "publish_date": "2026-03-12",
         "context": "Constancia diaria",
-        "source": "El secreto de la edad"
+        "source": "El secreto de la edad",
+        "tags": [
+                     "perseverancia",
+                     "éxito",
+                     "tiempo"
+                 ]
     },
     {
+        "id": 114,
         "text": "La adversidad introduce a un hombre en sí mismo.",
         "author": "Albert Einstein",
         "publish_date": "2026-03-13",
         "context": "Autoconocimiento",
-        "source": "Cartas y reflexiones"
+        "source": "Cartas y reflexiones",
+        "tags": ["reflexión"]
     },
     {
+        "id": 115,
         "text": "No podemos resolver problemas pensando de la misma manera que cuando los creamos.",
         "author": "Albert Einstein",
         "publish_date": "2026-03-14",
         "context": "Cambio de mentalidad",
-        "source": "Escritos y discursos"
+        "source": "Escritos y discursos",
+        "tags": [
+                     "cambio",
+                     "mentalidad"
+                 ]
     },
     {
+        "id": 116,
         "text": "La paciencia es amarga, pero su fruto es dulce.",
         "author": "Jean-Jacques Rousseau",
         "publish_date": "2026-03-15",
         "context": "Recompensa de la constancia",
-        "source": "Emilio, o De la educación"
+        "source": "Emilio, o De la educación",
+        "tags": [
+                     "perseverancia",
+                     "mentalidad"
+                 ]
     },
     {
+        "id": 117,
         "text": "Quien no vive para servir, no sirve para vivir.",
         "author": "Madre Teresa",
         "publish_date": "2026-03-16",
         "context": "Servicio y propósito",
-        "source": "Escritos y reflexiones"
+        "source": "Escritos y reflexiones",
+        "tags": [
+                     "vida",
+                     "propósito"
+                 ]
     },
     {
+        "id": 118,
         "text": "La fe es dar el primer paso incluso cuando no ves toda la escalera.",
         "author": "Martin Luther King Jr.",
         "publish_date": "2026-03-17",
         "context": "Confianza y fe",
-        "source": "Discursos"
+        "source": "Discursos",
+        "tags": ["esperanza"]
     },
     {
+        "id": 119,
         "text": "Nada se pierde mientras se tenga el valor de proclamar que todo está perdido y hay que empezar de nuevo.",
         "author": "Julio Cortázar",
         "publish_date": "2026-03-18",
         "context": "Renovación personal",
-        "source": "Rayuela"
+        "source": "Rayuela",
+        "tags": [
+                     "valentía",
+                     "acción",
+                     "superación"
+                 ]
     },
     {
+        "id": 120,
         "text": "El fracaso es simplemente la oportunidad de comenzar de nuevo, esta vez con más inteligencia.",
         "author": "Henry Ford",
         "publish_date": "2026-03-19",
         "context": "Aprender del error",
-        "source": "Mi vida y obra"
+        "source": "Mi vida y obra",
+        "tags": [
+                     "aprendizaje",
+                     "acción",
+                     "mentalidad",
+                     "vida",
+                     "simplicidad"
+                 ]
     },
     {
+        "id": 121,
         "text": "No importa lo lento que vayas, siempre y cuando no te detengas.",
         "author": "Confucio",
         "publish_date": "2026-03-20",
         "context": "Perseverancia",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 122,
         "text": "Convierte tus heridas en sabiduría.",
         "author": "Oprah Winfrey",
         "publish_date": "2026-03-21",
         "context": "Crecimiento emocional",
-        "source": "Reflexiones personales"
+        "source": "Reflexiones personales",
+        "tags": ["superación"]
     },
     {
+        "id": 123,
         "text": "Todo lo que puedas imaginar es real.",
         "author": "Pablo Picasso",
         "publish_date": "2026-03-22",
         "context": "Creatividad",
-        "source": "Entrevistas y reflexiones"
+        "source": "Entrevistas y reflexiones",
+        "tags": [
+                     "vida",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 124,
         "text": "La vida no se trata de encontrarte a ti mismo, sino de crearte a ti mismo.",
         "author": "George Bernard Shaw",
         "publish_date": "2026-03-23",
         "context": "Construcción personal",
-        "source": "Obras y prólogos"
+        "source": "Obras y prólogos",
+        "tags": [
+                     "vida",
+                     "superación"
+                 ]
     },
     {
+        "id": 125,
         "text": "El dolor es inevitable, el sufrimiento es opcional.",
         "author": "Haruki Murakami",
         "publish_date": "2026-03-24",
         "context": "Actitud ante el dolor",
-        "source": "What I Talk About When I Talk About Running"
+        "source": "What I Talk About When I Talk About Running",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 126,
         "text": "La mayor gloria no es no caer nunca, sino levantarse siempre.",
         "author": "Confucio",
         "publish_date": "2026-03-25",
         "context": "Resiliencia",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 127,
         "text": "No te preocupes por fracasar, preocúpate por las oportunidades que pierdes al no intentarlo.",
         "author": "Jack Canfield",
         "publish_date": "2026-03-26",
         "context": "Tomar acción",
-        "source": "Sopa de pollo para el alma"
+        "source": "Sopa de pollo para el alma",
+        "tags": [
+                     "aprendizaje",
+                     "acción"
+                 ]
     },
     {
+        "id": 128,
         "text": "Haz de cada día tu obra maestra.",
         "author": "John Wooden",
         "publish_date": "2026-03-27",
         "context": "Excelencia diaria",
-        "source": "Wooden on Leadership"
+        "source": "Wooden on Leadership",
+        "tags": ["tiempo"]
     },
     {
+        "id": 129,
         "text": "La gratitud convierte lo que tenemos en suficiente.",
         "author": "Aesop",
         "publish_date": "2026-03-28",
         "context": "Apreciación",
-        "source": "Fábulas"
+        "source": "Fábulas",
+        "tags": ["reflexión"]
     },
     {
+        "id": 130,
         "text": "La energía y la persistencia conquistan todas las cosas.",
         "author": "Benjamin Franklin",
         "publish_date": "2026-03-29",
         "context": "Constancia y esfuerzo",
-        "source": "Autobiografía"
+        "source": "Autobiografía",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 131,
         "text": "Tu vida mejora solo cuando tú mejoras.",
         "author": "Brian Tracy",
         "publish_date": "2026-03-30",
         "context": "Responsabilidad personal",
-        "source": "Metas"
+        "source": "Metas",
+        "tags": [
+                     "éxito",
+                     "vida",
+                     "superación"
+                 ]
     },
     {
+        "id": 132,
         "text": "El éxito normalmente llega a quienes están demasiado ocupados para buscarlo.",
         "author": "Henry David Thoreau",
         "publish_date": "2026-03-31",
         "context": "Enfoque y dedicación",
-        "source": "Walden"
+        "source": "Walden",
+        "tags": [
+                     "éxito",
+                     "mentalidad"
+                 ]
     },
-        {
+    {
+        "id": 133,
         "text": "La mejor manera de predecir el futuro es crearlo.",
         "author": "Peter Drucker",
         "publish_date": "2026-04-01",
         "context": "Responsabilidad y acción",
-        "source": "Management Challenges for the 21st Century"
+        "source": "Management Challenges for the 21st Century",
+        "tags": ["acción"]
     },
     {
+        "id": 134,
         "text": "La educación es el arma más poderosa que puedes usar para cambiar el mundo.",
         "author": "Nelson Mandela",
         "publish_date": "2026-04-02",
         "context": "Transformación social",
-        "source": "Discursos"
+        "source": "Discursos",
+        "tags": ["cambio"]
     },
     {
+        "id": 135,
         "text": "El éxito no se logra solo con cualidades especiales. Es sobre todo un trabajo de constancia, método y organización.",
         "author": "Victor Hugo",
         "publish_date": "2026-04-03",
         "context": "Disciplina y esfuerzo",
-        "source": "Obras y pensamientos"
+        "source": "Obras y pensamientos",
+        "tags": [
+                     "perseverancia",
+                     "disciplina",
+                     "éxito",
+                     "mentalidad"
+                 ]
     },
     {
+        "id": 136,
         "text": "El que no sabe lo que busca no entiende lo que encuentra.",
         "author": "Claude Bernard",
         "publish_date": "2026-04-04",
         "context": "Claridad de objetivos",
-        "source": "Introducción al estudio de la medicina experimental"
+        "source": "Introducción al estudio de la medicina experimental",
+        "tags": ["éxito"]
     },
     {
+        "id": 137,
         "text": "Aprender sin reflexionar es malgastar la energía.",
         "author": "Confucio",
         "publish_date": "2026-04-05",
         "context": "Aprendizaje consciente",
-        "source": "Analectas"
+        "source": "Analectas",
+        "tags": ["aprendizaje"]
     },
     {
+        "id": 138,
         "text": "Nada grande se consigue sin entusiasmo.",
         "author": "Ralph Waldo Emerson",
         "publish_date": "2026-04-06",
         "context": "Pasión",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": ["reflexión"]
     },
     {
+        "id": 139,
         "text": "La suerte favorece solo a la mente preparada.",
         "author": "Louis Pasteur",
         "publish_date": "2026-04-07",
         "context": "Preparación y oportunidad",
-        "source": "Discursos científicos"
+        "source": "Discursos científicos",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 140,
         "text": "No existe el fracaso, solo resultados.",
         "author": "Tony Robbins",
         "publish_date": "2026-04-08",
         "context": "Mentalidad de crecimiento",
-        "source": "Poder sin límites"
+        "source": "Poder sin límites",
+        "tags": [
+                     "aprendizaje",
+                     "mentalidad",
+                     "superación"
+                 ]
     },
     {
+        "id": 141,
         "text": "La perseverancia convierte lo ordinario en extraordinario.",
         "author": "James Clear",
         "publish_date": "2026-04-09",
         "context": "Hábitos y mejora continua",
-        "source": "Hábitos atómicos"
+        "source": "Hábitos atómicos",
+        "tags": ["perseverancia"]
     },
     {
+        "id": 142,
         "text": "Quien tiene imaginación sin instrucción tiene alas sin pies.",
         "author": "Joseph Joubert",
         "publish_date": "2026-04-10",
         "context": "Equilibrio entre ideas y conocimiento",
-        "source": "Pensamientos"
+        "source": "Pensamientos",
+        "tags": [
+                     "mentalidad",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 143,
         "text": "La confianza en sí mismo es el primer secreto del éxito.",
         "author": "Ralph Waldo Emerson",
         "publish_date": "2026-04-11",
         "context": "Autoconfianza",
-        "source": "Ensayos"
+        "source": "Ensayos",
+        "tags": [
+                     "éxito",
+                     "esperanza"
+                 ]
     },
     {
+        "id": 144,
         "text": "Un problema es una oportunidad para que des lo mejor de ti.",
         "author": "Duke Ellington",
         "publish_date": "2026-04-12",
         "context": "Actitud ante los retos",
-        "source": "Entrevistas"
+        "source": "Entrevistas",
+        "tags": ["mentalidad"]
     },
     {
+        "id": 145,
         "text": "La constancia es el esfuerzo diario aplicado al talento.",
         "author": "John C. Maxwell",
         "publish_date": "2026-04-13",
         "context": "Desarrollo personal",
-        "source": "Las 21 leyes irrefutables del liderazgo"
+        "source": "Las 21 leyes irrefutables del liderazgo",
+        "tags": [
+                     "perseverancia",
+                     "superación"
+                 ]
     },
     {
+        "id": 146,
         "text": "No hay viento favorable para el que no sabe a dónde va.",
         "author": "Séneca",
         "publish_date": "2026-04-14",
         "context": "Dirección en la vida",
-        "source": "Cartas a Lucilio"
+        "source": "Cartas a Lucilio",
+        "tags": ["vida"]
     },
     {
+        "id": 147,
         "text": "El mayor descubrimiento de mi generación es que un ser humano puede alterar su vida cambiando su actitud.",
         "author": "William James",
         "publish_date": "2026-04-15",
         "context": "Poder de la actitud",
-        "source": "Escritos psicológicos"
+        "source": "Escritos psicológicos",
+        "tags": [
+                     "mentalidad",
+                     "vida"
+                 ]
     },
     {
+        "id": 148,
         "text": "Trabaja en silencio y deja que tu éxito haga el ruido.",
         "author": "Frank Ocean",
         "publish_date": "2026-04-16",
         "context": "Humildad y enfoque",
-        "source": "Entrevistas"
+        "source": "Entrevistas",
+        "tags": ["éxito"]
     },
     {
+        "id": 149,
         "text": "El éxito es hacer cosas ordinarias de manera extraordinaria.",
         "author": "Jim Rohn",
         "publish_date": "2026-04-17",
         "context": "Excelencia cotidiana",
-        "source": "Reflexiones"
+        "source": "Reflexiones",
+        "tags": ["éxito"]
     },
     {
+        "id": 150,
         "text": "Cada logro comienza con la decisión de intentarlo.",
         "author": "Gail Devers",
         "publish_date": "2026-04-18",
         "context": "Inicio y determinación",
-        "source": "Entrevistas"
+        "source": "Entrevistas",
+        "tags": ["éxito"]
     },
     {
+        "id": 151,
         "text": "La vida no es esperar a que pase la tormenta, es aprender a bailar bajo la lluvia.",
         "author": "Vivian Greene",
         "publish_date": "2026-04-19",
         "context": "Resiliencia",
-        "source": "Poemas"
+        "source": "Poemas",
+        "tags": [
+                     "aprendizaje",
+                     "vida"
+                 ]
     },
     {
+        "id": 152,
         "text": "El éxito es la capacidad de ir de un fracaso a otro sin perder el entusiasmo.",
         "author": "Winston Churchill",
         "publish_date": "2026-04-20",
         "context": "Perseverancia",
-        "source": "Discursos"
+        "source": "Discursos",
+        "tags": [
+                     "perseverancia",
+                     "éxito",
+                     "aprendizaje"
+                 ]
     },
     {
+        "id": 153,
         "text": "Nunca renuncies a un sueño solo por el tiempo que llevará lograrlo. El tiempo pasará igual.",
         "author": "Earl Nightingale",
         "publish_date": "2026-04-21",
         "context": "Visión a largo plazo",
-        "source": "Reflexiones"
+        "source": "Reflexiones",
+        "tags": [
+                     "tiempo",
+                     "creatividad"
+                 ]
     },
     {
+        "id": 154,
         "text": "La felicidad es cuando lo que piensas, lo que dices y lo que haces están en armonía.",
         "author": "Mahatma Gandhi",
         "publish_date": "2026-04-22",
         "context": "Coherencia personal",
-        "source": "Escritos"
+        "source": "Escritos",
+        "tags": [
+                     "felicidad",
+                     "esperanza",
+                     "superación"
+                 ]
     },
     {
+        "id": 155,
         "text": "Haz lo mejor que puedas hasta que sepas más. Cuando sepas más, hazlo mejor.",
         "author": "Maya Angelou",
         "publish_date": "2026-04-23",
         "context": "Aprendizaje continuo",
-        "source": "Cartas y discursos"
+        "source": "Cartas y discursos",
+        "tags": ["aprendizaje"]
     },
     {
+        "id": 156,
         "text": "No es el más fuerte el que sobrevive, sino el que mejor se adapta al cambio.",
         "author": "Charles Darwin",
         "publish_date": "2026-04-24",
         "context": "Adaptabilidad",
-        "source": "El origen de las especies"
+        "source": "El origen de las especies",
+        "tags": ["cambio"]
     },
     {
+        "id": 157,
         "text": "El que quiere hacer algo encuentra un medio, el que no quiere hacer nada encuentra una excusa.",
         "author": "Proverbio árabe",
         "publish_date": "2026-04-25",
         "context": "Voluntad",
-        "source": "Sabiduría popular"
+        "source": "Sabiduría popular",
+        "tags": ["reflexión"]
     },
     {
+        "id": 158,
         "text": "La autodisciplina es elegir entre lo que quieres ahora y lo que quieres más.",
         "author": "Abraham Lincoln",
         "publish_date": "2026-04-26",
         "context": "Prioridades",
-        "source": "Escritos atribuidos"
+        "source": "Escritos atribuidos",
+        "tags": ["disciplina"]
     },
     {
+        "id": 159,
         "text": "La grandeza nace de pequeños comienzos.",
         "author": "Lao-Tsé",
         "publish_date": "2026-04-27",
         "context": "Progreso gradual",
-        "source": "Tao Te Ching"
+        "source": "Tao Te Ching",
+        "tags": ["reflexión"]
     },
     {
+        "id": 160,
         "text": "El éxito es aprender a convertir el dolor en sabiduría.",
         "author": "Oprah Winfrey",
         "publish_date": "2026-04-28",
         "context": "Crecimiento personal",
-        "source": "Reflexiones"
+        "source": "Reflexiones",
+        "tags": [
+                     "éxito",
+                     "aprendizaje",
+                     "superación"
+                 ]
     },
     {
+        "id": 161,
         "text": "No hay sustituto para el trabajo duro.",
         "author": "Thomas Edison",
         "publish_date": "2026-04-29",
         "context": "Esfuerzo",
-        "source": "Cartas y entrevistas"
+        "source": "Cartas y entrevistas",
+        "tags": ["reflexión"]
     },
     {
+        "id": 162,
         "text": "Las metas claras generan resultados claros.",
         "author": "Brian Tracy",
         "publish_date": "2026-04-30",
         "context": "Enfoque",
-        "source": "Metas"
+        "source": "Metas",
+        "tags": ["éxito"]
     },
     {
+        "id": 163,
         "text": "Haz de tu vida una misión, no una excusa.",
         "author": "Stephen Covey",
         "publish_date": "2026-05-01",
         "context": "Propósito de vida",
-        "source": "Los 7 hábitos de la gente altamente efectiva"
+        "source": "Los 7 hábitos de la gente altamente efectiva",
+        "tags": [
+                     "mentalidad",
+                     "vida",
+                     "esperanza",
+                     "propósito"
+                 ]
     }
-
-
-    
 ]

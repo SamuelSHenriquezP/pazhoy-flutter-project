@@ -6,20 +6,19 @@ import '../providers/quotes_provider.dart';
 import '../models/quote.dart';
 import 'details_page.dart';
 
-/// Página "Explorar" — dos pestañas: por Autor y por Origen (source).
-/// Usa groupByAuthor y groupBySource del QuotesProvider (solo publicadas).
+/// Página "Explorar" — tres pestañas: por Autor, por Origen y por Tema.
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Usamos .watch para que los contadores de las pestañas se actualicen si cambia la lista.
     final provider = context.watch<QuotesProvider>();
     final authorCount = provider.groupByAuthor.keys.length;
     final sourceCount = provider.groupBySource.keys.length;
+    final tagCount = provider.groupByTag.keys.length;
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Explorar'),
@@ -27,6 +26,7 @@ class ExplorePage extends StatelessWidget {
             tabs: [
               Tab(text: 'Autores ($authorCount)'),
               Tab(text: 'Origen ($sourceCount)'),
+              Tab(text: 'Temas ($tagCount)'),
             ],
           ),
         ),
@@ -35,14 +35,21 @@ class ExplorePage extends StatelessWidget {
             _buildGroupedList(
               context,
               provider.groupByAuthor,
-              provider.sortedAuthors, // Lista ya ordenada
+              provider.sortedAuthors,
               'No hay autores disponibles',
             ),
             _buildGroupedList(
               context,
               provider.groupBySource,
-              provider.sortedSources, // Lista ya ordenada
+              provider.sortedSources,
               'No hay orígenes disponibles',
+            ),
+            _buildGroupedList(
+              context,
+              provider.groupByTag,
+              provider.sortedTags,
+              'No hay temas disponibles',
+              isTag: true,
             ),
           ],
         ),
@@ -55,8 +62,9 @@ class ExplorePage extends StatelessWidget {
     BuildContext context,
     Map<String, List<Quote>> data,
     List<String> sortedKeys,
-    String emptyMessage,
-  ) {
+    String emptyMessage, {
+    bool isTag = false,
+  }) {
     if (sortedKeys.isEmpty) {
       return Center(child: Text(emptyMessage));
     }
@@ -72,6 +80,22 @@ class ExplorePage extends StatelessWidget {
         if (list == null) return const SizedBox.shrink();
 
         return ListTile(
+          leading: isTag
+              ? Chip(
+                  label: Text(
+                    '#',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  backgroundColor: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withAlpha(80),
+                  side: BorderSide.none,
+                )
+              : null,
           title: Text(key),
           subtitle: Text('${list.length} frase${list.length > 1 ? 's' : ''}'),
           onTap: () =>

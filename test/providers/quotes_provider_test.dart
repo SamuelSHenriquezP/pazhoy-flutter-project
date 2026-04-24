@@ -45,6 +45,12 @@ class MockLocalStorageService implements LocalStorageService {
     favorites.clear();
     lastIndex = null;
   }
+
+  @override
+  Future<bool> shouldShowDailyQuote() async => false;
+
+  @override
+  Future<void> markDailyQuoteShown() async {}
 }
 
 void main() {

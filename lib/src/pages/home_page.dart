@@ -8,6 +8,8 @@ import '../providers/quotes_provider.dart';
 import 'details_page.dart';
 import '../widgets/quote_card.dart';
 import 'explore_page.dart'; // importa si lo añadiste
+import 'settings_page.dart';
+import 'daily_quote_page.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -172,6 +174,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _isEditing = false;
   bool _showSearch = false; // New state for search toggle
+  bool _dailyChecked = false; // Evita abrir la pantalla diaria más de una vez
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +232,14 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.favorite),
             tooltip: 'Ver favoritos',
             onPressed: () => _showFavoritesModal(context, provider),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: 'Configuración',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsPage()),
+            ),
           ),
         ],
         bottom:
@@ -330,6 +341,31 @@ class _HomePageState extends State<HomePage> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    // Mostrar la frase del día una sola vez por sesión/día
+    if (!_dailyChecked) {
+      _dailyChecked = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final dq = provider.dailyQuote;
+        if (dq == null) return;
+        final shouldShow = await provider.shouldShowDailyQuote();
+        if (!shouldShow || !mounted) return;
+        await provider.markDailyQuoteShown();
+        if (!mounted) return;
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DailyQuotePage(
+              quote: dq,
+              onViewInFeed: () {
+                final idx = provider.dailyIndexLogical;
+                if (idx != null) _animateToLogicalIndex(idx, provider);
+              },
+            ),
+          ),
+        );
+      });
+    }
+
     return _buildPageView(provider);
   }
 
@@ -390,19 +426,50 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _SearchField extends StatelessWidget {
+class _SearchField extends StatefulWidget {
   const _SearchField();
+
+  @override
+  State<_SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<_SearchField> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _clear() {
+    _controller.clear();
+    context.read<QuotesProvider>().setSearchTerm('');
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = context.read<QuotesProvider>();
+    // Keep controller in sync if term was cleared externally
+    final term = context.select<QuotesProvider, String>((p) => p.searchTerm);
+    if (_controller.text != term && term.isEmpty) {
+      _controller.clear();
+    }
 
     return TextField(
+      controller: _controller,
       onChanged: provider.setSearchTerm,
       textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         hintText: 'Buscar frase o autor...',
         prefixIcon: const Icon(Icons.search),
+        suffixIcon: term.isNotEmpty
+            ? IconButton(
+                icon: const Icon(Icons.clear),
+                tooltip: 'Limpiar',
+                onPressed: _clear,
+              )
+            : null,
         contentPadding: const EdgeInsets.symmetric(vertical: 12),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),

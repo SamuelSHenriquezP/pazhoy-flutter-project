@@ -23,8 +23,10 @@ class QuotesProvider with ChangeNotifier {
   List<Quote>? _cachedPublished;
   Map<String, List<Quote>>? _cachedByAuthor;
   Map<String, List<Quote>>? _cachedBySource;
+  Map<String, List<Quote>>? _cachedByTag;
   List<String>? _cachedSortedAuthors;
   List<String>? _cachedSortedSources;
+  List<String>? _cachedSortedTags;
 
   // Cache de búsqueda
   String? _lastSearchTerm;
@@ -100,6 +102,10 @@ class QuotesProvider with ChangeNotifier {
   /// Lista ordenada de autores para la UI
   List<String> get sortedAuthors => _cachedSortedAuthors ?? [];
 
+
+  Map<String, List<Quote>> get groupByTag => _cachedByTag ?? {};
+  List<String> get sortedTags => _cachedSortedTags ?? [];
+
   /// Lista ordenada de fuentes para la UI
   List<String> get sortedSources => _cachedSortedSources ?? [];
 
@@ -156,9 +162,25 @@ class QuotesProvider with ChangeNotifier {
       ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
     _cachedSortedAuthors = List.unmodifiable(authorsList);
 
+    // 5b. Listas ordenadas de fuentes
     final sourcesList = mapSource.keys.toList()
       ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
     _cachedSortedSources = List.unmodifiable(sourcesList);
+
+    // 6. Agrupar por Tag
+    final mapTag = <String, List<Quote>>{};
+    for (final q in published) {
+      for (final tag in q.tags) {
+        mapTag.putIfAbsent(tag, () => []).add(q);
+      }
+      if (q.tags.isEmpty) {
+        mapTag.putIfAbsent('sin categoría', () => []).add(q);
+      }
+    }
+    _cachedByTag = Map.unmodifiable(mapTag);
+    final tagsList = mapTag.keys.toList()
+      ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    _cachedSortedTags = List.unmodifiable(tagsList);
 
     // Limpiar cache de búsqueda
     _invalidateSearchCache();
@@ -203,6 +225,14 @@ class QuotesProvider with ChangeNotifier {
   Future<void> retry() async {
     await init();
   }
+
+  // ── Frase del día ──────────────────────────────────────────────────────────
+
+  /// `true` si la pantalla de frase del día no se ha mostrado hoy todavía.
+  Future<bool> shouldShowDailyQuote() => storage.shouldShowDailyQuote();
+
+  /// Marca la pantalla de frase del día como mostrada hoy.
+  Future<void> markDailyQuoteShown() => storage.markDailyQuoteShown();
 
   // --- Favoritos ---
   Future<void> toggleFavorite(int id) async {

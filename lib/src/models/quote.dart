@@ -6,6 +6,7 @@ class Quote {
   final DateTime? publishDate; // UTC date (only year-month-day)
   final String? context; // descripción / notas
   final String? source; // libro, artículo, origen
+  final List<String> tags;
 
   // Campos precomputados para búsqueda rápida
   late final String _textLower = text.toLowerCase();
@@ -18,6 +19,7 @@ class Quote {
     this.publishDate,
     this.context,
     this.source,
+    this.tags = const [],
   });
 
   // Constructor desde JSON
@@ -48,13 +50,25 @@ class Quote {
       return s.isEmpty ? null : s;
     }
 
+    // Use the stable id from JSON if present, fall back to array index
+    final jsonId = json['id'];
+    final id = (jsonId is int) ? jsonId : idx;
+
+    List<String> parseTags(dynamic v) {
+      if (v == null) return const [];
+      if (v is List) return v.map((e) => e.toString()).toList(growable: false);
+      if (v is String && v.isNotEmpty) return [v];
+      return const [];
+    }
+
     return Quote(
       text: (json['text'] ?? '') as String,
       author: (json['author'] ?? '') as String,
-      id: idx,
+      id: id,
       publishDate: parsedDate,
       context: parseNullableString(json['context']),
       source: parseNullableString(json['source']),
+      tags: parseTags(json['tags']),
     );
   }
 
@@ -67,10 +81,9 @@ class Quote {
     }
     if (context != null) map['context'] = context;
     if (source != null) map['source'] = source;
+    if (tags.isNotEmpty) map['tags'] = tags;
     return map;
   }
-
-  // Añade este método dentro de tu clase Quote
 
   Quote copyWith({
     String? text,
@@ -79,6 +92,7 @@ class Quote {
     DateTime? publishDate,
     String? context,
     String? source,
+    List<String>? tags,
   }) {
     return Quote(
       text: text ?? this.text,
@@ -87,6 +101,7 @@ class Quote {
       publishDate: publishDate ?? this.publishDate,
       context: context ?? this.context,
       source: source ?? this.source,
+      tags: tags ?? this.tags,
     );
   }
 
