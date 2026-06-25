@@ -9,13 +9,13 @@ import 'details_page.dart';
 import '../widgets/quote_card.dart';
 import 'explore_page.dart'; // importa si lo añadiste
 import 'settings_page.dart';
-import 'daily_quote_page.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:gal/gal.dart';
 import '../widgets/modern_style_editor.dart';
+import '../widgets/empty_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,9 +32,15 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final provider = context.read<QuotesProvider>();
-    if (!provider.isLoading && _pageController == null) {
-      final initial = provider.currentIndex;
+    final n = provider.quotes.length;
+    if (!provider.isLoading && _pageController == null && n > 0) {
+      final initial = (provider.dailyIndexLogical ?? provider.currentIndex).clamp(0, n - 1);
       _pageController = PageController(initialPage: initial);
+      if (provider.currentIndex != initial) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          provider.setCurrentIndex(initial, persist: false);
+        });
+      }
     }
   }
 
@@ -58,14 +64,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openDetail(BuildContext context, Quote q, QuotesProvider provider) {
-    final isFav = provider.favorites.contains(q.id);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuoteDetailPage(
           quote: q,
-          isFavorite: isFav,
-          onToggleFavorite: () => provider.toggleFavorite(q.id),
           heroTag: 'quote-${q.id}',
         ),
       ),
@@ -118,6 +121,180 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  void _showCreateQuoteModal(BuildContext context, QuotesProvider provider) {
+    final formKey = GlobalKey<FormState>();
+    final textController = TextEditingController();
+    final authorController = TextEditingController(text: 'Yo');
+    final sourceController = TextEditingController();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Crear mi propia frase',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.grey),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: textController,
+                    maxLines: 3,
+                    maxLength: 250,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Frase o reflexión',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      hintText: 'Escribe tu frase aquí...',
+                      hintStyle: const TextStyle(color: Colors.black26),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return 'Por favor escribe una frase';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: authorController,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Autor',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      hintText: 'Yo, Anónimo, Marco Aurelio...',
+                      hintStyle: const TextStyle(color: Colors.black26),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: sourceController,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Origen / Libro (Opcional)',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      hintText: 'Meditaciones, Diario 2026...',
+                      hintStyle: const TextStyle(color: Colors.black26),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        final text = textController.text.trim();
+                        final author = authorController.text.trim();
+                        final source = sourceController.text.trim();
+
+                        final messenger = ScaffoldMessenger.of(context);
+                        Navigator.pop(context);
+
+                        // Liberar controladores al cerrar
+                        textController.dispose();
+                        authorController.dispose();
+                        sourceController.dispose();
+
+                        // Crear la frase
+                        await provider.addCustomQuote(
+                          text: text,
+                          author: author.isNotEmpty ? author : null,
+                          source: source.isNotEmpty ? source : null,
+                        );
+
+                        // Diferir la animación hasta que Flutter reconstruya el PageView
+                        // con el nuevo elemento ya incluido
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          final newIdx = provider.totalPublished - 1;
+                          if (newIdx >= 0) {
+                            _animateToLogicalIndex(newIdx, provider);
+                          }
+                        });
+
+                        messenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('¡Frase creada con éxito! Desliza hasta el final para verla.'),
+                          ),
+                        );
+                      }
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Guardar Frase',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      // Liberar controladores si el usuario cierra sin guardar
+      try { textController.dispose(); } catch (_) {}
+      try { authorController.dispose(); } catch (_) {}
+      try { sourceController.dispose(); } catch (_) {}
+    });
   }
 
   Future<void> _saveImage() async {
@@ -174,7 +351,6 @@ class _HomePageState extends State<HomePage> {
 
   bool _isEditing = false;
   bool _showSearch = false; // New state for search toggle
-  bool _dailyChecked = false; // Evita abrir la pantalla diaria más de una vez
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +361,11 @@ class _HomePageState extends State<HomePage> {
         title: const Text('PazHoy'),
         // Inherits backgroundColor, surfaceTintColor, scrolledUnderElevation from Theme
         actions: [
+          IconButton(
+            icon: const Icon(Icons.add_comment_rounded),
+            tooltip: 'Crear frase',
+            onPressed: () => _showCreateQuoteModal(context, provider),
+          ),
           IconButton(
             icon: const Icon(Icons.search), // New Search Toggle
             tooltip: 'Buscar',
@@ -341,43 +522,27 @@ class _HomePageState extends State<HomePage> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // Mostrar la frase del día una sola vez por sesión/día
-    if (!_dailyChecked) {
-      _dailyChecked = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        final dq = provider.dailyQuote;
-        if (dq == null) return;
-        final shouldShow = await provider.shouldShowDailyQuote();
-        if (!shouldShow || !mounted) return;
-        await provider.markDailyQuoteShown();
-        if (!mounted) return;
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => DailyQuotePage(
-              quote: dq,
-              onViewInFeed: () {
-                final idx = provider.dailyIndexLogical;
-                if (idx != null) _animateToLogicalIndex(idx, provider);
-              },
-            ),
-          ),
-        );
-      });
-    }
-
     return _buildPageView(provider);
   }
 
   Widget _buildPageView(QuotesProvider provider) {
     final list = provider.quotes;
     if (list.isEmpty) {
-      return const Center(child: Text('No hay frases para mostrar.'));
+      return const EmptyStateWidget(
+        title: 'Sin frases',
+        message: 'No hay frases disponibles en este momento.',
+        icon: Icons.format_quote_rounded,
+      );
     }
 
-    if (_pageController == null) {
-      final initial = provider.currentIndex.clamp(0, list.length - 1);
+    if (_pageController == null && list.isNotEmpty) {
+      final initial = (provider.dailyIndexLogical ?? provider.currentIndex).clamp(0, list.length - 1);
       _pageController = PageController(initialPage: initial);
+      if (provider.currentIndex != initial) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          provider.setCurrentIndex(initial, persist: false);
+        });
+      }
     }
 
     return PageView.builder(

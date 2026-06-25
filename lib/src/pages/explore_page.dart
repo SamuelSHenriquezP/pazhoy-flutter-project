@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/quotes_provider.dart';
 import '../models/quote.dart';
 import 'details_page.dart';
+import '../widgets/empty_state.dart';
 
 /// Página "Explorar" — tres pestañas: por Autor, por Origen y por Tema.
 class ExplorePage extends StatelessWidget {
@@ -66,7 +67,11 @@ class ExplorePage extends StatelessWidget {
     bool isTag = false,
   }) {
     if (sortedKeys.isEmpty) {
-      return Center(child: Text(emptyMessage));
+      return EmptyStateWidget(
+        title: 'Explorar',
+        message: emptyMessage,
+        icon: Icons.search_off_rounded,
+      );
     }
 
     return ListView.separated(
@@ -133,7 +138,11 @@ class _ListByKeyPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: quotes.isEmpty
-          ? const Center(child: Text('No hay frases.'))
+          ? const EmptyStateWidget(
+              title: 'Vacío',
+              message: 'No hay frases para mostrar.',
+              icon: Icons.format_quote_rounded,
+            )
           : ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: 8),
               itemCount: quotes.length,
@@ -164,8 +173,6 @@ class _ListByKeyPage extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (_) => QuoteDetailPage(
                           quote: q,
-                          isFavorite: isFav,
-                          onToggleFavorite: () => provider.toggleFavorite(q.id),
                           heroTag: 'quote-explore-${q.id}',
                         ),
                       ),

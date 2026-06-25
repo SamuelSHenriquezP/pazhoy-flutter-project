@@ -163,18 +163,26 @@ class _StyledText extends StatelessWidget {
     this.textAlign,
   });
 
+  static TextStyle _safeGetFont(String family, TextStyle textStyle) {
+    try {
+      return GoogleFonts.getFont(family, textStyle: textStyle);
+    } catch (_) {
+      return textStyle;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final baseStyle = GoogleFonts.getFont(
-      style.fontFamily ?? 'Lato',
-      textStyle: TextStyle(
-        fontSize: fontSize,
-        height: style.lineHeight,
-        letterSpacing: style.letterSpacing,
-        wordSpacing: style.wordSpacing,
-        fontStyle: isAuthor ? FontStyle.italic : FontStyle.normal,
-      ),
+    final baseTextStyle = TextStyle(
+      fontSize: fontSize,
+      height: style.lineHeight,
+      letterSpacing: style.letterSpacing,
+      wordSpacing: style.wordSpacing,
+      fontStyle: isAuthor ? FontStyle.italic : FontStyle.normal,
     );
+    final baseStyle = style.fontFamily != null
+        ? _safeGetFont(style.fontFamily!, baseTextStyle)
+        : baseTextStyle;
 
     // Si hay contorno, usamos Stack para dibujarlo detrás
     if (style.textOutlineColor != null && style.textOutlineWidth > 0) {

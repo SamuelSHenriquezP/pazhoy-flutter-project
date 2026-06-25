@@ -2,20 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:home_widget/home_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/quote.dart';
+import '../providers/quotes_provider.dart';
 
 class QuoteDetailPage extends StatelessWidget {
   final Quote quote;
-  final bool isFavorite;
-  final VoidCallback onToggleFavorite;
   final String heroTag;
 
   const QuoteDetailPage({
     super.key,
     required this.quote,
-    required this.isFavorite,
-    required this.onToggleFavorite,
     required this.heroTag,
   });
 
@@ -26,15 +25,17 @@ class QuoteDetailPage extends StatelessWidget {
     final media = MediaQuery.of(context);
     final maxWidth = media.size.width * 0.92;
 
+    // Reactively watch the provider so the favorite icon and state rebuilds automatically
+    final provider = context.watch<QuotesProvider>();
+    final isFav = provider.favorites.contains(quote.id);
+
     return Scaffold(
       appBar: AppBar(
-        // El AppBar ahora está más limpio, solo con el título.
         title: const Text('Frase'),
       ),
-      // REFACTOR: Añadimos un FloatingActionButton para unificar las acciones.
       floatingActionButton: FloatingActionButton(
         tooltip: 'Acciones',
-        onPressed: () => _showActionsModal(context),
+        onPressed: () => _showActionsModal(context, provider, isFav),
         child: const Icon(Icons.more_horiz_rounded),
       ),
       body: SafeArea(
@@ -77,7 +78,6 @@ class QuoteDetailPage extends StatelessWidget {
                       ),
                     ),
                   const SizedBox(height: 24), // Espacio extra
-                  // La información de contexto y fuente se queda igual.
                   if (quote.context != null) ...[
                     Text('Contexto', style: textTheme.titleMedium),
                     const SizedBox(height: 8),
@@ -95,7 +95,6 @@ class QuoteDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 18),
                   ],
-                  // REFACTOR: La fila de botones de aquí se ha eliminado.
                 ],
               ),
             ),
@@ -105,8 +104,7 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  /// REFACTOR: Nuevo método que muestra un panel con todas las acciones.
-  void _showActionsModal(BuildContext context) {
+  void _showActionsModal(BuildContext context, QuotesProvider provider, bool isFav) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -137,17 +135,45 @@ class QuoteDetailPage extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.redAccent : null,
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: isFav ? Colors.redAccent : null,
                     ),
                     title: Text(
-                      isFavorite
+                      isFav
                           ? 'Quitar de favoritos'
                           : 'Agregar a favoritos',
                     ),
                     onTap: () {
-                      onToggleFavorite();
+                      provider.toggleFavorite(quote.id);
                       Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.push_pin_outlined),
+                    title: const Text('Fijar en el widget'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      try {
+                        await provider.storage.setWidgetMode('pinned');
+                        await HomeWidget.saveWidgetData<String>('widget_mode', 'pinned');
+                        await HomeWidget.saveWidgetData<String>('widget_daily_text', quote.text);
+                        await HomeWidget.saveWidgetData<String>('widget_daily_author', quote.author.isNotEmpty ? quote.author : 'Anónimo');
+                        await HomeWidget.updateWidget(
+                          name: 'QuoteWidgetProvider',
+                          androidName: 'QuoteWidgetProvider',
+                        );
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Frase fijada en el widget de la pantalla de inicio')),
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('No se pudo fijar en el widget: $e')),
+                          );
+                        }
+                      }
                     },
                   ),
                   const SizedBox(height: 8),
@@ -167,7 +193,6 @@ class QuoteDetailPage extends StatelessWidget {
     return base;
   }
 
-  // Se simplifica la firma, ya no necesita el context.
   void _shareQuote() {
     final content =
         '"${quote.text}"'

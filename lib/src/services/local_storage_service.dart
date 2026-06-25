@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,7 +80,46 @@ class LocalStorageService {
   }
 
   String _todayString() {
-    final t = DateTime.now().toUtc();
+    final t = DateTime.now();
     return '${t.year}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+  }
+
+  // --- Configuraciones del Widget ---
+  static const String _widgetModeKey = 'widget_mode';
+
+  Future<String> getWidgetMode() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    return prefs.getString(_widgetModeKey) ?? 'daily';
+  }
+
+  Future<void> setWidgetMode(String mode) async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(_widgetModeKey, mode);
+  }
+
+  // --- Frases Personalizadas del Usuario ---
+  static const String _customQuotesKey = 'user_custom_quotes';
+
+  Future<List<Map<String, dynamic>>> getCustomQuotesRaw() async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final jsonStr = prefs.getString(_customQuotesKey);
+      if (jsonStr == null) return [];
+      final list = json.decode(jsonStr) as List<dynamic>;
+      return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+    } catch (e) {
+      debugPrint('Error loading custom quotes: $e');
+      return [];
+    }
+  }
+
+  Future<void> saveCustomQuotesRaw(List<Map<String, dynamic>> quotes) async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final jsonStr = json.encode(quotes);
+      await prefs.setString(_customQuotesKey, jsonStr);
+    } catch (e) {
+      debugPrint('Error saving custom quotes: $e');
+    }
   }
 }

@@ -4,6 +4,14 @@ import 'package:provider/provider.dart';
 import '../providers/style_provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+TextStyle _safeGetFont(String family, [TextStyle? textStyle]) {
+  try {
+    return GoogleFonts.getFont(family, textStyle: textStyle);
+  } catch (_) {
+    return textStyle ?? const TextStyle();
+  }
+}
+
 class ModernStyleEditor extends StatefulWidget {
   const ModernStyleEditor({super.key});
 
@@ -15,6 +23,7 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
   int _selectedIndex = 0;
 
   final List<Map<String, dynamic>> _categories = [
+    {'icon': Icons.palette_outlined, 'label': 'Temas'},
     {'icon': Icons.text_fields, 'label': 'Texto'},
     {'icon': Icons.format_paint, 'label': 'Fondo'},
     {'icon': Icons.space_bar, 'label': 'Espacio'},
@@ -49,20 +58,20 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
               : ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    transitionBuilder: (child, animation) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0.0, 0.2),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: _buildSubmenuContent(_selectedIndex),
+                     duration: const Duration(milliseconds: 300),
+                     transitionBuilder: (child, animation) {
+                       return FadeTransition(
+                         opacity: animation,
+                         child: SlideTransition(
+                           position: Tween<Offset>(
+                             begin: const Offset(0.0, 0.2),
+                             end: Offset.zero,
+                           ).animate(animation),
+                           child: child,
+                         ),
+                       );
+                     },
+                     child: _buildSubmenuContent(_selectedIndex),
                   ),
                 ),
         ),
@@ -181,16 +190,104 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
     // Key is important for AnimatedSwitcher
     switch (index) {
       case 0:
-        return _TextSubmenu(key: const ValueKey(0));
+        return _PresetsSubmenu(key: const ValueKey(0));
       case 1:
-        return _BackgroundSubmenu(key: const ValueKey(1));
+        return _TextSubmenu(key: const ValueKey(1));
       case 2:
-        return _SpacingSubmenu(key: const ValueKey(2));
+        return _BackgroundSubmenu(key: const ValueKey(2));
       case 3:
-        return _EffectsSubmenu(key: const ValueKey(3));
+        return _SpacingSubmenu(key: const ValueKey(3));
+      case 4:
+        return _EffectsSubmenu(key: const ValueKey(4));
       default:
         return const SizedBox.shrink();
     }
+  }
+}
+
+class _PresetsSubmenu extends StatelessWidget {
+  const _PresetsSubmenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<StyleProvider>();
+    final presets = StyleProvider.presets;
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Plantillas de Redes / Temas',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          const SizedBox(height: 12),
+          Expanded(
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: presets.length,
+              separatorBuilder: (c, i) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final entry = presets.entries.elementAt(index);
+                final name = entry.key;
+                final preset = entry.value;
+
+                return GestureDetector(
+                  onTap: () => provider.applyPreset(preset),
+                  child: Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: preset.backgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.black12,
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        )
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Mini Quote Visualizer
+                        Text(
+                          '“Abc”',
+                          style: TextStyle(
+                            color: preset.textColor,
+                            fontFamily: preset.fontFamily,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: preset.textColor.withValues(alpha: 0.8),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -233,7 +330,7 @@ class _TextSubmenu extends StatelessWidget {
               final font = fonts[index];
               final isSelected = provider.style.fontFamily == font;
               return ChoiceChip(
-                label: Text(font, style: GoogleFonts.getFont(font)),
+                label: Text(font, style: _safeGetFont(font)),
                 selected: isSelected,
                 onSelected: (_) => provider.setFontFamily(font),
                 showCheckmark: false,

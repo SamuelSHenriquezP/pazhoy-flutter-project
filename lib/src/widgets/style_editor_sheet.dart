@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/style_provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -93,7 +92,7 @@ class _TextTab extends StatelessWidget {
               final font = fonts[index];
               final isSelected = provider.style.fontFamily == font;
               return ChoiceChip(
-                label: Text(font, style: GoogleFonts.getFont(font)),
+                label: Text(font),
                 selected: isSelected,
                 onSelected: (_) => provider.setFontFamily(font),
               );

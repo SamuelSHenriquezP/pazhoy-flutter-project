@@ -1,6 +1,7 @@
 // lib/src/pages/settings_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/quotes_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
 
@@ -15,19 +16,23 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _notifsEnabled = false;
   TimeOfDay _notifTime = const TimeOfDay(hour: 9, minute: 0);
   bool _loading = true;
+  String _widgetMode = 'daily';
 
   @override
   void initState() {
     super.initState();
-    _loadNotifPrefs();
+    _loadPrefs();
   }
 
-  Future<void> _loadNotifPrefs() async {
+  Future<void> _loadPrefs() async {
+    final storage = context.read<QuotesProvider>().storage;
     final prefs = await NotificationService.instance.loadPrefs();
+    final widgetMode = await storage.getWidgetMode();
     if (mounted) {
       setState(() {
         _notifsEnabled = prefs.enabled;
         _notifTime = prefs.time;
+        _widgetMode = widgetMode;
         _loading = false;
       });
     }
@@ -53,9 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
       final granted = await NotificationService.instance.requestPermissions();
       if (!granted && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Permiso de notificaciones denegado'),
-          ),
+          const SnackBar(content: Text('Permiso de notificaciones denegado')),
         );
         return;
       }
@@ -69,9 +72,31 @@ class _SettingsPageState extends State<SettingsPage> {
     if (mounted) setState(() => _notifsEnabled = value);
   }
 
+  Future<void> _setWidgetMode(String mode) async {
+    final provider = context.read<QuotesProvider>();
+    await provider.storage.setWidgetMode(mode);
+    setState(() => _widgetMode = mode);
+    await provider.syncWidgetData();
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            mode == 'daily'
+                ? 'El widget mostrará la frase del día'
+                : mode == 'favorites'
+                    ? 'El widget rotará entre tus favoritos'
+                    : 'Modo de frase fijada activado',
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
+    final provider = context.watch<QuotesProvider>();
+    final hasFavorites = provider.favorites.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Configuración')),
@@ -99,6 +124,54 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     onTap: _pickTime,
                   ),
+                const Divider(),
+                const _SectionHeader(title: 'Widget de pantalla de inicio'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text(
+                    'Elige qué mostrará el widget de PazHoy en tu pantalla de inicio.',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                ),
+                RadioGroup<String>(
+                  groupValue: _widgetMode,
+                  onChanged: (v) {
+                    if (v == null) return;
+                    // No permitir cambiar a 'favorites' si no hay favoritos
+                    if (v == 'favorites' && !hasFavorites) return;
+                    _setWidgetMode(v);
+                  },
+                  child: Column(
+                    children: [
+                      const RadioListTile<String>(
+                        title: Text('Frase del día'),
+                        subtitle: Text('Muestra la frase más reciente publicada'),
+                        secondary: Icon(Icons.wb_sunny_outlined),
+                        value: 'daily',
+                      ),
+                      RadioListTile<String>(
+                        title: const Text('Rotar entre favoritos'),
+                        subtitle: Text(
+                          hasFavorites
+                              ? 'Cambia automáticamente cada 30 min o con el botón del widget'
+                              : 'Agrega frases a favoritos para usar este modo',
+                        ),
+                        secondary: const Icon(Icons.favorite_outline),
+                        value: 'favorites',
+                      ),
+                      if (_widgetMode == 'pinned')
+                        const RadioListTile<String>(
+                          title: Text('Frase fijada'),
+                          subtitle: Text('Fijada manualmente desde la pantalla de detalle'),
+                          secondary: Icon(Icons.push_pin_outlined),
+                          value: 'pinned',
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
               ],
             ),
     );
@@ -131,27 +204,27 @@ class _ThemeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RadioListTile<ThemeMode>(
-          title: const Text('Sistema (automático)'),
-          value: ThemeMode.system,
-          groupValue: themeProvider.themeMode,
-          onChanged: (v) => themeProvider.setThemeMode(v!),
-        ),
-        RadioListTile<ThemeMode>(
-          title: const Text('Claro'),
-          value: ThemeMode.light,
-          groupValue: themeProvider.themeMode,
-          onChanged: (v) => themeProvider.setThemeMode(v!),
-        ),
-        RadioListTile<ThemeMode>(
-          title: const Text('Oscuro'),
-          value: ThemeMode.dark,
-          groupValue: themeProvider.themeMode,
-          onChanged: (v) => themeProvider.setThemeMode(v!),
-        ),
-      ],
+    return RadioGroup<ThemeMode>(
+      groupValue: themeProvider.themeMode,
+      onChanged: (v) {
+        if (v != null) themeProvider.setThemeMode(v);
+      },
+      child: Column(
+        children: const [
+          RadioListTile<ThemeMode>(
+            title: Text('Sistema (automático)'),
+            value: ThemeMode.system,
+          ),
+          RadioListTile<ThemeMode>(
+            title: Text('Claro'),
+            value: ThemeMode.light,
+          ),
+          RadioListTile<ThemeMode>(
+            title: Text('Oscuro'),
+            value: ThemeMode.dark,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pazhoy/src/models/quote.dart';
 import 'package:pazhoy/src/providers/quotes_provider.dart';
@@ -51,9 +52,36 @@ class MockLocalStorageService implements LocalStorageService {
 
   @override
   Future<void> markDailyQuoteShown() async {}
+
+  @override
+  Future<String> getWidgetMode() async => 'daily';
+
+  @override
+  Future<void> setWidgetMode(String mode) async {}
+
+  List<Map<String, dynamic>> customQuotes = [];
+
+  @override
+  Future<List<Map<String, dynamic>>> getCustomQuotesRaw() async => customQuotes;
+
+  @override
+  Future<void> saveCustomQuotesRaw(List<Map<String, dynamic>> quotes) async {
+    customQuotes = quotes;
+  }
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  // Mock the home_widget platform method channel
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(
+    const MethodChannel('home_widget'),
+    (MethodCall methodCall) async {
+      return null;
+    },
+  );
+
   late MockQuotesRepository mockRepo;
   late MockLocalStorageService mockStorage;
   late QuotesProvider provider;

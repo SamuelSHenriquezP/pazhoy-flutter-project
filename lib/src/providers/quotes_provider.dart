@@ -1,6 +1,8 @@
 // lib/src/providers/quotes_provider.dart
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:home_widget/home_widget.dart';
 import '../data/quotes_repository.dart';
 import '../models/quote.dart';
 import '../services/local_storage_service.dart';
@@ -27,6 +29,8 @@ class QuotesProvider with ChangeNotifier {
   List<String>? _cachedSortedAuthors;
   List<String>? _cachedSortedSources;
   List<String>? _cachedSortedTags;
+
+  Quote? _cachedDailyQuote;
 
   // Cache de búsqueda
   String? _lastSearchTerm;
@@ -74,23 +78,11 @@ class QuotesProvider with ChangeNotifier {
 
   int get totalPublished => _publishedList.length;
 
-  Quote? get dailyQuote {
-    final published = _publishedList;
-    final nowUtc = DateTime.now().toUtc();
-    final todayUtc = DateTime.utc(nowUtc.year, nowUtc.month, nowUtc.day);
-    for (final q in published) {
-      final pd = q.publishDate;
-      if (pd == null) continue;
-      final pdDate = DateTime.utc(pd.year, pd.month, pd.day);
-      if (pdDate == todayUtc) return q;
-    }
-    return null;
-  }
+  Quote? get dailyQuote => _cachedDailyQuote;
 
   int? get dailyIndexLogical {
-    final dq = dailyQuote;
+    final dq = _cachedDailyQuote;
     if (dq == null) return null;
-    // Buscamos en la lista cacheada, operación O(N) pero sobre lista en memoria
     return _publishedList.indexWhere((q) => q.id == dq.id);
   }
 
@@ -113,8 +105,8 @@ class QuotesProvider with ChangeNotifier {
 
   void _recalculateDerivedData() {
     // 1. Calcular lista publicada (filtro de fecha)
-    final nowUtc = DateTime.now().toUtc();
-    final todayUtc = DateTime.utc(nowUtc.year, nowUtc.month, nowUtc.day);
+    final nowLocal = DateTime.now();
+    final todayUtc = DateTime.utc(nowLocal.year, nowLocal.month, nowLocal.day);
 
     final published = _quotes
         .where((q) {
@@ -138,6 +130,31 @@ class QuotesProvider with ChangeNotifier {
     });
 
     _cachedPublished = List.unmodifiable(published);
+
+    // Cachear frase del día: la que tenga publish_date == hoy,
+    // o si no hay, la más reciente (última publicada hasta hoy).
+    Quote? daily;
+    for (final q in published) {
+      final pd = q.publishDate;
+      if (pd == null) continue;
+      final pdDate = DateTime.utc(pd.year, pd.month, pd.day);
+      if (pdDate == todayUtc) {
+        daily = q;
+        break;
+      }
+    }
+    if (daily == null) {
+      // Tomar la última frase con fecha (la lista ya está ordenada por fecha asc)
+      for (final q in published.reversed) {
+        if (q.publishDate != null) {
+          daily = q;
+          break;
+        }
+      }
+      // Si ninguna tiene fecha, usar la última de la lista
+      daily ??= published.isNotEmpty ? published.last : null;
+    }
+    _cachedDailyQuote = daily;
 
     // 3. Agrupar por Autor
     final mapAuthor = <String, List<Quote>>{};
@@ -194,11 +211,21 @@ class QuotesProvider with ChangeNotifier {
         repo.loadQuotes(),
         storage.getFavorites(),
         storage.getLastViewedIndex(),
+        storage.getCustomQuotesRaw(),
       ]);
 
-      _quotes = List.unmodifiable(results[0] as List<Quote>);
+      final baseQuotes = results[0] as List<Quote>;
       _favorites = results[1] as Set<int>;
       final savedIndex = results[2] as int?;
+      final customRaw = results[3] as List<Map<String, dynamic>>;
+
+      // Parsear frases personalizadas
+      final customQuotes = List<Quote>.generate(
+        customRaw.length,
+        (i) => Quote.fromJson(customRaw[i], 100000 + i),
+      );
+
+      _quotes = List.unmodifiable([...baseQuotes, ...customQuotes]);
 
       // Calculamos todo una sola vez aquí
       _recalculateDerivedData();
@@ -214,11 +241,52 @@ class QuotesProvider with ChangeNotifier {
       }
 
       _setState(ViewState.success);
+      syncWidgetData();
     } catch (e, st) {
       debugPrint('Error en QuotesProvider.init(): $e\n$st');
       _setError(
         'No pudimos cargar las frases.\nPor favor revisa tu conexión o intenta más tarde.',
       );
+    }
+  }
+
+  Future<void> addCustomQuote({required String text, String? author, String? source}) async {
+    try {
+      final customRaw = await storage.getCustomQuotesRaw();
+
+      // Usar el ID más alto existente + 1 para evitar colisiones si se borran frases
+      final existingIds = customRaw
+          .map((e) => e['id'] as int? ?? 100000)
+          .toList();
+      final newQuoteId = existingIds.isEmpty
+          ? 100000
+          : existingIds.reduce((a, b) => a > b ? a : b) + 1;
+      final newQuoteMap = {
+        'id': newQuoteId,
+        'text': text,
+        'author': author ?? 'Yo',
+        'source': source ?? '',
+      };
+      
+      customRaw.add(newQuoteMap);
+      await storage.saveCustomQuotesRaw(customRaw);
+      
+      final newQuote = Quote.fromJson(newQuoteMap, newQuoteId);
+      final newQuotesList = List<Quote>.from(_quotes)..add(newQuote);
+      _quotes = List.unmodifiable(newQuotesList);
+      
+      _recalculateDerivedData();
+      
+      final newLogicalIdx = _publishedList.indexWhere((q) => q.id == newQuoteId);
+      if (newLogicalIdx != -1) {
+        _currentIndex = newLogicalIdx;
+        await storage.setLastViewedIndex(_currentIndex);
+      }
+      
+      notifyListeners();
+      await syncWidgetData();
+    } catch (e) {
+      debugPrint('Error adding custom quote: $e');
     }
   }
 
@@ -245,6 +313,7 @@ class QuotesProvider with ChangeNotifier {
     notifyListeners();
     try {
       await storage.setFavorites(_favorites);
+      syncWidgetData();
     } catch (e) {
       if (wasFav) {
         _favorites.add(id);
@@ -330,6 +399,38 @@ class QuotesProvider with ChangeNotifier {
     _state = ViewState.error;
     _errorMessage = message;
     notifyListeners();
+  }
+
+  // --- Sincronización del Widget ---
+  Future<void> syncWidgetData() async {
+    try {
+      final mode = await storage.getWidgetMode();
+      final daily = dailyQuote;
+
+      await HomeWidget.saveWidgetData<String>('widget_mode', mode);
+
+      if (daily != null) {
+        await HomeWidget.saveWidgetData<String>('widget_daily_text', daily.text);
+        await HomeWidget.saveWidgetData<String>('widget_daily_author', daily.author.isNotEmpty ? daily.author : 'Anónimo');
+      }
+
+      final favList = _quotes
+          .where((q) => _favorites.contains(q.id))
+          .map((q) => {
+                'text': q.text,
+                'author': q.author.isNotEmpty ? q.author : 'Anónimo',
+              })
+          .toList();
+
+      await HomeWidget.saveWidgetData<String>('widget_favorites_json', jsonEncode(favList));
+
+      await HomeWidget.updateWidget(
+        name: 'QuoteWidgetProvider',
+        androidName: 'QuoteWidgetProvider',
+      );
+    } catch (e) {
+      debugPrint('Error syncing widget data: $e');
+    }
   }
 
   @override

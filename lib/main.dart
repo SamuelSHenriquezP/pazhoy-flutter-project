@@ -18,38 +18,39 @@ Future<void> main() async {
 
   await NotificationService.instance.init();
 
-  // Preload the fonts used in the app so the first frame renders correctly
-  await GoogleFonts.pendingFonts([
-    GoogleFonts.lato(),
-    GoogleFonts.roboto(),
-    GoogleFonts.merriweather(),
-    GoogleFonts.montserrat(),
-    GoogleFonts.oswald(),
-    GoogleFonts.playfairDisplay(),
-    GoogleFonts.dancingScript(),
-    GoogleFonts.pacifico(),
-    GoogleFonts.anton(),
-    GoogleFonts.lobster(),
-  ]);
+  // Disable runtime font fetching so Google Fonts never makes network calls.
+  // Fonts will use cached versions or fall back to system fonts.
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   final repo = QuotesRepository();
-  runApp(PazHoyApp(repo: repo, storage: storage));
+  final quotesProvider = QuotesProvider(repo: repo, storage: storage);
+  await quotesProvider.init();
+  runApp(PazHoyApp(repo: repo, storage: storage, quotesProvider: quotesProvider));
 }
 
 class PazHoyApp extends StatelessWidget {
   final QuotesRepository repo;
   final LocalStorageService storage;
+  final QuotesProvider? quotesProvider;
 
-  PazHoyApp({super.key, QuotesRepository? repo, LocalStorageService? storage})
-    : repo = repo ?? QuotesRepository(),
-      storage = storage ?? LocalStorageService();
+  PazHoyApp({
+    super.key,
+    QuotesRepository? repo,
+    LocalStorageService? storage,
+    this.quotesProvider,
+  }) : repo = repo ?? QuotesRepository(),
+       storage = storage ?? LocalStorageService();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => QuotesProvider(repo: repo, storage: storage)..init(),
-        ),
+        if (quotesProvider != null)
+          ChangeNotifierProvider.value(value: quotesProvider!)
+        else
+          ChangeNotifierProvider(
+            create: (_) => QuotesProvider(repo: repo, storage: storage)..init(),
+          ),
         ChangeNotifierProvider(create: (_) => StyleProvider()..init()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()..init()),
       ],
@@ -134,3 +135,6 @@ class _LifecycleWatcherState extends State<_LifecycleWatcher>
   @override
   Widget build(BuildContext context) => widget.child;
 }
+
+
+
