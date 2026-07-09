@@ -61,6 +61,26 @@ class MockLocalStorageService implements LocalStorageService {
 
   List<Map<String, dynamic>> customQuotes = [];
 
+  int currentStreak = 0;
+
+  @override
+  Future<Map<String, dynamic>> updateAndGetStreak() async {
+    return {'streak': currentStreak, 'increased': false};
+  }
+
+  @override
+  Future<int> getStreakCount() async => currentStreak;
+
+  List<Map<String, dynamic>> collections = [];
+
+  @override
+  Future<List<Map<String, dynamic>>> getCollections() async => collections;
+
+  @override
+  Future<void> saveCollections(List<Map<String, dynamic>> cols) async {
+    collections = cols;
+  }
+
   @override
   Future<List<Map<String, dynamic>>> getCustomQuotesRaw() async => customQuotes;
 

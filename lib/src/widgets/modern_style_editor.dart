@@ -223,40 +223,12 @@ class _TextSubmenu extends StatelessWidget {
       'Lobster',
     ];
 
-    final previewStyle = _safeGetFont(
-      provider.style.fontFamily ?? 'Lato',
-      const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-    );
+
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.grey[50],
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: Colors.black12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Vista previa',
-                style: previewStyle.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '“La frase se verá con la tipografía activa en el editor.”',
-                style: previewStyle.copyWith(fontSize: 18),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
+
         Text(
           'Tipografía',
           style: TextStyle(

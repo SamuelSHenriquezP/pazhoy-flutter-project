@@ -19,11 +19,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
 
-    // La app debe abrir directamente en HomePage con la barra superior de "PazHoy"
-    expect(find.text('PazHoy'), findsOneWidget);
-
-    // Debe mostrar los botones de navegación principales de HomePage
-    expect(find.byTooltip('Ver favoritos'), findsOneWidget);
+    // La app debe abrir directamente en HomePage. Buscamos los tooltips de la nueva barra de navegación.
+    expect(find.byTooltip('Favoritos'), findsOneWidget);
     expect(find.byTooltip('Configuración'), findsOneWidget);
   });
 }

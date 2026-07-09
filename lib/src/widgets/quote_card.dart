@@ -69,112 +69,121 @@ class QuoteCard extends StatelessWidget {
           onLongPress: quote.isCustom ? () => _showCustomMenu(context) : null,
           borderRadius: BorderRadius.circular(12),
           child: Stack(
-        children: [
-          // Overlay de color/opacidad:
-          // Con imagen: tinta de backgroundColor encima de la imagen
-          // Sin imagen: tinta adicional sobre el color sólido (oscurecer/aclarar)
-          if (style.opacity > 0.0)
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: style.backgroundColor.withValues(alpha: style.opacity),
+            children: [
+              // Overlay de color/opacidad:
+              // Con imagen: tinta de backgroundColor encima de la imagen
+              // Sin imagen: tinta adicional sobre el color sólido (oscurecer/aclarar)
+              if (style.opacity > 0.0)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: style.backgroundColor.withValues(
+                        alpha: style.opacity,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
 
-          // Contenido
-          Padding(
-            padding: EdgeInsets.all(style.contentPadding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(
-                    Icons.format_quote_rounded,
-                    color: effectiveTextColor.withValues(alpha: 0.7),
-                    size: 22,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                _StyledText(
-                  text: quote.text,
-                  style: style,
-                  fontSize: style.fontSize,
-                  isAuthor: false,
-                  resolvedTextColor: effectiveTextColor,
-                ),
-                const SizedBox(height: 16),
-                if (quote.author.isNotEmpty)
-                  _StyledText(
-                    text: '— ${quote.author}',
-                    style: style,
-                    fontSize: 14,
-                    isAuthor: true,
-                    textAlign: TextAlign.right,
-                    resolvedTextColor: effectiveTextColor,
-                  ),
-                if (quote.source != null && quote.source!.trim().isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      quote.source!,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: effectiveTextColor.withValues(alpha: 0.6),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          // Botón de favoritos
-          Positioned(
-            top: 4,
-            right: 4,
-            child: IconButton(
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite
-                    ? Colors.red
-                    : effectiveTextColor.withValues(alpha: 0.5),
-              ),
-              onPressed: onToggleFavorite,
-            ),
-          ),
-          // Badge de frase propia
-          if (quote.isCustom)
-            Positioned(
-              bottom: 8,
-              left: 8,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                decoration: BoxDecoration(
-                  color: effectiveTextColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
+              // Contenido
+              Padding(
+                padding: EdgeInsets.all(style.contentPadding),
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Icon(Icons.edit_outlined, size: 11, color: effectiveTextColor.withValues(alpha: 0.6)),
-                    const SizedBox(width: 3),
-                    Text(
-                      'Mi frase',
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: effectiveTextColor.withValues(alpha: 0.6),
-                        fontWeight: FontWeight.w500,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(
+                        Icons.format_quote_rounded,
+                        color: effectiveTextColor.withValues(alpha: 0.7),
+                        size: 22,
                       ),
                     ),
+                    const SizedBox(height: 8),
+                    _StyledText(
+                      text: quote.text,
+                      style: style,
+                      fontSize: style.fontSize,
+                      isAuthor: false,
+                      resolvedTextColor: effectiveTextColor,
+                    ),
+                    const SizedBox(height: 16),
+                    if (quote.author.isNotEmpty)
+                      _StyledText(
+                        text: '— ${quote.author}',
+                        style: style,
+                        fontSize: 14,
+                        isAuthor: true,
+                        textAlign: TextAlign.right,
+                        resolvedTextColor: effectiveTextColor,
+                      ),
+                    if (quote.source != null && quote.source!.trim().isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          quote.source!,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: effectiveTextColor.withValues(alpha: 0.6),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
-            ),
-        ],
-      ),
+              // Botón de favoritos
+              Positioned(
+                top: 4,
+                right: 4,
+                child: IconButton(
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite
+                        ? Colors.red
+                        : effectiveTextColor.withValues(alpha: 0.5),
+                  ),
+                  onPressed: onToggleFavorite,
+                ),
+              ),
+              // Badge de frase propia
+              if (quote.isCustom)
+                Positioned(
+                  bottom: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: effectiveTextColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.edit_outlined,
+                          size: 11,
+                          color: effectiveTextColor.withValues(alpha: 0.6),
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          'Mi frase',
+                          style: TextStyle(
+                            fontSize: 9,
+                            color: effectiveTextColor.withValues(alpha: 0.6),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -329,9 +338,7 @@ class _StyledText extends StatelessWidget {
             text,
             textAlign: textAlign ?? style.textAlign,
             style: baseStyle.copyWith(
-              color: isAuthor
-                  ? textColor.withValues(alpha: 0.8)
-                  : textColor,
+              color: isAuthor ? textColor.withValues(alpha: 0.8) : textColor,
               shadows: style.textShadowColor != null
                   ? [
                       Shadow(
@@ -352,9 +359,7 @@ class _StyledText extends StatelessWidget {
       text,
       textAlign: textAlign ?? style.textAlign,
       style: baseStyle.copyWith(
-        color: isAuthor
-            ? textColor.withValues(alpha: 0.8)
-            : textColor,
+        color: isAuthor ? textColor.withValues(alpha: 0.8) : textColor,
         shadows: style.textShadowColor != null
             ? [
                 Shadow(

@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
+import 'dart:ui';
 
 import '../models/quote.dart';
 import '../providers/quotes_provider.dart';
 import 'details_page.dart';
 import '../widgets/quote_card.dart';
-import 'explore_page.dart'; // importa si lo añadiste
+import 'explore_page.dart';
+import 'favorites_page.dart';
 import 'settings_page.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -42,8 +44,12 @@ class _HomePageState extends State<HomePage> {
         });
       }
       // CRÍTICO: Sincronizar el widget cuando se carga la home page
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        provider.syncWidgetData();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await provider.syncWidgetData();
+        final streakResult = await provider.checkStreak();
+        if (streakResult['increased'] == true && mounted) {
+          _showStreakDialog(streakResult['streak'] as int);
+        }
       });
     }
   }
@@ -52,6 +58,43 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _pageController?.dispose();
     super.dispose();
+  }
+
+  void _showStreakDialog(int streak) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.local_fire_department_outlined, color: Colors.orange, size: 64),
+            const SizedBox(height: 16),
+            Text(
+              '¡Racha de $streak día${streak > 1 ? 's' : ''}!',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Has vuelto a encontrar tu paz hoy. Sigue así.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black54),
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+              child: const Text('Continuar'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _animateToLogicalIndex(int desiredLogical, QuotesProvider provider) {
@@ -82,54 +125,6 @@ class _HomePageState extends State<HomePage> {
               : null,
         ),
       ),
-    );
-  }
-
-  void _showFavoritesModal(BuildContext context, QuotesProvider provider) {
-    final favIds = provider.favorites;
-    final favQuotes = provider.quotes
-        .where((q) => favIds.contains(q.id))
-        .toList();
-
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-      ),
-      builder: (_) {
-        if (favQuotes.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.all(20),
-            child: Text('No tienes favoritos aún.'),
-          );
-        }
-        return SafeArea(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            itemCount: favQuotes.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
-            itemBuilder: (_, i) {
-              final q = favQuotes[i];
-              return ListTile(
-                title: Text(
-                  q.text,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: q.author.isNotEmpty ? Text(q.author) : null,
-                onTap: () {
-                  Navigator.pop(context);
-                  final provider = context.read<QuotesProvider>();
-                  final idx = provider.quotes.indexWhere(
-                    (item) => item.id == q.id,
-                  );
-                  if (idx != -1) _animateToLogicalIndex(idx, provider);
-                },
-              );
-            },
-          ),
-        );
-      },
     );
   }
 
@@ -430,7 +425,7 @@ class _HomePageState extends State<HomePage> {
                           source: source.isNotEmpty ? source : null,
                         );
 
-                        if (mounted) {
+                        if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Frase actualizada')),
                           );
@@ -493,7 +488,7 @@ class _HomePageState extends State<HomePage> {
     );
     if (confirmed == true) {
       await provider.deleteCustomQuote(quote.id);
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Frase eliminada')),
         );
@@ -554,163 +549,197 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _isEditing = false;
-  bool _showSearch = false; // New state for search toggle
+
+  Widget _buildFloatingIconButton(IconData icon, String tooltip, VoidCallback onPressed, {Color? color, Color? iconColor}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color ?? Colors.white.withValues(alpha: 0.9),
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: IconButton(
+        icon: Icon(icon, color: iconColor ?? Colors.black87),
+        tooltip: tooltip,
+        onPressed: onPressed,
+      ),
+    );
+  }
+
+  Widget _buildBottomDock(QuotesProvider provider) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 24, left: 32, right: 32),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            height: 64,
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor.withValues(alpha: 0.75),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home_outlined),
+                  tooltip: 'Inicio (Frase del día)',
+                  onPressed: () {
+                    final idx = provider.dailyIndexLogical;
+                    if (idx != null) {
+                      _animateToLogicalIndex(idx, provider);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('No hay frase del día disponible')),
+                      );
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.explore_outlined),
+                  tooltip: 'Explorar / Buscar',
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ExplorePage()),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _showCreateQuoteModal(context, provider),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 8,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.add, color: Colors.white),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.favorite_border),
+                  tooltip: 'Favoritos',
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const FavoritesPage()),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.settings_outlined),
+                  tooltip: 'Configuración',
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SettingsPage()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<QuotesProvider>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PazHoy'),
-        // Inherits backgroundColor, surfaceTintColor, scrolledUnderElevation from Theme
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_comment_rounded),
-            tooltip: 'Crear frase',
-            onPressed: () => _showCreateQuoteModal(context, provider),
-          ),
-          IconButton(
-            icon: const Icon(Icons.search), // New Search Toggle
-            tooltip: 'Buscar',
-            onPressed: () {
-              setState(() {
-                _showSearch = !_showSearch;
-              });
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.calendar_today),
-            tooltip: 'Frase del día',
-            onPressed: () {
-              final idx = provider.dailyIndexLogical;
-              if (idx != null) {
-                _animateToLogicalIndex(idx, provider);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('No hay frase del día disponible'),
-                  ),
-                );
-              }
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.explore),
-            tooltip: 'Explorar',
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const ExplorePage()),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.shuffle),
-            tooltip: 'Aleatorio',
-            onPressed: () {
-              final list = provider.quotes;
-              if (list.isEmpty) return;
-              final randomIndex = Random().nextInt(list.length);
-              _animateToLogicalIndex(randomIndex, provider);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.favorite),
-            tooltip: 'Ver favoritos',
-            onPressed: () => _showFavoritesModal(context, provider),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'Configuración',
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const SettingsPage()),
-            ),
-          ),
-        ],
-        bottom:
-            _showSearch // Conditionally show search bar
-            ? PreferredSize(
-                preferredSize: const Size.fromHeight(64),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  child: _SearchField(),
-                ),
-              )
-            : null,
-      ),
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      backgroundColor: const Color(0xFFF3F4F6), // Base light color
       body: Stack(
         children: [
+          // Dynamic elegant background layer
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          
+          // Main Content Area
           GestureDetector(
             onTap: () {
-              if (_isEditing) {
-                setState(() {
-                  _isEditing = false;
-                });
-              }
+              if (_isEditing) setState(() => _isEditing = false);
             },
             child: AnimatedPadding(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               padding: EdgeInsets.only(bottom: _isEditing ? 300 : 0),
-              child: Column(children: [Expanded(child: _buildBody(provider))]),
+              child: _buildBody(provider),
             ),
           ),
+
+          // Editor Overlay
           if (_isEditing)
             Positioned(
               left: 0,
               right: 0,
-              bottom: 40,
+              bottom: 30, // Elevated to not overlap completely
               child: ModernStyleEditor(),
             ),
-        ],
-      ),
-      floatingActionButton: _isEditing
-          ? null
-          : Padding(
-              padding: const EdgeInsets.only(bottom: 24.0),
+
+          // Horizontal Action Bar for Shuffle, Save, Share, Personalize
+          if (!_isEditing)
+            Positioned(
+              right: 0,
+              left: 0,
+              bottom: 100, // Just above the dock
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingActionButton(
-                    heroTag: 'fab_save',
-                    backgroundColor: Colors.white,
-                    shape: const CircleBorder(),
-                    elevation: 6,
-                    tooltip: 'Guardar imagen',
-                    onPressed: _saveImage,
-                    child: const Icon(Icons.save_alt),
-                  ),
+                  _buildFloatingIconButton(Icons.shuffle, 'Aleatorio', () {
+                    final list = provider.quotes;
+                    if (list.isEmpty) return;
+                    _animateToLogicalIndex(Random().nextInt(list.length), provider);
+                  }),
                   const SizedBox(width: 16),
-                  FloatingActionButton(
-                    heroTag: 'fab_share',
-                    backgroundColor: Colors.white,
-                    shape: const CircleBorder(),
-                    elevation: 6,
-                    tooltip: 'Compartir',
-                    onPressed: _shareImage,
-                    child: const Icon(Icons.share),
-                  ),
+                  _buildFloatingIconButton(Icons.save_alt, 'Guardar', _saveImage),
                   const SizedBox(width: 16),
-                  FloatingActionButton(
-                    heroTag: 'fab_edit',
-                    backgroundColor: Colors.white,
-                    shape: const CircleBorder(),
-                    elevation: 6,
-                    onPressed: () {
-                      setState(() {
-                        _isEditing = !_isEditing;
-                      });
-                    },
-                    child: Icon(
-                      _isEditing ? Icons.check : Icons.palette_outlined,
-                    ),
-                  ),
+                  _buildFloatingIconButton(Icons.share, 'Compartir', _shareImage),
+                  const SizedBox(width: 16),
+                  _buildFloatingIconButton(Icons.palette_outlined, 'Personalizar estilo', () {
+                    setState(() => _isEditing = true);
+                  }),
                 ],
               ),
             ),
+            
+          if (_isEditing)
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 16, // Top right corner
+              right: 20,
+              child: _buildFloatingIconButton(Icons.check, 'Listo', () {
+                setState(() => _isEditing = false);
+              }, color: Colors.black, iconColor: Colors.white),
+            ),
+
+          // Bottom Glassmorphism Dock
+          if (!_isEditing)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SafeArea(child: _buildBottomDock(provider)),
+            ),
+        ],
+      ),
     );
   }
 

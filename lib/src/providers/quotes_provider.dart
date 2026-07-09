@@ -1,10 +1,11 @@
 // lib/src/providers/quotes_provider.dart
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import '../data/quotes_repository.dart';
 import '../models/quote.dart';
+import '../models/quote_collection.dart';
 import '../services/local_storage_service.dart';
 
 enum ViewState { idle, loading, success, error }
@@ -20,6 +21,10 @@ class QuotesProvider with ChangeNotifier {
   ViewState _state = ViewState.idle;
   String? _errorMessage;
   String _searchTerm = '';
+
+  // --- Colecciones y Racha ---
+  List<QuoteCollection> _collections = [];
+  int _streak = 0;
 
   // --- Caches (Memoización) ---
   List<Quote>? _cachedPublished;
@@ -48,6 +53,9 @@ class QuotesProvider with ChangeNotifier {
   int get currentIndex => _currentIndex;
   String get searchTerm => _searchTerm;
   String? get errorMessage => _errorMessage;
+
+  List<QuoteCollection> get collections => List.unmodifiable(_collections);
+  int get streak => _streak;
 
   /// Frases creadas por el usuario (id >= 100000 e isCustom == true)
   List<Quote> get customQuotes =>
@@ -215,12 +223,16 @@ class QuotesProvider with ChangeNotifier {
         storage.getFavorites(),
         storage.getLastViewedIndex(),
         storage.getCustomQuotesRaw(),
+        storage.getCollections(),
       ]);
 
       final baseQuotes = results[0] as List<Quote>;
       _favorites = results[1] as Set<int>;
       final savedIndex = results[2] as int?;
       final customRaw = results[3] as List<Map<String, dynamic>>;
+      final collectionsRaw = results[4] as List<Map<String, dynamic>>;
+
+      _collections = collectionsRaw.map((e) => QuoteCollection.fromJson(e)).toList();
 
       // Parsear frases personalizadas
       final customQuotes = List<Quote>.generate(
@@ -342,6 +354,21 @@ class QuotesProvider with ChangeNotifier {
         await storage.setLastViewedIndex(_currentIndex);
       }
 
+      // Eliminar esta frase de cualquier colección donde estuviera guardada
+      bool collectionsChanged = false;
+      final updatedCollections = _collections.map((c) {
+        if (c.quoteIds.contains(id)) {
+          collectionsChanged = true;
+          return c.copyWith(quoteIds: List.from(c.quoteIds)..remove(id));
+        }
+        return c;
+      }).toList();
+
+      if (collectionsChanged) {
+        _collections = updatedCollections;
+        await storage.saveCollections(_collections.map((e) => e.toJson()).toList());
+      }
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error deleting custom quote: $e');
@@ -427,6 +454,48 @@ class QuotesProvider with ChangeNotifier {
       notifyListeners();
       debugPrint('Error guardando favoritos: $e');
     }
+  }
+
+  // --- Rachas (Streaks) ---
+  Future<Map<String, dynamic>> checkStreak() async {
+    final result = await storage.updateAndGetStreak();
+    _streak = result['streak'] as int;
+    notifyListeners();
+    return result;
+  }
+
+  // --- Colecciones ---
+  Future<void> createCollection(String name, Color color) async {
+    final id = DateTime.now().millisecondsSinceEpoch.toString();
+    final newCollection = QuoteCollection(id: id, name: name, color: color, quoteIds: []);
+    _collections = List.from(_collections)..add(newCollection);
+    await storage.saveCollections(_collections.map((e) => e.toJson()).toList());
+    notifyListeners();
+  }
+
+  Future<void> deleteCollection(String id) async {
+    _collections = List.from(_collections)..removeWhere((c) => c.id == id);
+    await storage.saveCollections(_collections.map((e) => e.toJson()).toList());
+    notifyListeners();
+  }
+
+  Future<void> toggleQuoteInCollection(String collectionId, int quoteId) async {
+    final idx = _collections.indexWhere((c) => c.id == collectionId);
+    if (idx == -1) return;
+
+    final col = _collections[idx];
+    final ids = List<int>.from(col.quoteIds);
+    if (ids.contains(quoteId)) {
+      ids.remove(quoteId);
+    } else {
+      ids.add(quoteId);
+    }
+
+    final newList = List<QuoteCollection>.from(_collections);
+    newList[idx] = col.copyWith(quoteIds: ids);
+    _collections = newList;
+    await storage.saveCollections(_collections.map((e) => e.toJson()).toList());
+    notifyListeners();
   }
 
   // --- Búsqueda ---
@@ -532,7 +601,7 @@ class QuotesProvider with ChangeNotifier {
       final daily = dailyQuote;
 
       debugPrint('[WIDGET] Modo: $mode');
-      debugPrint('[WIDGET] Frase del día: ${daily?.text.substring(0, 50) ?? "NULA"}...');
+      debugPrint('[WIDGET] Frase del día: ${daily != null ? (daily.text.length > 50 ? "${daily.text.substring(0, 50)}..." : daily.text) : "NULA"}');
 
       // Guardar el modo
       await HomeWidget.saveWidgetData<String>('widget_mode', mode);

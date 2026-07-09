@@ -171,6 +171,9 @@ class StyleProvider extends ChangeNotifier {
           if (!file.existsSync()) {
             debugPrint('StyleProvider.init() - Imagen de fondo guardada no encontrada, borrando ruta.');
             _style = _style.copyWith(backgroundImagePath: null);
+            // Persistimos la corrección para que no vuelva a fallar
+            final prefs2 = await SharedPreferences.getInstance();
+            await prefs2.setString(_styleKey, json.encode(_style.toJson()));
           }
         }
         debugPrint('StyleProvider.init() - Style loaded successfully');
@@ -308,20 +311,30 @@ class StyleProvider extends ChangeNotifier {
   Future<void> pickBackgroundImage() async {
     final XFile? image = await _picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 70,
-      maxWidth: 1200,
-      maxHeight: 1200,
+      imageQuality: 85,
+      maxWidth: 1920,
+      maxHeight: 1920,
     );
     if (image != null) {
       try {
         final directory = await getApplicationDocumentsDirectory();
         final timestamp = DateTime.now().millisecondsSinceEpoch;
-        final extension = image.path.split('.').last;
-        final newPath = '${directory.path}/widget_bg_$timestamp.$extension';
+        final extension = image.path.split('.').last.toLowerCase();
+        final safeName = 'widget_bg_$timestamp.$extension';
+        final newPath = '${directory.path}/$safeName';
         await File(image.path).copy(newPath);
-        _style = _style.copyWith(backgroundImagePath: newPath);
+
+        // Verificar que el archivo copiado realmente existe antes de usarlo
+        if (await File(newPath).exists()) {
+          _style = _style.copyWith(backgroundImagePath: newPath);
+        } else {
+          // Fallback: usar la ruta original si la copia falla
+          debugPrint('StyleProvider - Copia falló, usando ruta original: ${image.path}');
+          _style = _style.copyWith(backgroundImagePath: image.path);
+        }
       } catch (e) {
         debugPrint('Error saving background image: $e');
+        // Fallback: usar la ruta temporal original
         _style = _style.copyWith(backgroundImagePath: image.path);
       }
       notifyListeners();

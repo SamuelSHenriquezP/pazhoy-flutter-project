@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quotes_provider.dart';
 import '../models/quote.dart';
+import '../models/quote_collection.dart';
 import 'details_page.dart';
 import '../widgets/empty_state.dart';
 
@@ -18,13 +19,24 @@ class ExplorePage extends StatelessWidget {
     final sourceCount = provider.groupBySource.keys.length;
     final tagCount = provider.groupByTag.keys.length;
 
+    final collectionsCount = provider.collections.length;
+
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
+        backgroundColor: const Color(0xFFF9FAFB),
         appBar: AppBar(
-          title: const Text('Explorar'),
+          title: const Text('Explorar', style: TextStyle(fontWeight: FontWeight.bold)),
+          backgroundColor: const Color(0xFFF9FAFB),
+          scrolledUnderElevation: 0,
+          elevation: 0,
           bottom: TabBar(
+            isScrollable: true,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorWeight: 3,
+            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: [
+              Tab(text: 'Carpetas ($collectionsCount)'),
               Tab(text: 'Autores ($authorCount)'),
               Tab(text: 'Origen ($sourceCount)'),
               Tab(text: 'Temas ($tagCount)'),
@@ -33,24 +45,237 @@ class ExplorePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _buildGroupedList(
-              context,
-              provider.groupByAuthor,
-              provider.sortedAuthors,
-              'No hay autores disponibles',
+            _buildCollectionsGrid(context, provider),
+            _buildAuthorsList(context, provider.groupByAuthor, provider.sortedAuthors),
+            _buildSourcesList(context, provider.groupBySource, provider.sortedSources),
+            _buildTagsGrid(context, provider.groupByTag, provider.sortedTags),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAuthorsList(BuildContext context, Map<String, List<Quote>> data, List<String> sortedKeys) {
+    if (sortedKeys.isEmpty) return const EmptyStateWidget(title: 'Explorar', message: 'No hay autores', icon: Icons.person_off);
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      itemCount: sortedKeys.length,
+      itemBuilder: (context, index) {
+        final key = sortedKeys[index];
+        final list = data[key]!;
+        // Generate a stable color based on author name
+        final colorHue = (key.hashCode % 360).toDouble();
+        final avatarColor = HSLColor.fromAHSL(1.0, colorHue, 0.6, 0.8).toColor();
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
+            ],
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            leading: CircleAvatar(
+              radius: 24,
+              backgroundColor: avatarColor,
+              child: Text(
+                key.isNotEmpty ? key.substring(0, 1).toUpperCase() : '?',
+                style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ),
-            _buildGroupedList(
-              context,
-              provider.groupBySource,
-              provider.sortedSources,
-              'No hay orígenes disponibles',
+            title: Text(key, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+            subtitle: Text('${list.length} frase${list.length > 1 ? 's' : ''}', style: TextStyle(color: Colors.grey.shade600)),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black26),
+            onTap: () => _openListByKey(context: context, title: key, quotes: list),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSourcesList(BuildContext context, Map<String, List<Quote>> data, List<String> sortedKeys) {
+    if (sortedKeys.isEmpty) return const EmptyStateWidget(title: 'Explorar', message: 'No hay orígenes', icon: Icons.menu_book);
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      itemCount: sortedKeys.length,
+      itemBuilder: (context, index) {
+        final key = sortedKeys[index];
+        final list = data[key]!;
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            leading: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: Colors.blueGrey.shade50, borderRadius: BorderRadius.circular(12)),
+              child: Icon(Icons.menu_book_rounded, color: Colors.blueGrey.shade700),
             ),
-            _buildGroupedList(
-              context,
-              provider.groupByTag,
-              provider.sortedTags,
-              'No hay temas disponibles',
-              isTag: true,
+            title: Text(key, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+            subtitle: Text('${list.length} frase${list.length > 1 ? 's' : ''}', style: TextStyle(color: Colors.grey.shade600)),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black26),
+            onTap: () => _openListByKey(context: context, title: key, quotes: list),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTagsGrid(BuildContext context, Map<String, List<Quote>> data, List<String> sortedKeys) {
+    if (sortedKeys.isEmpty) return const EmptyStateWidget(title: 'Explorar', message: 'No hay temas', icon: Icons.tag);
+
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        childAspectRatio: 1.3,
+      ),
+      itemCount: sortedKeys.length,
+      itemBuilder: (context, index) {
+        final key = sortedKeys[index];
+        final list = data[key]!;
+        final colorHue = ((key.hashCode * 13) % 360).toDouble();
+        final cardColor = HSLColor.fromAHSL(1.0, colorHue, 0.7, 0.9).toColor();
+        final textColor = HSLColor.fromAHSL(1.0, colorHue, 0.8, 0.3).toColor();
+
+        return InkWell(
+          onTap: () => _openListByKey(context: context, title: '#$key', quotes: list),
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            decoration: BoxDecoration(
+              color: cardColor,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: cardColor.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4)),
+              ],
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.tag, color: textColor.withValues(alpha: 0.5), size: 28),
+                const Spacer(),
+                Text(
+                  key,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${list.length} frase${list.length > 1 ? 's' : ''}',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: textColor.withValues(alpha: 0.8)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _openListByKey({required BuildContext context, required String title, required List<Quote> quotes}) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => _ListByKeyPage(title: title, quotes: quotes)));
+  }
+
+  Widget _buildCollectionsGrid(BuildContext context, QuotesProvider provider) {
+    final collections = provider.collections;
+
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        childAspectRatio: 1.1,
+      ),
+      itemCount: collections.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return _buildCreateCollectionCard(context, provider);
+        }
+        
+        final collection = collections[index - 1];
+        final quotes = provider.quotes.where((q) => collection.quoteIds.contains(q.id)).toList();
+        
+        return InkWell(
+          onTap: () => _openListByKey(
+            context: context, 
+            title: collection.name, 
+            quotes: quotes,
+          ),
+          onLongPress: () => _showCollectionOptions(context, provider, collection),
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            decoration: BoxDecoration(
+              color: collection.color,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: collection.color.withValues(alpha: 0.3), 
+                  blurRadius: 8, 
+                  offset: const Offset(0, 4)
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.folder_outlined, color: Colors.white70, size: 32),
+                const Spacer(),
+                Text(
+                  collection.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${quotes.length} frase${quotes.length != 1 ? 's' : ''}',
+                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCreateCollectionCard(BuildContext context, QuotesProvider provider) {
+    return InkWell(
+      onTap: () => _showCreateCollectionModal(context, provider),
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.grey.shade300, width: 2, style: BorderStyle.solid),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add, color: Colors.grey.shade400, size: 36),
+            const SizedBox(height: 8),
+            Text(
+              'Nueva',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey.shade600),
             ),
           ],
         ),
@@ -58,73 +283,135 @@ class ExplorePage extends StatelessWidget {
     );
   }
 
-  /// Método genérico para construir las listas usando claves pre-ordenadas.
-  Widget _buildGroupedList(
-    BuildContext context,
-    Map<String, List<Quote>> data,
-    List<String> sortedKeys,
-    String emptyMessage, {
-    bool isTag = false,
-  }) {
-    if (sortedKeys.isEmpty) {
-      return EmptyStateWidget(
-        title: 'Explorar',
-        message: emptyMessage,
-        icon: Icons.search_off_rounded,
-      );
-    }
+  void _showCreateCollectionModal(BuildContext context, QuotesProvider provider) {
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    Color selectedColor = Colors.blueGrey;
 
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: sortedKeys.length,
-      separatorBuilder: (_, _) => const Divider(height: 1),
-      itemBuilder: (context, index) {
-        final key = sortedKeys[index];
-        final list = data[key];
-
-        if (list == null) return const SizedBox.shrink();
-
-        return ListTile(
-          leading: isTag
-              ? Chip(
-                  label: Text(
-                    '#',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                left: 24, right: 24, top: 24,
+              ),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('Nueva Carpeta', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Nombre',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      validator: (v) => v == null || v.trim().isEmpty ? 'Ingresa un nombre' : null,
                     ),
-                  ),
-                  backgroundColor: Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withAlpha(80),
-                  side: BorderSide.none,
-                )
-              : null,
-          title: Text(key),
-          subtitle: Text('${list.length} frase${list.length > 1 ? 's' : ''}'),
-          onTap: () =>
-              _openListByKey(context: context, title: key, quotes: list),
+                    const SizedBox(height: 16),
+                    const Text('Color de la carpeta', style: TextStyle(fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 50,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Colors.blueGrey, Colors.indigo, Colors.teal, 
+                          Colors.brown, Colors.deepOrange, Colors.pink
+                        ].map((c) => GestureDetector(
+                          onTap: () => setState(() => selectedColor = c),
+                          child: Container(
+                            width: 40, height: 40,
+                            margin: const EdgeInsets.only(right: 12),
+                            decoration: BoxDecoration(
+                              color: c,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: selectedColor == c ? Colors.black : Colors.transparent,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        )).toList(),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    FilledButton(
+                      onPressed: () {
+                        if (formKey.currentState?.validate() ?? false) {
+                          provider.createCollection(nameController.text.trim(), selectedColor);
+                          Navigator.pop(ctx);
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: const Text('Crear'),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  void _showCollectionOptions(BuildContext context, QuotesProvider provider, QuoteCollection collection) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                title: const Text('Eliminar carpeta', style: TextStyle(color: Colors.red)),
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (c) => AlertDialog(
+                      title: const Text('¿Eliminar carpeta?'),
+                      content: const Text('Las frases no se eliminarán, solo se borrará la carpeta.'),
+                      actions: [
+                        TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Cancelar')),
+                        FilledButton(
+                          onPressed: () => Navigator.pop(c, true),
+                          style: FilledButton.styleFrom(backgroundColor: Colors.red),
+                          child: const Text('Eliminar'),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (confirm == true) {
+                    provider.deleteCollection(collection.id);
+                  }
+                },
+              ),
+            ],
+          ),
         );
       },
     );
   }
-
-  void _openListByKey({
-    required BuildContext context,
-    required String title,
-    required List<Quote> quotes,
-  }) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => _ListByKeyPage(title: title, quotes: quotes),
-      ),
-    );
-  }
 }
 
-/// Página que muestra la lista de frases para una clave específica (autor u origen).
+/// Página que muestra la lista de frases para una clave específica.
 class _ListByKeyPage extends StatelessWidget {
   final String title;
   final List<Quote> quotes;
@@ -136,48 +423,83 @@ class _ListByKeyPage extends StatelessWidget {
     final favorites = provider.favorites;
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      backgroundColor: const Color(0xFFF9FAFB),
+      appBar: AppBar(
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFFF9FAFB),
+        scrolledUnderElevation: 0,
+        elevation: 0,
+      ),
       body: quotes.isEmpty
-          ? const EmptyStateWidget(
-              title: 'Vacío',
-              message: 'No hay frases para mostrar.',
-              icon: Icons.format_quote_rounded,
-            )
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+          ? const EmptyStateWidget(title: 'Vacío', message: 'No hay frases para mostrar.', icon: Icons.format_quote_rounded)
+          : ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               itemCount: quotes.length,
-              separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, i) {
                 final q = quotes[i];
                 final isFav = favorites.contains(q.id);
-                return ListTile(
-                  title: Text(
-                    q.text,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 5)),
+                    ],
                   ),
-                  subtitle: q.author.isNotEmpty ? Text(q.author) : null,
-                  trailing: IconButton(
-                    tooltip: isFav
-                        ? 'Quitar de favoritos'
-                        : 'Agregar a favoritos',
-                    icon: Icon(
-                      isFav ? Icons.favorite : Icons.favorite_border,
-                      color: isFav ? Colors.redAccent : null,
-                    ),
-                    onPressed: () => provider.toggleFavorite(q.id),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => QuoteDetailPage(
-                          quote: q,
-                          heroTag: 'quote-explore-${q.id}',
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => QuoteDetailPage(quote: q, heroTag: 'quote-explore-${q.id}'),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.format_quote_rounded, color: Colors.black12, size: 32),
+                                const Spacer(),
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(),
+                                  tooltip: isFav ? 'Quitar de favoritos' : 'Agregar a favoritos',
+                                  icon: Icon(
+                                    isFav ? Icons.favorite : Icons.favorite_border,
+                                    color: isFav ? Colors.redAccent : Colors.black26,
+                                  ),
+                                  onPressed: () => provider.toggleFavorite(q.id),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              q.text,
+                              style: const TextStyle(fontSize: 16, height: 1.5, color: Colors.black87),
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (q.author.isNotEmpty) ...[
+                              const SizedBox(height: 12),
+                              Text(
+                                '— ${q.author}',
+                                style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black54, fontWeight: FontWeight.w500),
+                              ),
+                            ]
+                          ],
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 );
               },
             ),

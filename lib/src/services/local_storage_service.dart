@@ -10,6 +10,9 @@ class LocalStorageService {
   static const String _favKey = 'favorites';
   static const String _lastIndexKey = 'last_quote_index';
   static const String _dailyShownKey = 'daily_shown_date';
+  static const String _streakCountKey = 'streak_count';
+  static const String _streakLastDateKey = 'streak_last_date';
+  static const String _collectionsKey = 'user_collections';
 
   SharedPreferences? _prefs;
 
@@ -120,6 +123,72 @@ class LocalStorageService {
       await prefs.setString(_customQuotesKey, jsonStr);
     } catch (e) {
       debugPrint('Error saving custom quotes: $e');
+    }
+  }
+
+  // --- Rachas (Streaks) ---
+  
+  /// Actualiza la racha del usuario basándose en la última fecha de apertura.
+  /// Devuelve un mapa con { 'streak': int, 'increased': bool }
+  Future<Map<String, dynamic>> updateAndGetStreak() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    final today = _todayString();
+    final lastDate = prefs.getString(_streakLastDateKey);
+    int currentStreak = prefs.getInt(_streakCountKey) ?? 0;
+    bool increased = false;
+
+    if (lastDate == today) {
+      // Ya abrió hoy, no hacer nada
+      return {'streak': currentStreak, 'increased': false};
+    }
+
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    final yesterdayStr = '${yesterday.year}-${yesterday.month.toString().padLeft(2, '0')}-${yesterday.day.toString().padLeft(2, '0')}';
+
+    if (lastDate == yesterdayStr) {
+      // Racha continua
+      currentStreak += 1;
+      increased = true;
+    } else {
+      // Racha perdida o es el primer día
+      currentStreak = 1;
+      // Si el lastDate es null, es la primera vez, consideramos que "aumentó"
+      increased = (lastDate != null) ? false : true; 
+    }
+
+    await prefs.setInt(_streakCountKey, currentStreak);
+    await prefs.setString(_streakLastDateKey, today);
+
+    return {'streak': currentStreak, 'increased': increased};
+  }
+  
+  Future<int> getStreakCount() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    return prefs.getInt(_streakCountKey) ?? 0;
+  }
+
+  // --- Colecciones ---
+
+  Future<List<Map<String, dynamic>>> getCollections() async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final jsonStr = prefs.getString(_collectionsKey);
+      if (jsonStr == null) return [];
+      final list = json.decode(jsonStr) as List<dynamic>;
+      return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+    } catch (e) {
+      debugPrint('Error loading collections: $e');
+      return [];
+    }
+  }
+
+  Future<void> saveCollections(List<Map<String, dynamic>> collections) async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final jsonStr = json.encode(collections);
+      await prefs.setString(_collectionsKey, jsonStr);
+    } catch (e) {
+      debugPrint('Error saving collections: $e');
     }
   }
 }
