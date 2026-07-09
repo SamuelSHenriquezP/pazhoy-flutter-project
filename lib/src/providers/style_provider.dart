@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QuoteStyle {
@@ -164,6 +166,13 @@ class StyleProvider extends ChangeNotifier {
       try {
         final map = json.decode(styleJson) as Map<String, dynamic>;
         _style = QuoteStyle.fromJson(map);
+        if (_style.backgroundImagePath != null) {
+          final file = File(_style.backgroundImagePath!);
+          if (!file.existsSync()) {
+            debugPrint('StyleProvider.init() - Imagen de fondo guardada no encontrada, borrando ruta.');
+            _style = _style.copyWith(backgroundImagePath: null);
+          }
+        }
         debugPrint('StyleProvider.init() - Style loaded successfully');
         notifyListeners();
         _syncStyleToWidget();
@@ -191,23 +200,41 @@ class StyleProvider extends ChangeNotifier {
 
   Future<void> _syncStyleToWidget() async {
     try {
-      await HomeWidget.saveWidgetData<int>('widget_bg_color', _style.backgroundColor.toARGB32());
-      await HomeWidget.saveWidgetData<int>('widget_text_color', _style.textColor.toARGB32());
-      await HomeWidget.saveWidgetData<String>('widget_bg_image', _style.backgroundImagePath);
-      await HomeWidget.saveWidgetData<double>('widget_bg_opacity', _style.opacity);
-      await HomeWidget.saveWidgetData<double>('widget_font_size', _style.fontSize);
+      await HomeWidget.saveWidgetData<int>(
+        'widget_bg_color',
+        _style.backgroundColor.toARGB32(),
+      );
+      await HomeWidget.saveWidgetData<int>(
+        'widget_text_color',
+        _style.textColor.toARGB32(),
+      );
+      await HomeWidget.saveWidgetData<String>(
+        'widget_bg_image',
+        _style.backgroundImagePath,
+      );
+      await HomeWidget.saveWidgetData<double>(
+        'widget_bg_opacity',
+        _style.opacity,
+      );
+      await HomeWidget.saveWidgetData<double>(
+        'widget_font_size',
+        _style.fontSize,
+      );
 
       int androidGravity = 17; // Gravity.CENTER
-      if (_style.textAlign == TextAlign.left || _style.textAlign == TextAlign.start) {
+      if (_style.textAlign == TextAlign.left ||
+          _style.textAlign == TextAlign.start) {
         androidGravity = 3; // Gravity.LEFT
-      } else if (_style.textAlign == TextAlign.right || _style.textAlign == TextAlign.end) {
+      } else if (_style.textAlign == TextAlign.right ||
+          _style.textAlign == TextAlign.end) {
         androidGravity = 5; // Gravity.RIGHT
       }
       await HomeWidget.saveWidgetData<int>('widget_text_align', androidGravity);
 
       await HomeWidget.updateWidget(
         name: 'QuoteWidgetProvider',
-        androidName: 'QuoteWidgetProvider',
+        androidName: 'com.example.pazhoy.QuoteWidgetProvider',
+        qualifiedAndroidName: 'com.example.pazhoy.QuoteWidgetProvider',
       );
       debugPrint('StyleProvider - Style synchronized to HomeWidget');
     } catch (e) {
@@ -279,9 +306,24 @@ class StyleProvider extends ChangeNotifier {
   }
 
   Future<void> pickBackgroundImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+      maxWidth: 1200,
+      maxHeight: 1200,
+    );
     if (image != null) {
-      _style = _style.copyWith(backgroundImagePath: image.path);
+      try {
+        final directory = await getApplicationDocumentsDirectory();
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        final extension = image.path.split('.').last;
+        final newPath = '${directory.path}/widget_bg_$timestamp.$extension';
+        await File(image.path).copy(newPath);
+        _style = _style.copyWith(backgroundImagePath: newPath);
+      } catch (e) {
+        debugPrint('Error saving background image: $e');
+        _style = _style.copyWith(backgroundImagePath: image.path);
+      }
       notifyListeners();
       _saveStyle();
     }
@@ -366,57 +408,4 @@ class StyleProvider extends ChangeNotifier {
     notifyListeners();
     _saveStyle();
   }
-
-  void applyPreset(QuoteStyle preset) {
-    _style = preset;
-    notifyListeners();
-    _saveStyle();
-  }
-
-  static final Map<String, QuoteStyle> presets = {
-    'Zen Minimal': const QuoteStyle(
-      backgroundColor: Color(0xFF1A1A2E),
-      textColor: Colors.white,
-      fontFamily: 'Montserrat',
-      fontSize: 18.0,
-      textAlign: TextAlign.center,
-      lineHeight: 1.4,
-    ),
-    'Cristal': const QuoteStyle(
-      backgroundColor: Color(0xFFE3F2FD),
-      textColor: Color(0xFF0D47A1),
-      fontFamily: 'Outfit',
-      fontSize: 18.0,
-      textAlign: TextAlign.center,
-      lineHeight: 1.4,
-      opacity: 0.15,
-      textShadowColor: Color(0x33000000),
-      textShadowBlur: 4.0,
-    ),
-    'Café Retro': const QuoteStyle(
-      backgroundColor: Color(0xFFECE0D1),
-      textColor: Color(0xFF3D251E),
-      fontFamily: 'Courier Prime',
-      fontSize: 18.0,
-      textAlign: TextAlign.left,
-      lineHeight: 1.5,
-      letterSpacing: 0.5,
-    ),
-    'Atardecer': const QuoteStyle(
-      backgroundColor: Color(0xFFFFA07A),
-      textColor: Color(0xFF2F4F4F),
-      fontFamily: 'Playfair Display',
-      fontSize: 20.0,
-      textAlign: TextAlign.center,
-      lineHeight: 1.3,
-    ),
-    'Estoico': const QuoteStyle(
-      backgroundColor: Color(0xFF0E2F20),
-      textColor: Color(0xFFDFBA73),
-      fontFamily: 'Cardo',
-      fontSize: 19.0,
-      textAlign: TextAlign.center,
-      lineHeight: 1.4,
-    ),
-  };
 }

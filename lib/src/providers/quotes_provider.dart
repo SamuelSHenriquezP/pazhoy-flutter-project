@@ -49,6 +49,10 @@ class QuotesProvider with ChangeNotifier {
   String get searchTerm => _searchTerm;
   String? get errorMessage => _errorMessage;
 
+  /// Frases creadas por el usuario (id >= 100000 e isCustom == true)
+  List<Quote> get customQuotes =>
+      List.unmodifiable(_quotes.where((q) => q.isCustom).toList());
+
   // --- Getters optimizados (usan cache) ---
 
   /// Lista de frases publicadas (ya filtrada por fecha y ordenada).
@@ -93,7 +97,6 @@ class QuotesProvider with ChangeNotifier {
 
   /// Lista ordenada de autores para la UI
   List<String> get sortedAuthors => _cachedSortedAuthors ?? [];
-
 
   Map<String, List<Quote>> get groupByTag => _cachedByTag ?? {};
   List<String> get sortedTags => _cachedSortedTags ?? [];
@@ -241,7 +244,10 @@ class QuotesProvider with ChangeNotifier {
       }
 
       _setState(ViewState.success);
-      syncWidgetData();
+      await syncWidgetData();
+      // CRÍTICO: Actualizar el widget después de completar la carga
+      await Future.delayed(const Duration(milliseconds: 200));
+      await _forceWidgetUpdate();
     } catch (e, st) {
       debugPrint('Error en QuotesProvider.init(): $e\n$st');
       _setError(
@@ -250,43 +256,141 @@ class QuotesProvider with ChangeNotifier {
     }
   }
 
-  Future<void> addCustomQuote({required String text, String? author, String? source}) async {
+  Future<void> addCustomQuote({
+    required String text,
+    String? author,
+    String? source,
+    List<String> tags = const [],
+  }) async {
     try {
       final customRaw = await storage.getCustomQuotesRaw();
 
-      // Usar el ID más alto existente + 1 para evitar colisiones si se borran frases
       final existingIds = customRaw
           .map((e) => e['id'] as int? ?? 100000)
           .toList();
       final newQuoteId = existingIds.isEmpty
           ? 100000
           : existingIds.reduce((a, b) => a > b ? a : b) + 1;
+
+      // Siempre incluir 'mis frases' como tag y marcar como custom
+      final allTags = {'mis frases', ...tags}.toList();
+
       final newQuoteMap = {
         'id': newQuoteId,
         'text': text,
         'author': author ?? 'Yo',
         'source': source ?? '',
+        'tags': allTags,
+        'is_custom': true,
       };
-      
+
       customRaw.add(newQuoteMap);
       await storage.saveCustomQuotesRaw(customRaw);
-      
+
       final newQuote = Quote.fromJson(newQuoteMap, newQuoteId);
       final newQuotesList = List<Quote>.from(_quotes)..add(newQuote);
       _quotes = List.unmodifiable(newQuotesList);
-      
+
       _recalculateDerivedData();
-      
-      final newLogicalIdx = _publishedList.indexWhere((q) => q.id == newQuoteId);
+
+      final newLogicalIdx = _publishedList.indexWhere(
+        (q) => q.id == newQuoteId,
+      );
       if (newLogicalIdx != -1) {
         _currentIndex = newLogicalIdx;
         await storage.setLastViewedIndex(_currentIndex);
       }
-      
+
       notifyListeners();
       await syncWidgetData();
+      notifyListeners();
     } catch (e) {
       debugPrint('Error adding custom quote: $e');
+    }
+  }
+
+  Future<void> deleteCustomQuote(int id) async {
+    // Seguridad: solo se pueden borrar frases propias
+    final quote = _quotes.firstWhere(
+      (q) => q.id == id,
+      orElse: () => Quote(text: '', author: '', id: -1),
+    );
+    if (!quote.isCustom) {
+      debugPrint('deleteCustomQuote: intento de borrar frase del sistema ($id) bloqueado');
+      return;
+    }
+
+    try {
+      final customRaw = await storage.getCustomQuotesRaw();
+      customRaw.removeWhere((e) => e['id'] == id);
+      await storage.saveCustomQuotesRaw(customRaw);
+
+      // Quitar de favoritos si estaba
+      if (_favorites.contains(id)) {
+        _favorites.remove(id);
+        await storage.setFavorites(_favorites);
+      }
+
+      final newList = List<Quote>.from(_quotes)..removeWhere((q) => q.id == id);
+      _quotes = List.unmodifiable(newList);
+      _recalculateDerivedData();
+
+      // Ajustar índice si era la frase actual
+      final n = _publishedList.length;
+      if (_currentIndex >= n && n > 0) {
+        _currentIndex = n - 1;
+        await storage.setLastViewedIndex(_currentIndex);
+      }
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error deleting custom quote: $e');
+    }
+  }
+
+  Future<void> editCustomQuote({
+    required int id,
+    required String text,
+    String? author,
+    String? source,
+    List<String>? extraTags,
+  }) async {
+    final quote = _quotes.firstWhere(
+      (q) => q.id == id,
+      orElse: () => Quote(text: '', author: '', id: -1),
+    );
+    if (!quote.isCustom) {
+      debugPrint('editCustomQuote: intento de editar frase del sistema ($id) bloqueado');
+      return;
+    }
+
+    try {
+      final customRaw = await storage.getCustomQuotesRaw();
+      final idx = customRaw.indexWhere((e) => e['id'] == id);
+      if (idx == -1) return;
+
+      final existingTags = List<String>.from(customRaw[idx]['tags'] ?? []);
+      final allTags = {'mis frases', ...existingTags, ...?extraTags}.toList();
+
+      customRaw[idx] = {
+        'id': id,
+        'text': text,
+        'author': author?.trim().isNotEmpty == true ? author! : 'Yo',
+        'source': source ?? '',
+        'tags': allTags,
+        'is_custom': true,
+      };
+      await storage.saveCustomQuotesRaw(customRaw);
+
+      final updatedQuote = Quote.fromJson(customRaw[idx], id);
+      final newList = List<Quote>.from(_quotes);
+      final listIdx = newList.indexWhere((q) => q.id == id);
+      if (listIdx != -1) newList[listIdx] = updatedQuote;
+      _quotes = List.unmodifiable(newList);
+      _recalculateDerivedData();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error editing custom quote: $e');
     }
   }
 
@@ -313,7 +417,7 @@ class QuotesProvider with ChangeNotifier {
     notifyListeners();
     try {
       await storage.setFavorites(_favorites);
-      syncWidgetData();
+      await syncWidgetData();
     } catch (e) {
       if (wasFav) {
         _favorites.add(id);
@@ -401,36 +505,110 @@ class QuotesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> savePinnedQuoteToWidget({
+    required String text,
+    String? author,
+  }) async {
+    try {
+      await HomeWidget.saveWidgetData<String>('widget_mode', 'pinned');
+      await HomeWidget.saveWidgetData<String>('widget_pinned_text', text);
+      await HomeWidget.saveWidgetData<String>(
+        'widget_pinned_author',
+        author != null && author.trim().isNotEmpty ? author : 'Anónimo',
+      );
+
+      await _forceWidgetUpdate();
+    } catch (e) {
+      debugPrint('Error syncing pinned widget data: $e');
+    }
+  }
+
   // --- Sincronización del Widget ---
   Future<void> syncWidgetData() async {
     try {
+      debugPrint('\n⏳ [WIDGET] Iniciando sincronización de datos...');
+      
       final mode = await storage.getWidgetMode();
       final daily = dailyQuote;
 
-      await HomeWidget.saveWidgetData<String>('widget_mode', mode);
+      debugPrint('[WIDGET] Modo: $mode');
+      debugPrint('[WIDGET] Frase del día: ${daily?.text.substring(0, 50) ?? "NULA"}...');
 
+      // Guardar el modo
+      await HomeWidget.saveWidgetData<String>('widget_mode', mode);
+      debugPrint('[WIDGET] ✓ Modo guardado: $mode');
+
+      // Guardar datos de la frase del día
       if (daily != null) {
-        await HomeWidget.saveWidgetData<String>('widget_daily_text', daily.text);
-        await HomeWidget.saveWidgetData<String>('widget_daily_author', daily.author.isNotEmpty ? daily.author : 'Anónimo');
+        await HomeWidget.saveWidgetData<String>(
+          'widget_daily_text',
+          daily.text,
+        );
+        await HomeWidget.saveWidgetData<String>(
+          'widget_daily_author',
+          daily.author.isNotEmpty ? daily.author : 'Anónimo',
+        );
+        debugPrint('[WIDGET] ✓ Frase del día guardada: ${daily.author}');
+      } else {
+        // Si no hay frase del día, guardar textos por defecto
+        await HomeWidget.saveWidgetData<String>(
+          'widget_daily_text',
+          'Abre PazHoy para ver la frase del día.',
+        );
+        await HomeWidget.saveWidgetData<String>(
+          'widget_daily_author',
+          '',
+        );
+        debugPrint('[WIDGET] ⚠️  No hay frase del día, usando valores por defecto');
       }
 
+      // Guardar lista de favoritos
       final favList = _quotes
           .where((q) => _favorites.contains(q.id))
-          .map((q) => {
-                'text': q.text,
-                'author': q.author.isNotEmpty ? q.author : 'Anónimo',
-              })
+          .map(
+            (q) => {
+              'text': q.text,
+              'author': q.author.isNotEmpty ? q.author : 'Anónimo',
+            },
+          )
           .toList();
 
-      await HomeWidget.saveWidgetData<String>('widget_favorites_json', jsonEncode(favList));
-
-      await HomeWidget.updateWidget(
-        name: 'QuoteWidgetProvider',
-        androidName: 'QuoteWidgetProvider',
+      await HomeWidget.saveWidgetData<String>(
+        'widget_favorites_json',
+        jsonEncode(favList),
       );
-    } catch (e) {
-      debugPrint('Error syncing widget data: $e');
+      debugPrint('[WIDGET] ✓ Favoritos guardados: ${favList.length} frases');
+
+      debugPrint('[WIDGET] ✓ Todos los datos sincronizados correctamente');
+      debugPrint('[WIDGET] Disparando actualización del widget nativo...\n');
+
+      // Actualizar el widget nativo con reintentos
+      await _forceWidgetUpdate();
+    } catch (e, st) {
+      debugPrint('[WIDGET] ❌ ERROR en syncWidgetData: $e\n$st');
     }
+  }
+
+  /// Intenta actualizar el widget con reintentos si falla
+  Future<void> _forceWidgetUpdate({int retries = 3}) async {
+    for (int i = 0; i < retries; i++) {
+      try {
+        debugPrint('[WIDGET] Intento ${i + 1}/$retries de actualizar widget nativo...');
+        await HomeWidget.updateWidget(
+          name: 'QuoteWidgetProvider',
+          androidName: 'com.example.pazhoy.QuoteWidgetProvider',
+          qualifiedAndroidName: 'com.example.pazhoy.QuoteWidgetProvider',
+        );
+        debugPrint('[WIDGET] ✓ Widget actualizado exitosamente en intento ${i + 1}');
+        return;
+      } catch (e) {
+        debugPrint('[WIDGET] ❌ Intento ${i + 1} falló: $e');
+        if (i < retries - 1) {
+          await Future.delayed(const Duration(milliseconds: 500));
+        }
+      }
+    }
+    debugPrint('[WIDGET] ❌ Widget update falló después de $retries intentos');
   }
 
   @override

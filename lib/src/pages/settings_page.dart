@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quotes_provider.dart';
-import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -94,7 +93,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
     final provider = context.watch<QuotesProvider>();
     final hasFavorites = provider.favorites.isNotEmpty;
 
@@ -105,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
           : ListView(
               children: [
                 const _SectionHeader(title: 'Apariencia'),
-                _ThemeTile(themeProvider: themeProvider),
+                const _ThemeTile(),
                 const Divider(),
                 const _SectionHeader(title: 'Notificaciones'),
                 SwitchListTile(
@@ -199,32 +197,14 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _ThemeTile extends StatelessWidget {
-  final ThemeProvider themeProvider;
-  const _ThemeTile({required this.themeProvider});
+  const _ThemeTile();
 
   @override
   Widget build(BuildContext context) {
-    return RadioGroup<ThemeMode>(
-      groupValue: themeProvider.themeMode,
-      onChanged: (v) {
-        if (v != null) themeProvider.setThemeMode(v);
-      },
-      child: Column(
-        children: const [
-          RadioListTile<ThemeMode>(
-            title: Text('Sistema (automático)'),
-            value: ThemeMode.system,
-          ),
-          RadioListTile<ThemeMode>(
-            title: Text('Claro'),
-            value: ThemeMode.light,
-          ),
-          RadioListTile<ThemeMode>(
-            title: Text('Oscuro'),
-            value: ThemeMode.dark,
-          ),
-        ],
-      ),
+    return ListTile(
+      leading: const Icon(Icons.light_mode),
+      title: const Text('Modo claro fijo'),
+      subtitle: const Text('La aplicación usa siempre modo claro y mantiene los colores tal como están.'),
     );
   }
 }

@@ -41,6 +41,10 @@ class _HomePageState extends State<HomePage> {
           provider.setCurrentIndex(initial, persist: false);
         });
       }
+      // CRÍTICO: Sincronizar el widget cuando se carga la home page
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        provider.syncWidgetData();
+      });
     }
   }
 
@@ -70,6 +74,12 @@ class _HomePageState extends State<HomePage> {
         builder: (_) => QuoteDetailPage(
           quote: q,
           heroTag: 'quote-${q.id}',
+          onEdit: q.isCustom
+              ? () => _showEditQuoteModal(context, provider, q)
+              : null,
+          onDelete: q.isCustom
+              ? () => _confirmDeleteQuote(context, provider, q)
+              : null,
         ),
       ),
     );
@@ -295,6 +305,200 @@ class _HomePageState extends State<HomePage> {
       try { authorController.dispose(); } catch (_) {}
       try { sourceController.dispose(); } catch (_) {}
     });
+  }
+
+  void _showEditQuoteModal(BuildContext context, QuotesProvider provider, Quote quote) {
+    final formKey = GlobalKey<FormState>();
+    final textController = TextEditingController(text: quote.text);
+    final authorController = TextEditingController(
+      text: quote.author == 'Yo' ? 'Yo' : quote.author,
+    );
+    final sourceController = TextEditingController(text: quote.source ?? '');
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Editar mi frase',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.grey),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: textController,
+                    maxLines: 3,
+                    maxLength: 250,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Frase o reflexión',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return 'Por favor escribe una frase';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: authorController,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Autor',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: sourceController,
+                    style: const TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: 'Origen / Libro (Opcional)',
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        final text = textController.text.trim();
+                        final author = authorController.text.trim();
+                        final source = sourceController.text.trim();
+
+                        Navigator.pop(context);
+                        textController.dispose();
+                        authorController.dispose();
+                        sourceController.dispose();
+
+                        await provider.editCustomQuote(
+                          id: quote.id,
+                          text: text,
+                          author: author.isNotEmpty ? author : null,
+                          source: source.isNotEmpty ? source : null,
+                        );
+
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Frase actualizada')),
+                          );
+                        }
+                      }
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Guardar Cambios',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      try { textController.dispose(); } catch (_) {}
+      try { authorController.dispose(); } catch (_) {}
+      try { sourceController.dispose(); } catch (_) {}
+    });
+  }
+
+  Future<void> _confirmDeleteQuote(BuildContext context, QuotesProvider provider, Quote quote) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text('Eliminar frase', style: TextStyle(color: Colors.black)),
+        content: Text(
+          '¿Eliminar esta frase?\n\n«${quote.text.length > 80 ? '${quote.text.substring(0, 80)}...' : quote.text}»',
+          style: const TextStyle(color: Colors.black87),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            style: TextButton.styleFrom(foregroundColor: Colors.black54),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await provider.deleteCustomQuote(quote.id);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Frase eliminada')),
+        );
+      }
+    }
   }
 
   Future<void> _saveImage() async {
@@ -579,6 +783,12 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => _openDetail(context, q, provider),
                     screenshotController: isCurrent
                         ? _screenshotController
+                        : null,
+                    onEdit: q.isCustom
+                        ? () => _showEditQuoteModal(context, provider, q)
+                        : null,
+                    onDelete: q.isCustom
+                        ? () => _confirmDeleteQuote(context, provider, q)
                         : null,
                   ),
                 ),

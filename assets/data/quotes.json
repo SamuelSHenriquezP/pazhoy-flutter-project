@@ -6,7 +6,9 @@
         "publish_date": "2025-10-30",
         "context": "Sobre aprovechar el tiempo",
         "source": "Entrevista",
-        "tags": ["tiempo"]
+        "tags": [
+            "tiempo"
+        ]
     },
     {
         "id": 1,
@@ -16,9 +18,9 @@
         "context": "Discurso de aceptación del Nobel",
         "source": "Vida y obra",
         "tags": [
-                     "paz",
-                     "vida"
-                 ]
+            "paz",
+            "vida"
+        ]
     },
     {
         "id": 2,
@@ -27,7 +29,9 @@
         "publish_date": "2025-11-21",
         "context": "Filosofía de la no violencia",
         "source": "Escritos",
-        "tags": ["paz"]
+        "tags": [
+            "paz"
+        ]
     },
     {
         "id": 3,
@@ -37,10 +41,10 @@
         "context": "Enseñanzas sobre la vida",
         "source": "El Arte de la Felicidad",
         "tags": [
-                     "felicidad",
-                     "vida",
-                     "esperanza"
-                 ]
+            "felicidad",
+            "vida",
+            "esperanza"
+        ]
     },
     {
         "id": 4,
@@ -49,7 +53,9 @@
         "publish_date": "2025-11-23",
         "context": "Sobre la responsabilidad personal",
         "source": "Citas célebres",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 5,
@@ -58,7 +64,9 @@
         "publish_date": "2025-11-24",
         "context": "Discurso en Stanford",
         "source": "Discurso de graduación 2005",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 6,
@@ -68,10 +76,10 @@
         "context": "Perseguir los sueños personales",
         "source": "El alquimista",
         "tags": [
-                     "amor",
-                     "creatividad",
-                     "superación"
-                 ]
+            "amor",
+            "creatividad",
+            "superación"
+        ]
     },
     {
         "id": 7,
@@ -81,9 +89,9 @@
         "context": "Resiliencia y sentido de vida",
         "source": "El hombre en busca de sentido",
         "tags": [
-                     "vida",
-                     "propósito"
-                 ]
+            "vida",
+            "propósito"
+        ]
     },
     {
         "id": 8,
@@ -92,7 +100,9 @@
         "publish_date": "2025-11-27",
         "context": "Convertir dificultades en oportunidades",
         "source": "Meditaciones",
-        "tags": ["paz"]
+        "tags": [
+            "paz"
+        ]
     },
     {
         "id": 9,
@@ -101,7 +111,9 @@
         "publish_date": "2025-11-28",
         "context": "Esperanza y resistencia",
         "source": "Obra poética",
-        "tags": ["esperanza"]
+        "tags": [
+            "esperanza"
+        ]
     },
     {
         "id": 10,
@@ -111,9 +123,9 @@
         "context": "Persistencia ante la adversidad",
         "source": "Poema \"No te rindas\"",
         "tags": [
-                     "valentía",
-                     "perseverancia"
-                 ]
+            "valentía",
+            "perseverancia"
+        ]
     },
     {
         "id": 11,
@@ -123,10 +135,10 @@
         "context": "Valorar los momentos significativos",
         "source": "Cartas a mi hija",
         "tags": [
-                     "valentía",
-                     "tiempo",
-                     "vida"
-                 ]
+            "valentía",
+            "tiempo",
+            "vida"
+        ]
     },
     {
         "id": 12,
@@ -135,7 +147,9 @@
         "publish_date": "2025-12-01",
         "context": "Avanzar pese a las críticas",
         "source": "Don Quijote de la Mancha",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 13,
@@ -145,10 +159,10 @@
         "context": "El valor de lo verdaderamente importante",
         "source": "El principito",
         "tags": [
-                     "valentía",
-                     "mentalidad",
-                     "simplicidad"
-                 ]
+            "valentía",
+            "mentalidad",
+            "simplicidad"
+        ]
     },
     {
         "id": 14,
@@ -158,9 +172,9 @@
         "context": "Reflexión sobre la existencia",
         "source": "La vida es sueño",
         "tags": [
-                     "vida",
-                     "creatividad"
-                 ]
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 15,
@@ -169,7 +183,9 @@
         "publish_date": "2025-12-04",
         "context": "Naturaleza del amor",
         "source": "Como agua para chocolate",
-        "tags": ["amor"]
+        "tags": [
+            "amor"
+        ]
     },
     {
         "id": 16,
@@ -179,9 +195,9 @@
         "context": "Saber cuándo actuar",
         "source": "2666",
         "tags": [
-                     "tiempo",
-                     "acción"
-                 ]
+            "tiempo",
+            "acción"
+        ]
     },
     {
         "id": 17,
@@ -191,11 +207,11 @@
         "context": "Constancia y disciplina",
         "source": "El secreto de la edad de oro",
         "tags": [
-                     "perseverancia",
-                     "disciplina",
-                     "éxito",
-                     "tiempo"
-                 ]
+            "perseverancia",
+            "disciplina",
+            "éxito",
+            "tiempo"
+        ]
     },
     {
         "id": 18,
@@ -205,9 +221,9 @@
         "context": "Tomar acción inmediata",
         "source": "Piense y hágase rico",
         "tags": [
-                     "tiempo",
-                     "acción"
-                 ]
+            "tiempo",
+            "acción"
+        ]
     },
     {
         "id": 19,
@@ -216,7 +232,9 @@
         "publish_date": "2025-12-08",
         "context": "Formación del carácter",
         "source": "Ética a Nicómaco",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 20,
@@ -225,7 +243,9 @@
         "publish_date": "2025-12-09",
         "context": "Excelencia diaria",
         "source": "Wooden on Leadership",
-        "tags": ["tiempo"]
+        "tags": [
+            "tiempo"
+        ]
     },
     {
         "id": 21,
@@ -234,7 +254,9 @@
         "publish_date": "2025-12-10",
         "context": "Perspectiva personal",
         "source": "Walden",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 22,
@@ -243,7 +265,9 @@
         "publish_date": "2025-12-11",
         "context": "Reflexión sobre el crecimiento personal",
         "source": "Un largo camino hacia la libertad",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 23,
@@ -252,7 +276,9 @@
         "publish_date": "2025-12-12",
         "context": "Constancia y paciencia",
         "source": "Analectas",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 24,
@@ -262,12 +288,12 @@
         "context": "Dominio de la mente",
         "source": "Meditaciones",
         "tags": [
-                     "paz",
-                     "felicidad",
-                     "mentalidad",
-                     "vida",
-                     "esperanza"
-                 ]
+            "paz",
+            "felicidad",
+            "mentalidad",
+            "vida",
+            "esperanza"
+        ]
     },
     {
         "id": 25,
@@ -277,10 +303,10 @@
         "context": "Cambio de mentalidad",
         "source": "Escritos y conferencias",
         "tags": [
-                     "cambio",
-                     "mentalidad",
-                     "esperanza"
-                 ]
+            "cambio",
+            "mentalidad",
+            "esperanza"
+        ]
     },
     {
         "id": 26,
@@ -290,9 +316,9 @@
         "context": "Nueva forma de ver la vida",
         "source": "En busca del tiempo perdido",
         "tags": [
-                     "tiempo",
-                     "vida"
-                 ]
+            "tiempo",
+            "vida"
+        ]
     },
     {
         "id": 27,
@@ -302,10 +328,10 @@
         "context": "Autodisciplina y éxito",
         "source": "Las estaciones de la vida",
         "tags": [
-                     "disciplina",
-                     "éxito",
-                     "vida"
-                 ]
+            "disciplina",
+            "éxito",
+            "vida"
+        ]
     },
     {
         "id": 28,
@@ -315,10 +341,10 @@
         "context": "Superar el miedo",
         "source": "El monje que vendió su Ferrari",
         "tags": [
-                     "valentía",
-                     "aprendizaje",
-                     "esperanza"
-                 ]
+            "valentía",
+            "aprendizaje",
+            "esperanza"
+        ]
     },
     {
         "id": 29,
@@ -327,7 +353,9 @@
         "publish_date": "2025-12-18",
         "context": "Aprendizaje y mejora continua",
         "source": "Cartas a mi hija",
-        "tags": ["aprendizaje"]
+        "tags": [
+            "aprendizaje"
+        ]
     },
     {
         "id": 30,
@@ -337,11 +365,11 @@
         "context": "Persistencia ante la adversidad",
         "source": "Discursos y escritos",
         "tags": [
-                     "valentía",
-                     "perseverancia",
-                     "éxito",
-                     "aprendizaje"
-                 ]
+            "valentía",
+            "perseverancia",
+            "éxito",
+            "aprendizaje"
+        ]
     },
     {
         "id": 31,
@@ -351,9 +379,9 @@
         "context": "Propósito y sentido",
         "source": "El ocaso de los ídolos",
         "tags": [
-                     "vida",
-                     "propósito"
-                 ]
+            "vida",
+            "propósito"
+        ]
     },
     {
         "id": 32,
@@ -363,9 +391,9 @@
         "context": "Importancia de actuar",
         "source": "Entrevistas y escritos",
         "tags": [
-                     "éxito",
-                     "acción"
-                 ]
+            "éxito",
+            "acción"
+        ]
     },
     {
         "id": 33,
@@ -375,11 +403,11 @@
         "context": "Confianza personal",
         "source": "Usted puede sanar su vida",
         "tags": [
-                     "valentía",
-                     "vida",
-                     "esperanza",
-                     "superación"
-                 ]
+            "valentía",
+            "vida",
+            "esperanza",
+            "superación"
+        ]
     },
     {
         "id": 34,
@@ -389,9 +417,9 @@
         "context": "Reflexión sobre conocimiento y sabiduría",
         "source": "Escritos y conferencias",
         "tags": [
-                     "tiempo",
-                     "esperanza"
-                 ]
+            "tiempo",
+            "esperanza"
+        ]
     },
     {
         "id": 35,
@@ -400,7 +428,9 @@
         "publish_date": "2025-12-24",
         "context": "Segundas oportunidades",
         "source": "Ensayos y cartas",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 36,
@@ -410,9 +440,9 @@
         "context": "Creatividad e imaginación",
         "source": "Rimas y leyendas",
         "tags": [
-                     "vida",
-                     "creatividad"
-                 ]
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 37,
@@ -421,7 +451,9 @@
         "publish_date": "2025-12-26",
         "context": "Superación personal",
         "source": "Alto riesgo",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 38,
@@ -431,11 +463,11 @@
         "context": "Cambio interior y actitud",
         "source": "Lo que sé con certeza",
         "tags": [
-                     "tiempo",
-                     "cambio",
-                     "mentalidad",
-                     "simplicidad"
-                 ]
+            "tiempo",
+            "cambio",
+            "mentalidad",
+            "simplicidad"
+        ]
     },
     {
         "id": 39,
@@ -444,7 +476,9 @@
         "publish_date": "2025-12-28",
         "context": "Sencillez y verdadera riqueza",
         "source": "Máximas y sentencias",
-        "tags": ["simplicidad"]
+        "tags": [
+            "simplicidad"
+        ]
     },
     {
         "id": 40,
@@ -454,9 +488,9 @@
         "context": "Iniciar sin esperar perfección",
         "source": "Discursos y escritos",
         "tags": [
-                     "acción",
-                     "esperanza"
-                 ]
+            "acción",
+            "esperanza"
+        ]
     },
     {
         "id": 41,
@@ -466,10 +500,10 @@
         "context": "Soñar y actuar",
         "source": "Tierra de hombres",
         "tags": [
-                     "acción",
-                     "vida",
-                     "creatividad"
-                 ]
+            "acción",
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 42,
@@ -479,10 +513,10 @@
         "context": "Esperanza y visión de futuro",
         "source": "Aprendes viviendo",
         "tags": [
-                     "aprendizaje",
-                     "creatividad",
-                     "esperanza"
-                 ]
+            "aprendizaje",
+            "creatividad",
+            "esperanza"
+        ]
     },
     {
         "id": 43,
@@ -492,9 +526,9 @@
         "context": "Responsabilidad personal",
         "source": "Pragmatismo",
         "tags": [
-                     "esperanza",
-                     "superación"
-                 ]
+            "esperanza",
+            "superación"
+        ]
     },
     {
         "id": 44,
@@ -503,7 +537,9 @@
         "publish_date": "2026-01-02",
         "context": "Comenzar grandes proyectos",
         "source": "Tao Te Ching",
-        "tags": ["acción"]
+        "tags": [
+            "acción"
+        ]
     },
     {
         "id": 45,
@@ -513,9 +549,9 @@
         "context": "Construcción de la felicidad",
         "source": "El arte de la felicidad",
         "tags": [
-                     "felicidad",
-                     "esperanza"
-                 ]
+            "felicidad",
+            "esperanza"
+        ]
     },
     {
         "id": 46,
@@ -524,7 +560,9 @@
         "publish_date": "2026-01-04",
         "context": "Autenticidad personal",
         "source": "Discurso en Stanford",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 47,
@@ -533,7 +571,9 @@
         "publish_date": "2026-01-05",
         "context": "Superar el miedo",
         "source": "Escritos motivacionales",
-        "tags": ["valentía"]
+        "tags": [
+            "valentía"
+        ]
     },
     {
         "id": 48,
@@ -542,7 +582,9 @@
         "publish_date": "2026-01-06",
         "context": "Proactividad y liderazgo",
         "source": "La práctica de la administración",
-        "tags": ["vida"]
+        "tags": [
+            "vida"
+        ]
     },
     {
         "id": 49,
@@ -551,7 +593,9 @@
         "publish_date": "2026-01-07",
         "context": "Autenticidad",
         "source": "Frases y pensamientos",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 50,
@@ -561,10 +605,10 @@
         "context": "Persistencia",
         "source": "Discursos y escritos",
         "tags": [
-                     "perseverancia",
-                     "éxito",
-                     "aprendizaje"
-                 ]
+            "perseverancia",
+            "éxito",
+            "aprendizaje"
+        ]
     },
     {
         "id": 51,
@@ -573,7 +617,9 @@
         "publish_date": "2026-01-09",
         "context": "Resiliencia",
         "source": "Analectas",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 52,
@@ -583,10 +629,10 @@
         "context": "Simplicidad y claridad",
         "source": "Analectas",
         "tags": [
-                     "mentalidad",
-                     "vida",
-                     "simplicidad"
-                 ]
+            "mentalidad",
+            "vida",
+            "simplicidad"
+        ]
     },
     {
         "id": 53,
@@ -596,10 +642,10 @@
         "context": "Renovación personal",
         "source": "Ensayos y cartas",
         "tags": [
-                     "éxito",
-                     "creatividad",
-                     "superación"
-                 ]
+            "éxito",
+            "creatividad",
+            "superación"
+        ]
     },
     {
         "id": 54,
@@ -608,7 +654,9 @@
         "publish_date": "2026-01-12",
         "context": "Fortaleza a través de la adversidad",
         "source": "El ocaso de los ídolos",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 55,
@@ -617,7 +665,9 @@
         "publish_date": "2026-01-13",
         "context": "Crecimiento personal ante desafíos",
         "source": "Tierra de hombres",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 56,
@@ -627,10 +677,10 @@
         "context": "Valor del tiempo",
         "source": "Sobre la brevedad de la vida",
         "tags": [
-                     "valentía",
-                     "tiempo",
-                     "vida"
-                 ]
+            "valentía",
+            "tiempo",
+            "vida"
+        ]
     },
     {
         "id": 57,
@@ -640,9 +690,9 @@
         "context": "Aprender del fracaso",
         "source": "Discursos y escritos",
         "tags": [
-                     "éxito",
-                     "aprendizaje"
-                 ]
+            "éxito",
+            "aprendizaje"
+        ]
     },
     {
         "id": 58,
@@ -652,9 +702,9 @@
         "context": "Sentido de vida",
         "source": "El hombre en busca de sentido",
         "tags": [
-                     "vida",
-                     "propósito"
-                 ]
+            "vida",
+            "propósito"
+        ]
     },
     {
         "id": 59,
@@ -664,9 +714,9 @@
         "context": "Superación del miedo",
         "source": "Ensayos",
         "tags": [
-                     "valentía",
-                     "superación"
-                 ]
+            "valentía",
+            "superación"
+        ]
     },
     {
         "id": 60,
@@ -676,9 +726,9 @@
         "context": "Autoconfianza",
         "source": "Ensayos",
         "tags": [
-                     "éxito",
-                     "esperanza"
-                 ]
+            "éxito",
+            "esperanza"
+        ]
     },
     {
         "id": 61,
@@ -687,7 +737,9 @@
         "publish_date": "2026-01-19",
         "context": "Aprovechar el tiempo",
         "source": "Autobiografía y entrevistas",
-        "tags": ["tiempo"]
+        "tags": [
+            "tiempo"
+        ]
     },
     {
         "id": 62,
@@ -696,7 +748,9 @@
         "publish_date": "2026-01-20",
         "context": "Acción y ejecución",
         "source": "Discursos y entrevistas",
-        "tags": ["acción"]
+        "tags": [
+            "acción"
+        ]
     },
     {
         "id": 63,
@@ -706,11 +760,11 @@
         "context": "Coraje y perseverancia",
         "source": "Discursos y escritos",
         "tags": [
-                     "valentía",
-                     "perseverancia",
-                     "éxito",
-                     "aprendizaje"
-                 ]
+            "valentía",
+            "perseverancia",
+            "éxito",
+            "aprendizaje"
+        ]
     },
     {
         "id": 64,
@@ -720,10 +774,10 @@
         "context": "Soñar y actuar",
         "source": "Tierra de hombres",
         "tags": [
-                     "acción",
-                     "vida",
-                     "creatividad"
-                 ]
+            "acción",
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 65,
@@ -732,7 +786,9 @@
         "publish_date": "2026-01-23",
         "context": "Superar expectativas ajenas",
         "source": "Ensayos literarios",
-        "tags": ["vida"]
+        "tags": [
+            "vida"
+        ]
     },
     {
         "id": 66,
@@ -742,10 +798,10 @@
         "context": "Felicidad y mentalidad",
         "source": "Autobiografía",
         "tags": [
-                     "felicidad",
-                     "mentalidad",
-                     "esperanza"
-                 ]
+            "felicidad",
+            "mentalidad",
+            "esperanza"
+        ]
     },
     {
         "id": 67,
@@ -754,7 +810,9 @@
         "publish_date": "2026-01-25",
         "context": "Valentía auténtica",
         "source": "Un largo camino hacia la libertad",
-        "tags": ["valentía"]
+        "tags": [
+            "valentía"
+        ]
     },
     {
         "id": 68,
@@ -764,10 +822,10 @@
         "context": "Aceptación y propósito",
         "source": "Confesión",
         "tags": [
-                     "felicidad",
-                     "esperanza",
-                     "propósito"
-                 ]
+            "felicidad",
+            "esperanza",
+            "propósito"
+        ]
     },
     {
         "id": 69,
@@ -776,7 +834,9 @@
         "publish_date": "2026-01-27",
         "context": "Acción y compromiso",
         "source": "Máximas y reflexiones",
-        "tags": ["acción"]
+        "tags": [
+            "acción"
+        ]
     },
     {
         "id": 70,
@@ -786,9 +846,9 @@
         "context": "Constancia",
         "source": "Piense y hágase rico",
         "tags": [
-                     "perseverancia",
-                     "éxito"
-                 ]
+            "perseverancia",
+            "éxito"
+        ]
     },
     {
         "id": 71,
@@ -797,7 +857,9 @@
         "publish_date": "2026-01-29",
         "context": "Superar lo imposible",
         "source": "Discursos y escritos",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 72,
@@ -807,9 +869,9 @@
         "context": "Propósito y contribución",
         "source": "Cartas y reflexiones",
         "tags": [
-                     "vida",
-                     "propósito"
-                 ]
+            "vida",
+            "propósito"
+        ]
     },
     {
         "id": 73,
@@ -819,9 +881,9 @@
         "context": "Cambio de perspectiva",
         "source": "En busca del tiempo perdido",
         "tags": [
-                     "tiempo",
-                     "cambio"
-                 ]
+            "tiempo",
+            "cambio"
+        ]
     },
     {
         "id": 74,
@@ -831,11 +893,11 @@
         "context": "Disciplina personal",
         "source": "Las estaciones de la vida",
         "tags": [
-                     "disciplina",
-                     "éxito",
-                     "vida",
-                     "superación"
-                 ]
+            "disciplina",
+            "éxito",
+            "vida",
+            "superación"
+        ]
     },
     {
         "id": 75,
@@ -844,7 +906,9 @@
         "publish_date": "2026-02-02",
         "context": "Superación personal",
         "source": "Escritos y reflexiones",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 76,
@@ -853,7 +917,9 @@
         "publish_date": "2026-02-03",
         "context": "Formación del carácter",
         "source": "Cartas a Lucilio",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 77,
@@ -863,9 +929,9 @@
         "context": "Crecimiento personal",
         "source": "La luz en el corazón",
         "tags": [
-                     "amor",
-                     "superación"
-                 ]
+            "amor",
+            "superación"
+        ]
     },
     {
         "id": 78,
@@ -874,7 +940,9 @@
         "publish_date": "2026-02-05",
         "context": "Libertad y decisión",
         "source": "Manuscrito encontrado en Accra",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 79,
@@ -884,9 +952,9 @@
         "context": "Acción constante",
         "source": "Walden",
         "tags": [
-                     "éxito",
-                     "acción"
-                 ]
+            "éxito",
+            "acción"
+        ]
     },
     {
         "id": 80,
@@ -896,9 +964,9 @@
         "context": "Valor de lo esencial",
         "source": "Cuadernos",
         "tags": [
-                     "valentía",
-                     "simplicidad"
-                 ]
+            "valentía",
+            "simplicidad"
+        ]
     },
     {
         "id": 81,
@@ -907,7 +975,9 @@
         "publish_date": "2026-02-08",
         "context": "Segundas oportunidades",
         "source": "Ensayos",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 82,
@@ -917,11 +987,11 @@
         "context": "Creatividad y acción",
         "source": "Cartas y reflexiones",
         "tags": [
-                     "éxito",
-                     "acción",
-                     "vida",
-                     "creatividad"
-                 ]
+            "éxito",
+            "acción",
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 83,
@@ -930,7 +1000,9 @@
         "publish_date": "2026-02-10",
         "context": "Formación de hábitos",
         "source": "Principios de psicología",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 84,
@@ -940,9 +1012,9 @@
         "context": "Iniciativa personal",
         "source": "Piense y hágase rico",
         "tags": [
-                     "tiempo",
-                     "superación"
-                 ]
+            "tiempo",
+            "superación"
+        ]
     },
     {
         "id": 85,
@@ -951,7 +1023,9 @@
         "publish_date": "2026-02-12",
         "context": "Paciencia y constancia",
         "source": "Autobiografía",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 86,
@@ -960,7 +1034,9 @@
         "publish_date": "2026-02-13",
         "context": "Fuerza de voluntad",
         "source": "Compilaciones filosóficas",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 87,
@@ -970,10 +1046,10 @@
         "context": "Valentía personal",
         "source": "Diarios",
         "tags": [
-                     "valentía",
-                     "vida",
-                     "superación"
-                 ]
+            "valentía",
+            "vida",
+            "superación"
+        ]
     },
     {
         "id": 88,
@@ -982,7 +1058,9 @@
         "publish_date": "2026-02-15",
         "context": "Planificación",
         "source": "Escritos",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 89,
@@ -991,7 +1069,9 @@
         "publish_date": "2026-02-16",
         "context": "Desarrollo personal",
         "source": "Cartas a los accionistas",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 90,
@@ -1001,9 +1081,9 @@
         "context": "Transformación personal",
         "source": "The Single Woman",
         "tags": [
-                     "cambio",
-                     "superación"
-                 ]
+            "cambio",
+            "superación"
+        ]
     },
     {
         "id": 91,
@@ -1013,10 +1093,10 @@
         "context": "Aprender del error",
         "source": "Ensayos",
         "tags": [
-                     "aprendizaje",
-                     "mentalidad",
-                     "simplicidad"
-                 ]
+            "aprendizaje",
+            "mentalidad",
+            "simplicidad"
+        ]
     },
     {
         "id": 92,
@@ -1026,9 +1106,9 @@
         "context": "Vida consciente",
         "source": "El monje que vendió su Ferrari",
         "tags": [
-                     "vida",
-                     "esperanza"
-                 ]
+            "vida",
+            "esperanza"
+        ]
     },
     {
         "id": 93,
@@ -1037,7 +1117,9 @@
         "publish_date": "2026-02-20",
         "context": "Constancia",
         "source": "Reflexiones deportivas",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 94,
@@ -1046,7 +1128,9 @@
         "publish_date": "2026-02-21",
         "context": "Pasión y propósito",
         "source": "Lecciones sobre la filosofía de la historia",
-        "tags": ["propósito"]
+        "tags": [
+            "propósito"
+        ]
     },
     {
         "id": 95,
@@ -1055,7 +1139,9 @@
         "publish_date": "2026-02-22",
         "context": "Autodominio",
         "source": "Tao Te Ching",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 96,
@@ -1064,7 +1150,9 @@
         "publish_date": "2026-02-23",
         "context": "Decisiones diarias",
         "source": "Las estaciones de la vida",
-        "tags": ["vida"]
+        "tags": [
+            "vida"
+        ]
     },
     {
         "id": 97,
@@ -1073,7 +1161,9 @@
         "publish_date": "2026-02-24",
         "context": "Persistencia",
         "source": "Ensayos",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 98,
@@ -1083,10 +1173,10 @@
         "context": "Disfrutar el proceso",
         "source": "Ensayos",
         "tags": [
-                     "felicidad",
-                     "éxito",
-                     "esperanza"
-                 ]
+            "felicidad",
+            "éxito",
+            "esperanza"
+        ]
     },
     {
         "id": 99,
@@ -1095,7 +1185,9 @@
         "publish_date": "2026-02-26",
         "context": "Progreso constante",
         "source": "Sabiduría oriental",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 100,
@@ -1105,9 +1197,9 @@
         "context": "Acción transformadora",
         "source": "Poder sin límites",
         "tags": [
-                     "cambio",
-                     "acción"
-                 ]
+            "cambio",
+            "acción"
+        ]
     },
     {
         "id": 101,
@@ -1116,7 +1208,9 @@
         "publish_date": "2026-02-28",
         "context": "Autenticidad",
         "source": "Ensayos",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 102,
@@ -1125,7 +1219,9 @@
         "publish_date": "2026-03-01",
         "context": "Fortaleza interior",
         "source": "Enquiridión",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 103,
@@ -1134,7 +1230,9 @@
         "publish_date": "2026-03-02",
         "context": "Virtud y constancia",
         "source": "Ética a Nicómaco",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 104,
@@ -1144,9 +1242,9 @@
         "context": "Acción decidida",
         "source": "Pensamientos",
         "tags": [
-                     "acción",
-                     "mentalidad"
-                 ]
+            "acción",
+            "mentalidad"
+        ]
     },
     {
         "id": 105,
@@ -1156,10 +1254,10 @@
         "context": "Vivir plenamente",
         "source": "Cartas y ensayos",
         "tags": [
-                     "tiempo",
-                     "mentalidad",
-                     "vida"
-                 ]
+            "tiempo",
+            "mentalidad",
+            "vida"
+        ]
     },
     {
         "id": 106,
@@ -1169,9 +1267,9 @@
         "context": "Esfuerzo a largo plazo",
         "source": "Reflexiones personales",
         "tags": [
-                     "vida",
-                     "superación"
-                 ]
+            "vida",
+            "superación"
+        ]
     },
     {
         "id": 107,
@@ -1180,7 +1278,9 @@
         "publish_date": "2026-03-06",
         "context": "Poder del pensamiento",
         "source": "Dhammapada",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 108,
@@ -1190,9 +1290,9 @@
         "context": "Confianza personal",
         "source": "Discursos",
         "tags": [
-                     "esperanza",
-                     "superación"
-                 ]
+            "esperanza",
+            "superación"
+        ]
     },
     {
         "id": 109,
@@ -1201,7 +1301,9 @@
         "publish_date": "2026-03-08",
         "context": "Actitud ante la dificultad",
         "source": "Reflexiones",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 110,
@@ -1211,9 +1313,9 @@
         "context": "Disciplina personal",
         "source": "Tráguese ese sapo",
         "tags": [
-                     "disciplina",
-                     "superación"
-                 ]
+            "disciplina",
+            "superación"
+        ]
     },
     {
         "id": 111,
@@ -1222,7 +1324,9 @@
         "publish_date": "2026-03-10",
         "context": "Crecimiento continuo",
         "source": "Ensayos",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 112,
@@ -1232,9 +1336,9 @@
         "context": "Influencia personal",
         "source": "Pragmatismo",
         "tags": [
-                     "esperanza",
-                     "superación"
-                 ]
+            "esperanza",
+            "superación"
+        ]
     },
     {
         "id": 113,
@@ -1244,10 +1348,10 @@
         "context": "Constancia diaria",
         "source": "El secreto de la edad",
         "tags": [
-                     "perseverancia",
-                     "éxito",
-                     "tiempo"
-                 ]
+            "perseverancia",
+            "éxito",
+            "tiempo"
+        ]
     },
     {
         "id": 114,
@@ -1256,7 +1360,9 @@
         "publish_date": "2026-03-13",
         "context": "Autoconocimiento",
         "source": "Cartas y reflexiones",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 115,
@@ -1266,9 +1372,9 @@
         "context": "Cambio de mentalidad",
         "source": "Escritos y discursos",
         "tags": [
-                     "cambio",
-                     "mentalidad"
-                 ]
+            "cambio",
+            "mentalidad"
+        ]
     },
     {
         "id": 116,
@@ -1278,9 +1384,9 @@
         "context": "Recompensa de la constancia",
         "source": "Emilio, o De la educación",
         "tags": [
-                     "perseverancia",
-                     "mentalidad"
-                 ]
+            "perseverancia",
+            "mentalidad"
+        ]
     },
     {
         "id": 117,
@@ -1290,9 +1396,9 @@
         "context": "Servicio y propósito",
         "source": "Escritos y reflexiones",
         "tags": [
-                     "vida",
-                     "propósito"
-                 ]
+            "vida",
+            "propósito"
+        ]
     },
     {
         "id": 118,
@@ -1301,7 +1407,9 @@
         "publish_date": "2026-03-17",
         "context": "Confianza y fe",
         "source": "Discursos",
-        "tags": ["esperanza"]
+        "tags": [
+            "esperanza"
+        ]
     },
     {
         "id": 119,
@@ -1311,10 +1419,10 @@
         "context": "Renovación personal",
         "source": "Rayuela",
         "tags": [
-                     "valentía",
-                     "acción",
-                     "superación"
-                 ]
+            "valentía",
+            "acción",
+            "superación"
+        ]
     },
     {
         "id": 120,
@@ -1324,12 +1432,12 @@
         "context": "Aprender del error",
         "source": "Mi vida y obra",
         "tags": [
-                     "aprendizaje",
-                     "acción",
-                     "mentalidad",
-                     "vida",
-                     "simplicidad"
-                 ]
+            "aprendizaje",
+            "acción",
+            "mentalidad",
+            "vida",
+            "simplicidad"
+        ]
     },
     {
         "id": 121,
@@ -1338,7 +1446,9 @@
         "publish_date": "2026-03-20",
         "context": "Perseverancia",
         "source": "Analectas",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 122,
@@ -1347,7 +1457,9 @@
         "publish_date": "2026-03-21",
         "context": "Crecimiento emocional",
         "source": "Reflexiones personales",
-        "tags": ["superación"]
+        "tags": [
+            "superación"
+        ]
     },
     {
         "id": 123,
@@ -1357,9 +1469,9 @@
         "context": "Creatividad",
         "source": "Entrevistas y reflexiones",
         "tags": [
-                     "vida",
-                     "creatividad"
-                 ]
+            "vida",
+            "creatividad"
+        ]
     },
     {
         "id": 124,
@@ -1369,9 +1481,9 @@
         "context": "Construcción personal",
         "source": "Obras y prólogos",
         "tags": [
-                     "vida",
-                     "superación"
-                 ]
+            "vida",
+            "superación"
+        ]
     },
     {
         "id": 125,
@@ -1380,7 +1492,9 @@
         "publish_date": "2026-03-24",
         "context": "Actitud ante el dolor",
         "source": "What I Talk About When I Talk About Running",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 126,
@@ -1389,7 +1503,9 @@
         "publish_date": "2026-03-25",
         "context": "Resiliencia",
         "source": "Analectas",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 127,
@@ -1399,9 +1515,9 @@
         "context": "Tomar acción",
         "source": "Sopa de pollo para el alma",
         "tags": [
-                     "aprendizaje",
-                     "acción"
-                 ]
+            "aprendizaje",
+            "acción"
+        ]
     },
     {
         "id": 128,
@@ -1410,7 +1526,9 @@
         "publish_date": "2026-03-27",
         "context": "Excelencia diaria",
         "source": "Wooden on Leadership",
-        "tags": ["tiempo"]
+        "tags": [
+            "tiempo"
+        ]
     },
     {
         "id": 129,
@@ -1419,7 +1537,9 @@
         "publish_date": "2026-03-28",
         "context": "Apreciación",
         "source": "Fábulas",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 130,
@@ -1428,7 +1548,9 @@
         "publish_date": "2026-03-29",
         "context": "Constancia y esfuerzo",
         "source": "Autobiografía",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 131,
@@ -1438,10 +1560,10 @@
         "context": "Responsabilidad personal",
         "source": "Metas",
         "tags": [
-                     "éxito",
-                     "vida",
-                     "superación"
-                 ]
+            "éxito",
+            "vida",
+            "superación"
+        ]
     },
     {
         "id": 132,
@@ -1451,9 +1573,9 @@
         "context": "Enfoque y dedicación",
         "source": "Walden",
         "tags": [
-                     "éxito",
-                     "mentalidad"
-                 ]
+            "éxito",
+            "mentalidad"
+        ]
     },
     {
         "id": 133,
@@ -1462,7 +1584,9 @@
         "publish_date": "2026-04-01",
         "context": "Responsabilidad y acción",
         "source": "Management Challenges for the 21st Century",
-        "tags": ["acción"]
+        "tags": [
+            "acción"
+        ]
     },
     {
         "id": 134,
@@ -1471,7 +1595,9 @@
         "publish_date": "2026-04-02",
         "context": "Transformación social",
         "source": "Discursos",
-        "tags": ["cambio"]
+        "tags": [
+            "cambio"
+        ]
     },
     {
         "id": 135,
@@ -1481,11 +1607,11 @@
         "context": "Disciplina y esfuerzo",
         "source": "Obras y pensamientos",
         "tags": [
-                     "perseverancia",
-                     "disciplina",
-                     "éxito",
-                     "mentalidad"
-                 ]
+            "perseverancia",
+            "disciplina",
+            "éxito",
+            "mentalidad"
+        ]
     },
     {
         "id": 136,
@@ -1494,7 +1620,9 @@
         "publish_date": "2026-04-04",
         "context": "Claridad de objetivos",
         "source": "Introducción al estudio de la medicina experimental",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 137,
@@ -1503,7 +1631,9 @@
         "publish_date": "2026-04-05",
         "context": "Aprendizaje consciente",
         "source": "Analectas",
-        "tags": ["aprendizaje"]
+        "tags": [
+            "aprendizaje"
+        ]
     },
     {
         "id": 138,
@@ -1512,7 +1642,9 @@
         "publish_date": "2026-04-06",
         "context": "Pasión",
         "source": "Ensayos",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 139,
@@ -1521,7 +1653,9 @@
         "publish_date": "2026-04-07",
         "context": "Preparación y oportunidad",
         "source": "Discursos científicos",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 140,
@@ -1531,10 +1665,10 @@
         "context": "Mentalidad de crecimiento",
         "source": "Poder sin límites",
         "tags": [
-                     "aprendizaje",
-                     "mentalidad",
-                     "superación"
-                 ]
+            "aprendizaje",
+            "mentalidad",
+            "superación"
+        ]
     },
     {
         "id": 141,
@@ -1543,7 +1677,9 @@
         "publish_date": "2026-04-09",
         "context": "Hábitos y mejora continua",
         "source": "Hábitos atómicos",
-        "tags": ["perseverancia"]
+        "tags": [
+            "perseverancia"
+        ]
     },
     {
         "id": 142,
@@ -1553,9 +1689,9 @@
         "context": "Equilibrio entre ideas y conocimiento",
         "source": "Pensamientos",
         "tags": [
-                     "mentalidad",
-                     "creatividad"
-                 ]
+            "mentalidad",
+            "creatividad"
+        ]
     },
     {
         "id": 143,
@@ -1565,9 +1701,9 @@
         "context": "Autoconfianza",
         "source": "Ensayos",
         "tags": [
-                     "éxito",
-                     "esperanza"
-                 ]
+            "éxito",
+            "esperanza"
+        ]
     },
     {
         "id": 144,
@@ -1576,7 +1712,9 @@
         "publish_date": "2026-04-12",
         "context": "Actitud ante los retos",
         "source": "Entrevistas",
-        "tags": ["mentalidad"]
+        "tags": [
+            "mentalidad"
+        ]
     },
     {
         "id": 145,
@@ -1586,9 +1724,9 @@
         "context": "Desarrollo personal",
         "source": "Las 21 leyes irrefutables del liderazgo",
         "tags": [
-                     "perseverancia",
-                     "superación"
-                 ]
+            "perseverancia",
+            "superación"
+        ]
     },
     {
         "id": 146,
@@ -1597,7 +1735,9 @@
         "publish_date": "2026-04-14",
         "context": "Dirección en la vida",
         "source": "Cartas a Lucilio",
-        "tags": ["vida"]
+        "tags": [
+            "vida"
+        ]
     },
     {
         "id": 147,
@@ -1607,9 +1747,9 @@
         "context": "Poder de la actitud",
         "source": "Escritos psicológicos",
         "tags": [
-                     "mentalidad",
-                     "vida"
-                 ]
+            "mentalidad",
+            "vida"
+        ]
     },
     {
         "id": 148,
@@ -1618,7 +1758,9 @@
         "publish_date": "2026-04-16",
         "context": "Humildad y enfoque",
         "source": "Entrevistas",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 149,
@@ -1627,7 +1769,9 @@
         "publish_date": "2026-04-17",
         "context": "Excelencia cotidiana",
         "source": "Reflexiones",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 150,
@@ -1636,7 +1780,9 @@
         "publish_date": "2026-04-18",
         "context": "Inicio y determinación",
         "source": "Entrevistas",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 151,
@@ -1646,9 +1792,9 @@
         "context": "Resiliencia",
         "source": "Poemas",
         "tags": [
-                     "aprendizaje",
-                     "vida"
-                 ]
+            "aprendizaje",
+            "vida"
+        ]
     },
     {
         "id": 152,
@@ -1658,10 +1804,10 @@
         "context": "Perseverancia",
         "source": "Discursos",
         "tags": [
-                     "perseverancia",
-                     "éxito",
-                     "aprendizaje"
-                 ]
+            "perseverancia",
+            "éxito",
+            "aprendizaje"
+        ]
     },
     {
         "id": 153,
@@ -1671,9 +1817,9 @@
         "context": "Visión a largo plazo",
         "source": "Reflexiones",
         "tags": [
-                     "tiempo",
-                     "creatividad"
-                 ]
+            "tiempo",
+            "creatividad"
+        ]
     },
     {
         "id": 154,
@@ -1683,10 +1829,10 @@
         "context": "Coherencia personal",
         "source": "Escritos",
         "tags": [
-                     "felicidad",
-                     "esperanza",
-                     "superación"
-                 ]
+            "felicidad",
+            "esperanza",
+            "superación"
+        ]
     },
     {
         "id": 155,
@@ -1695,7 +1841,9 @@
         "publish_date": "2026-04-23",
         "context": "Aprendizaje continuo",
         "source": "Cartas y discursos",
-        "tags": ["aprendizaje"]
+        "tags": [
+            "aprendizaje"
+        ]
     },
     {
         "id": 156,
@@ -1704,7 +1852,9 @@
         "publish_date": "2026-04-24",
         "context": "Adaptabilidad",
         "source": "El origen de las especies",
-        "tags": ["cambio"]
+        "tags": [
+            "cambio"
+        ]
     },
     {
         "id": 157,
@@ -1713,7 +1863,9 @@
         "publish_date": "2026-04-25",
         "context": "Voluntad",
         "source": "Sabiduría popular",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 158,
@@ -1722,7 +1874,9 @@
         "publish_date": "2026-04-26",
         "context": "Prioridades",
         "source": "Escritos atribuidos",
-        "tags": ["disciplina"]
+        "tags": [
+            "disciplina"
+        ]
     },
     {
         "id": 159,
@@ -1731,7 +1885,9 @@
         "publish_date": "2026-04-27",
         "context": "Progreso gradual",
         "source": "Tao Te Ching",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 160,
@@ -1741,10 +1897,10 @@
         "context": "Crecimiento personal",
         "source": "Reflexiones",
         "tags": [
-                     "éxito",
-                     "aprendizaje",
-                     "superación"
-                 ]
+            "éxito",
+            "aprendizaje",
+            "superación"
+        ]
     },
     {
         "id": 161,
@@ -1753,7 +1909,9 @@
         "publish_date": "2026-04-29",
         "context": "Esfuerzo",
         "source": "Cartas y entrevistas",
-        "tags": ["reflexión"]
+        "tags": [
+            "reflexión"
+        ]
     },
     {
         "id": 162,
@@ -1762,7 +1920,9 @@
         "publish_date": "2026-04-30",
         "context": "Enfoque",
         "source": "Metas",
-        "tags": ["éxito"]
+        "tags": [
+            "éxito"
+        ]
     },
     {
         "id": 163,
@@ -1772,10 +1932,4446 @@
         "context": "Propósito de vida",
         "source": "Los 7 hábitos de la gente altamente efectiva",
         "tags": [
-                     "mentalidad",
-                     "vida",
-                     "esperanza",
-                     "propósito"
-                 ]
+            "mentalidad",
+            "vida",
+            "esperanza",
+            "propósito"
+        ]
+    },
+    {
+        "id": 164,
+        "text": "No te comprometas con nada ni con nadie, excepto con tu propio crecimiento y excelencia.",
+        "author": "Robert Greene",
+        "publish_date": "2026-06-26",
+        "context": "Sobre la independencia",
+        "source": "Las 48 leyes del poder",
+        "tags": [
+            "superación",
+            "disciplina",
+            "vida"
+        ]
+    },
+    {
+        "id": 165,
+        "text": "El verdadero poder está dentro de ti y está disponible ahora mismo, en el presente.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2026-06-27",
+        "context": "Sobre el presente y el poder interior",
+        "source": "El poder del ahora",
+        "tags": [
+            "paz",
+            "mentalidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 166,
+        "text": "No es lo que te sucede, sino cómo reaccionas ante ello lo que importa.",
+        "author": "Epicteto",
+        "publish_date": "2026-06-28",
+        "context": "Sobre la actitud",
+        "source": "Discursos",
+        "tags": [
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 167,
+        "text": "La verdadera libertad consiste en ser nosotros mismos, libres de las expectativas de los demás.",
+        "author": "Don Miguel Ruiz",
+        "publish_date": "2026-06-29",
+        "context": "Sobre la libertad personal",
+        "source": "Los cuatro acuerdos",
+        "tags": [
+            "paz",
+            "vida",
+            "superación"
+        ]
+    },
+    {
+        "id": 168,
+        "text": "Conócete a ti mismo y conocerás el universo.",
+        "author": "Sócrates",
+        "publish_date": "2026-06-30",
+        "context": "Sobre la introspección",
+        "source": "Sentencia délfica",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 169,
+        "text": "El único conocimiento verdadero es saber que no sabes nada.",
+        "author": "Sócrates",
+        "publish_date": "2026-07-01",
+        "context": "Sobre la humildad",
+        "source": "Apología de Sócrates",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 170,
+        "text": "La duda es el principio de la sabiduría.",
+        "author": "Aristóteles",
+        "publish_date": "2026-07-02",
+        "context": "Sobre el conocimiento",
+        "source": "Metafísica",
+        "tags": [
+            "aprendizaje",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 171,
+        "text": "La paciencia es el arte de tener esperanza.",
+        "author": "Luc de Clapiers",
+        "publish_date": "2026-07-03",
+        "context": "Sobre la paciencia",
+        "source": "Reflexiones y máximas",
+        "tags": [
+            "esperanza",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 172,
+        "text": "La perseverancia no es una carrera larga; son muchas carreras cortas una tras otra.",
+        "author": "Walter Elliot",
+        "publish_date": "2026-07-04",
+        "context": "Sobre la constancia",
+        "source": "Escritos",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 173,
+        "text": "Lo que dejas ir es lo que te hace verdaderamente libre.",
+        "author": "Buda",
+        "publish_date": "2026-07-05",
+        "context": "Sobre el desapego",
+        "source": "Sutras",
+        "tags": [
+            "paz",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 174,
+        "text": "El destino no es cuestión de casualidad, sino de elección.",
+        "author": "William Jennings Bryan",
+        "publish_date": "2026-07-06",
+        "context": "Sobre las elecciones",
+        "source": "Discursos",
+        "tags": [
+            "vida",
+            "acción"
+        ]
+    },
+    {
+        "id": 175,
+        "text": "Si no tienes un diseño para tu vida, otros lo diseñarán por ti.",
+        "author": "Jim Rohn",
+        "publish_date": "2026-07-07",
+        "context": "Sobre el propósito",
+        "source": "Filosofía del éxito",
+        "tags": [
+            "propósito",
+            "acción"
+        ]
+    },
+    {
+        "id": 176,
+        "text": "La felicidad no es una estación de llegada, sino un modo de viajar.",
+        "author": "Margaret Lee Runbeck",
+        "publish_date": "2026-07-08",
+        "context": "Sobre el camino",
+        "source": "Ensayos",
+        "tags": [
+            "felicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 177,
+        "text": "No busques que los eventos sucedan como tú quieres, sino desea que sucedan como suceden.",
+        "author": "Epicteto",
+        "publish_date": "2026-07-09",
+        "context": "Sobre la aceptación",
+        "source": "Enquiridión",
+        "tags": [
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 178,
+        "text": "El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice.",
+        "author": "Aristóteles",
+        "publish_date": "2026-07-10",
+        "context": "Sobre la prudencia",
+        "source": "Ética",
+        "tags": [
+            "reflexión",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 179,
+        "text": "La vida es cambio. El crecimiento es opcional. Elige sabiamente.",
+        "author": "Karen Kaiser Clark",
+        "publish_date": "2026-07-11",
+        "context": "Sobre el crecimiento",
+        "source": "Escritos",
+        "tags": [
+            "cambio",
+            "superación"
+        ]
+    },
+    {
+        "id": 180,
+        "text": "Quien se vence a sí mismo es el más fuerte de los guerreros.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-07-12",
+        "context": "Sobre el autocontrol",
+        "source": "Tao Te Ching",
+        "tags": [
+            "superación",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 181,
+        "text": "Un viaje de mil millas comienza con un solo paso.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-07-13",
+        "context": "Sobre el inicio",
+        "source": "Tao Te Ching",
+        "tags": [
+            "action",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 182,
+        "text": "La música en el alma puede ser escuchada por el universo.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-07-14",
+        "context": "Sobre la paz interior",
+        "source": "Tao Te Ching",
+        "tags": [
+            "paz",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 183,
+        "text": "Aquel que tiene un porqué para vivir puede soportar casi cualquier cómo.",
+        "author": "Viktor Frankl",
+        "publish_date": "2026-07-15",
+        "context": "Sobre el sentido",
+        "source": "El hombre en busca de sentido",
+        "tags": [
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 184,
+        "text": "Nuestra mayor libertad es la libertad de elegir nuestra actitud ante cualquier circunstancia.",
+        "author": "Viktor Frankl",
+        "publish_date": "2026-07-16",
+        "context": "Sobre la elección interior",
+        "source": "El hombre en busca de sentido",
+        "tags": [
+            "mentalidad",
+            "valentía"
+        ]
+    },
+    {
+        "id": 185,
+        "text": "Las dificultades a menudo preparan a una persona común para un destino extraordinario.",
+        "author": "C. S. Lewis",
+        "publish_date": "2026-07-17",
+        "context": "Sobre la adversidad",
+        "source": "Cartas y ensayos",
+        "tags": [
+            "superación",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 186,
+        "text": "El amor es la única fuerza capaz de transformar a un enemigo en un amigo.",
+        "author": "Martin Luther King Jr.",
+        "publish_date": "2026-07-18",
+        "context": "Sobre el amor",
+        "source": "Discursos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 187,
+        "text": "Si no puedes volar entonces corre, si no puedes correr entonces camina.",
+        "author": "Martin Luther King Jr.",
+        "publish_date": "2026-07-19",
+        "context": "Sobre seguir adelante",
+        "source": "Discursos",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 188,
+        "text": "La oscuridad no puede expulsar a la oscuridad; solo la luz puede hacer eso.",
+        "author": "Martin Luther King Jr.",
+        "publish_date": "2026-07-20",
+        "context": "Sobre la luz y el amor",
+        "source": "La fuerza de amar",
+        "tags": [
+            "amor",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 189,
+        "text": "El éxito no es el final, el fracaso no es la ruina; es el coraje de continuar lo que cuenta.",
+        "author": "Winston Churchill",
+        "publish_date": "2026-07-21",
+        "context": "Sobre el coraje",
+        "source": "Discursos",
+        "tags": [
+            "valentía",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 190,
+        "text": "Un optimista ve una oportunidad en toda dificultad; un pesimista ve una dificultad en toda oportunidad.",
+        "author": "Winston Churchill",
+        "publish_date": "2026-07-22",
+        "context": "Sobre la perspectiva",
+        "source": "Escritos",
+        "tags": [
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 191,
+        "text": "La vida es como andar en bicicleta. Para mantener el equilibrio debes seguir moviéndote.",
+        "author": "Albert Einstein",
+        "publish_date": "2026-07-23",
+        "context": "Sobre el equilibrio",
+        "source": "Cartas a su hijo",
+        "tags": [
+            "vida",
+            "acción"
+        ]
+    },
+    {
+        "id": 192,
+        "text": "La imaginación es más importante que el conocimiento. El conocimiento es limitado.",
+        "author": "Albert Einstein",
+        "publish_date": "2026-07-24",
+        "context": "Sobre la creatividad",
+        "source": "Ensayos",
+        "tags": [
+            "creatividad",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 193,
+        "text": "En medio de la dificultad reside la oportunidad.",
+        "author": "Albert Einstein",
+        "publish_date": "2026-07-25",
+        "context": "Sobre los problemas",
+        "source": "Aforismos",
+        "tags": [
+            "superación",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 194,
+        "text": "Lo que no me mata me hace más fuerte.",
+        "author": "Friedrich Nietzsche",
+        "publish_date": "2026-07-26",
+        "context": "Sobre la resiliencia",
+        "source": "El ocaso de los ídolos",
+        "tags": [
+            "superación",
+            "valentía"
+        ]
+    },
+    {
+        "id": 195,
+        "text": "Hay que tener caos dentro de sí para dar a luz una estrella danzarina.",
+        "author": "Friedrich Nietzsche",
+        "publish_date": "2026-07-27",
+        "context": "Sobre la creación",
+        "source": "Así habló Zaratustra",
+        "tags": [
+            "creatividad",
+            "vida"
+        ]
+    },
+    {
+        "id": 196,
+        "text": "La vida sin música sería un error.",
+        "author": "Friedrich Nietzsche",
+        "publish_date": "2026-07-28",
+        "context": "Sobre el arte",
+        "source": "El crepúsculo de los ídolos",
+        "tags": [
+            "vida",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 197,
+        "text": "No dejes que lo que no puedes hacer interfiera con lo que puedes hacer.",
+        "author": "John Wooden",
+        "publish_date": "2026-07-29",
+        "context": "Sobre la acción",
+        "source": "Aforismos deportivos",
+        "tags": [
+            "acción",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 198,
+        "text": "Si no sabes a dónde vas, cualquier camino te llevará allí.",
+        "author": "Lewis Carroll",
+        "publish_date": "2026-07-30",
+        "context": "Sobre la dirección",
+        "source": "Alicia en el país de las maravillas",
+        "tags": [
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 199,
+        "text": "La única forma de descubrir los límites de lo posible es aventurarse un poco más allá en lo imposible.",
+        "author": "Arthur C. Clarke",
+        "publish_date": "2026-07-31",
+        "context": "Sobre los límites",
+        "source": "Perfiles del futuro",
+        "tags": [
+            "creatividad",
+            "valentía"
+        ]
+    },
+    {
+        "id": 200,
+        "text": "Es en los momentos de decisión cuando se forma tu destino.",
+        "author": "Tony Robbins",
+        "publish_date": "2026-08-01",
+        "context": "Sobre la decisión",
+        "source": "Despertando al gigante interior",
+        "tags": [
+            "acción",
+            "vida"
+        ]
+    },
+    {
+        "id": 201,
+        "text": "Tu pasado no es igual a tu futuro a menos que decidas vivir allí.",
+        "author": "Tony Robbins",
+        "publish_date": "2026-08-02",
+        "context": "Sobre el futuro",
+        "source": "Poder sin límites",
+        "tags": [
+            "superación",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 202,
+        "text": "La calidad de tu vida es la calidad de tus relaciones.",
+        "author": "Tony Robbins",
+        "publish_date": "2026-08-03",
+        "context": "Sobre las relaciones",
+        "source": "Escritos",
+        "tags": [
+            "vida",
+            "amor"
+        ]
+    },
+    {
+        "id": 203,
+        "text": "El arte de la vida consiste en hacer de la vida una obra de arte.",
+        "author": "Voltaire",
+        "publish_date": "2026-08-04",
+        "context": "Sobre la existencia",
+        "source": "Cartas filosóficas",
+        "tags": [
+            "vida",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 204,
+        "text": "El secreto de la felicidad no está en hacer siempre lo que se quiere, sino en querer lo que se hace.",
+        "author": "León Tolstói",
+        "publish_date": "2026-08-05",
+        "context": "Sobre el contentamiento",
+        "source": "Guerra y paz",
+        "tags": [
+            "felicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 205,
+        "text": "No hay caminos para la paz; la paz es el camino.",
+        "author": "Mahatma Gandhi",
+        "publish_date": "2026-08-06",
+        "context": "Sobre la paz",
+        "source": "Discursos",
+        "tags": [
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 206,
+        "text": "Vive como si fueras a morir mañana. Aprende como si fueras a vivir siempre.",
+        "author": "Mahatma Gandhi",
+        "publish_date": "2026-08-07",
+        "context": "Sobre el aprendizaje",
+        "source": "Aforismos",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 207,
+        "text": "La fuerza no proviene de la capacidad física, sino de una voluntad indomable.",
+        "author": "Mahatma Gandhi",
+        "publish_date": "2026-08-08",
+        "context": "Sobre la voluntad",
+        "source": "Escritos",
+        "tags": [
+            "perseverancia",
+            "valentía"
+        ]
+    },
+    {
+        "id": 208,
+        "text": "El verdadero heroísmo consiste en convertir los deseos en realidades y las ideas en hechos.",
+        "author": "Alfonso Castelao",
+        "publish_date": "2026-08-09",
+        "context": "Sobre la acción",
+        "source": "Sempre en Galiza",
+        "tags": [
+            "acción",
+            "valentía"
+        ]
+    },
+    {
+        "id": 209,
+        "text": "El único límite para nuestra comprensión del mañana serán nuestras dudas de hoy.",
+        "author": "Franklin D. Roosevelt",
+        "publish_date": "2026-08-10",
+        "context": "Sobre la duda",
+        "source": "Discursos",
+        "tags": [
+            "esperanza",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 210,
+        "text": "Haz lo que puedas, con lo que tengas, donde estés.",
+        "author": "Theodore Roosevelt",
+        "publish_date": "2026-08-11",
+        "context": "Sobre el pragmatismo",
+        "source": "Autobiografía",
+        "tags": [
+            "acción",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 211,
+        "text": "Cree que puedes y ya habrás recorrido la mitad del camino.",
+        "author": "Theodore Roosevelt",
+        "publish_date": "2026-08-12",
+        "context": "Sobre la creencia",
+        "source": "Escritos",
+        "tags": [
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 212,
+        "text": "La felicidad es un subproducto de hacer felices a otros.",
+        "author": "G. K. Chesterton",
+        "publish_date": "2026-08-13",
+        "context": "Sobre el dar",
+        "source": "Ensayos",
+        "tags": [
+            "felicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 213,
+        "text": "El que busca la verdad corre el riesgo de encontrarla.",
+        "author": "Isabel Allende",
+        "publish_date": "2026-08-14",
+        "context": "Sobre la verdad",
+        "source": "Cuentos de Eva Luna",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 214,
+        "text": "Solo se ve bien con el corazón; lo esencial es invisible para los ojos.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-08-15",
+        "context": "Sobre lo esencial",
+        "source": "El principito",
+        "tags": [
+            "amor",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 215,
+        "text": "Fue el tiempo que pasaste con tu rosa lo que la hizo tan importante.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-08-16",
+        "context": "Sobre el lazo",
+        "source": "El principito",
+        "tags": [
+            "tiempo",
+            "amor"
+        ]
+    },
+    {
+        "id": 216,
+        "text": "El fracaso es solo la oportunidad de comenzar de nuevo de forma más inteligente.",
+        "author": "Henry Ford",
+        "publish_date": "2026-08-17",
+        "context": "Sobre el error",
+        "source": "Reflexiones",
+        "tags": [
+            "aprendizaje",
+            "superación"
+        ]
+    },
+    {
+        "id": 217,
+        "text": "Si crees que puedes o si crees que no puedes, tienes razón.",
+        "author": "Henry Ford",
+        "publish_date": "2026-08-18",
+        "context": "Sobre la creencia",
+        "source": "Aforismos",
+        "tags": [
+            "mentalidad",
+            "éxito"
+        ]
+    },
+    {
+        "id": 218,
+        "text": "La sencillez es la máxima sofisticación.",
+        "author": "Leonardo da Vinci",
+        "publish_date": "2026-08-19",
+        "context": "Sobre el diseño",
+        "source": "Cuadernos",
+        "tags": [
+            "simplicidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 219,
+        "text": "Quien no valora la vida no se la merece.",
+        "author": "Leonardo da Vinci",
+        "publish_date": "2026-08-20",
+        "context": "Sobre el valor de vivir",
+        "source": "Aforismos",
+        "tags": [
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 220,
+        "text": "Nuestra vida se desperdicia en los detalles... simplifica, simplifica.",
+        "author": "Henry David Thoreau",
+        "publish_date": "2026-08-21",
+        "context": "Sobre la simplicidad",
+        "source": "Walden",
+        "tags": [
+            "simplicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 221,
+        "text": "Ve con confianza en la dirección de tus sueños. Vive la vida que has imaginado.",
+        "author": "Henry David Thoreau",
+        "publish_date": "2026-08-22",
+        "context": "Sobre los sueños",
+        "source": "Walden",
+        "tags": [
+            "propósito",
+            "acción"
+        ]
+    },
+    {
+        "id": 222,
+        "text": "Bajo una administración que encarcela a cualquiera injustamente, el único lugar para un hombre justo es la cárcel.",
+        "author": "Henry David Thoreau",
+        "publish_date": "2026-08-23",
+        "context": "Sobre la justicia",
+        "source": "Desobediencia civil",
+        "tags": [
+            "reflexión",
+            "valentía"
+        ]
+    },
+    {
+        "id": 223,
+        "text": "La felicidad no es tener mucho, sino necesitar poco.",
+        "author": "Epicteto",
+        "publish_date": "2026-08-24",
+        "context": "Sobre la austeridad",
+        "source": "Discursos",
+        "tags": [
+            "simplicidad",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 224,
+        "text": "La paciencia es el arma definitiva de los que saben esperar el momento oportuno para actuar.",
+        "author": "Robert Greene",
+        "publish_date": "2026-08-25",
+        "context": "Sobre la paciencia estratégica",
+        "source": "Las 48 leyes del poder",
+        "tags": [
+            "perseverancia",
+            "tiempo",
+            "paz"
+        ]
+    },
+    {
+        "id": 225,
+        "text": "Tu autoestima debe provenir de tus logros y de tu carácter, no de la opinión de los demás.",
+        "author": "Robert Greene",
+        "publish_date": "2026-08-26",
+        "context": "Sobre la autovaloración",
+        "source": "Las leyes de la naturaleza humana",
+        "tags": [
+            "mentalidad",
+            "superación",
+            "paz"
+        ]
+    },
+    {
+        "id": 226,
+        "text": "El obstáculo y la crítica son los mejores maestros para forjar un carácter inquebrantable.",
+        "author": "Robert Greene",
+        "publish_date": "2026-08-27",
+        "context": "Sobre las dificultades",
+        "source": "La ley número 50",
+        "tags": [
+            "superación",
+            "aprendizaje",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 227,
+        "text": "No te elevas al nivel de tus metas, desciendes al nivel de tus sistemas diarios.",
+        "author": "James Clear",
+        "publish_date": "2026-08-28",
+        "context": "Sobre los sistemas y las metas",
+        "source": "Hábitos Atómicos",
+        "tags": [
+            "disciplina",
+            "acción",
+            "superación"
+        ]
+    },
+    {
+        "id": 228,
+        "text": "Acepta —luego actúa. Lo que contenga el momento presente, acéptalo como si lo hubieras elegido.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2026-08-29",
+        "context": "Sobre la aceptación activa",
+        "source": "El poder del ahora",
+        "tags": [
+            "paz",
+            "acción",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 229,
+        "text": "La causa principal de la infelicidad nunca es la situación sino tus pensamientos sobre ella.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2026-08-30",
+        "context": "Sobre el pensamiento y la infelicidad",
+        "source": "Una nueva tierra",
+        "tags": [
+            "felicidad",
+            "mentalidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 230,
+        "text": "Toda negatividad es causada por una acumulación de tiempo psicológico y negación del presente.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2026-08-31",
+        "context": "Sobre la negatividad y el tiempo",
+        "source": "El poder del ahora",
+        "tags": [
+            "paz",
+            "tiempo",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 231,
+        "text": "La sabiduría consiste en saber qué ignorar.",
+        "author": "William James",
+        "publish_date": "2026-09-01",
+        "context": "Sobre el enfoque",
+        "source": "Principios de psicología",
+        "tags": [
+            "simplicidad",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 232,
+        "text": "El gran uso de la vida es gastarla en algo que dure más que ella.",
+        "author": "William James",
+        "publish_date": "2026-09-02",
+        "context": "Sobre el legado",
+        "source": "Escritos",
+        "tags": [
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 233,
+        "text": "Tu actitud, no tu aptitud, determinará tu altitud.",
+        "author": "Zig Ziglar",
+        "publish_date": "2026-09-03",
+        "context": "Sobre el éxito",
+        "source": "Pasos hacia la cumbre",
+        "tags": [
+            "mentalidad",
+            "éxito"
+        ]
+    },
+    {
+        "id": 234,
+        "text": "No mires el reloj; haz lo que él hace. Sigue adelante.",
+        "author": "Sam Levenson",
+        "publish_date": "2026-09-04",
+        "context": "Sobre seguir",
+        "source": "Escritos",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 235,
+        "text": "El ayer es historia, el mañana es un misterio, pero el hoy es un regalo. Por eso lo llaman presente.",
+        "author": "Bil Keane",
+        "publish_date": "2026-09-05",
+        "context": "Sobre el presente",
+        "source": "Tira cómica",
+        "tags": [
+            "tiempo",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 236,
+        "text": "No dejes que tu felicidad dependa de algo que puedas perder.",
+        "author": "C. S. Lewis",
+        "publish_date": "2026-09-06",
+        "context": "Sobre el apego",
+        "source": "Una pena en observación",
+        "tags": [
+            "paz",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 237,
+        "text": "La integridad es hacer lo correcto cuando nadie te está mirando.",
+        "author": "C. S. Lewis",
+        "publish_date": "2026-09-07",
+        "context": "Sobre la rectitud",
+        "source": "Aforismos",
+        "tags": [
+            "disciplina",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 238,
+        "text": "Para tener éxito, tu deseo de triunfar debe ser mayor que tu miedo a fracasar.",
+        "author": "Bill Cosby",
+        "publish_date": "2026-09-08",
+        "context": "Sobre el deseo",
+        "source": "Escritos",
+        "tags": [
+            "éxito",
+            "valentía"
+        ]
+    },
+    {
+        "id": 239,
+        "text": "Los años arrugan la piel, pero renunciar al entusiasmo arruga el alma.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2026-09-09",
+        "context": "Sobre el entusiasmo",
+        "source": "Aforismos",
+        "tags": [
+            "vida",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 240,
+        "text": "Busca siempre una forma de servir a la humanidad.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2026-09-10",
+        "context": "Sobre el servicio",
+        "source": "Ensayos",
+        "tags": [
+            "propósito",
+            "amor"
+        ]
+    },
+    {
+        "id": 241,
+        "text": "La felicidad no es una meta; es un subproducto de una vida bien vivida.",
+        "author": "Eleanor Roosevelt",
+        "publish_date": "2026-09-11",
+        "context": "Sobre el camino",
+        "source": "Ensayos",
+        "tags": [
+            "felicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 242,
+        "text": "Nadie puede hacerte sentir inferior sin tu consentimiento.",
+        "author": "Eleanor Roosevelt",
+        "publish_date": "2026-09-12",
+        "context": "Sobre la autoestima",
+        "source": "Escritos",
+        "tags": [
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 243,
+        "text": "Haz una cosa al día que te dé miedo.",
+        "author": "Eleanor Roosevelt",
+        "publish_date": "2026-09-13",
+        "context": "Sobre el coraje",
+        "source": "Aforismos",
+        "tags": [
+            "valentía",
+            "superación"
+        ]
+    },
+    {
+        "id": 244,
+        "text": "No juzgues cada día por la cosecha que recoges, sino por las semillas que plantas.",
+        "author": "Robert Louis Stevenson",
+        "publish_date": "2026-09-14",
+        "context": "Sobre el esfuerzo",
+        "source": "Ensayos",
+        "tags": [
+            "tiempo",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 245,
+        "text": "La paz no es la ausencia de conflicto, sino la presencia de alternativas creativas.",
+        "author": "Dorothy Thompson",
+        "publish_date": "2026-09-15",
+        "context": "Sobre el conflicto",
+        "source": "Ensayos",
+        "tags": [
+            "paz",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 246,
+        "text": "No hay camino más seguro hacia la paz que el perdón.",
+        "author": "Madre Teresa",
+        "publish_date": "2026-09-16",
+        "context": "Sobre el perdón",
+        "source": "Cartas",
+        "tags": [
+            "paz",
+            "amor"
+        ]
+    },
+    {
+        "id": 247,
+        "text": "Sé fiel a las cosas pequeñas, pues en ellas reside tu fuerza.",
+        "author": "Madre Teresa",
+        "publish_date": "2026-09-17",
+        "context": "Sobre el detalle",
+        "source": "Escritos",
+        "tags": [
+            "simplicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 248,
+        "text": "Las palabras amables pueden ser cortas y fáciles de decir, pero sus ecos son infinitos.",
+        "author": "Madre Teresa",
+        "publish_date": "2026-09-18",
+        "context": "Sobre las palabras",
+        "source": "Aforismos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 249,
+        "text": "El trabajo ahuyenta tres grandes males: el aburrimiento, el vicio y la necesidad.",
+        "author": "Voltaire",
+        "publish_date": "2026-09-19",
+        "context": "Sobre la labor",
+        "source": "Cándido",
+        "tags": [
+            "acción",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 250,
+        "text": "Quien tiene paciencia obtendrá lo que desea.",
+        "author": "Benjamin Franklin",
+        "publish_date": "2026-09-20",
+        "context": "Sobre la paciencia",
+        "source": "Almanaque del pobre Richard",
+        "tags": [
+            "perseverancia",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 251,
+        "text": "Dime y lo olvido, enséñame y lo recuerdo, involúcrame y lo aprendo.",
+        "author": "Benjamin Franklin",
+        "publish_date": "2026-09-21",
+        "context": "Sobre la educación",
+        "source": "Escritos políticos",
+        "tags": [
+            "aprendizaje",
+            "acción"
+        ]
+    },
+    {
+        "id": 252,
+        "text": "La peor soledad es no estar cómodo contigo mismo.",
+        "author": "Mark Twain",
+        "publish_date": "2026-09-22",
+        "context": "Sobre uno mismo",
+        "source": "Ensayos",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 253,
+        "text": "El coraje es la resistencia al miedo, el dominio del miedo, no la ausencia de miedo.",
+        "author": "Mark Twain",
+        "publish_date": "2026-09-23",
+        "context": "Sobre el valor",
+        "source": "Pudd'nhead Wilson",
+        "tags": [
+            "valentía",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 254,
+        "text": "Dentro de veinte años estarás más decepcionado por las cosas que no hiciste.",
+        "author": "Mark Twain",
+        "publish_date": "2026-09-24",
+        "context": "Sobre arriesgarse",
+        "source": "Atribuida",
+        "tags": [
+            "acción",
+            "valentía"
+        ]
+    },
+    {
+        "id": 255,
+        "text": "La amabilidad es el lenguaje que los sordos pueden oír y los ciegos pueden ver.",
+        "author": "Mark Twain",
+        "publish_date": "2026-09-25",
+        "context": "Sobre el afecto",
+        "source": "Aforismos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 256,
+        "text": "La pluma es más fuerte que la espada.",
+        "author": "Edward Bulwer-Lytton",
+        "publish_date": "2026-09-26",
+        "context": "Sobre la palabra",
+        "source": "Richelieu",
+        "tags": [
+            "creatividad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 257,
+        "text": "No heredes nada que no sea útil o que no consideres bello.",
+        "author": "William Morris",
+        "publish_date": "2026-09-27",
+        "context": "Sobre el entorno",
+        "source": "La era del arte",
+        "tags": [
+            "simplicidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 258,
+        "text": "En el desapego reside la sabiduría de la incertidumbre, que es la libertad de nuestro pasado.",
+        "author": "Deepak Chopra",
+        "publish_date": "2026-09-28",
+        "context": "Sobre el desapego",
+        "source": "Las 7 leyes espirituales del éxito",
+        "tags": [
+            "paz",
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 259,
+        "text": "La forma más fácil de obtener lo que quieres es ayudar a los demás a obtener lo que ellos quieren.",
+        "author": "Deepak Chopra",
+        "publish_date": "2026-09-29",
+        "context": "Sobre la ley de dar",
+        "source": "Las 7 leyes espirituales del éxito",
+        "tags": [
+            "amor",
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 260,
+        "text": "La sabiduría viene de la reflexión constante sobre la experiencia.",
+        "author": "Confucio",
+        "publish_date": "2026-09-30",
+        "context": "Sobre el saber",
+        "source": "Analectas",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 261,
+        "text": "El hombre superior busca en sí mismo; el hombre inferior busca en los demás.",
+        "author": "Confucio",
+        "publish_date": "2026-10-01",
+        "context": "Sobre la autosuficiencia",
+        "source": "Analectas",
+        "tags": [
+            "superación",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 262,
+        "text": "El silencio es un amigo que jamás traiciona.",
+        "author": "Confucio",
+        "publish_date": "2026-10-02",
+        "context": "Sobre el silencio",
+        "source": "Analectas",
+        "tags": [
+            "simplicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 263,
+        "text": "Cuando el sabio señala a la luna, el necio mira al dedo.",
+        "author": "Proverbio oriental",
+        "publish_date": "2026-10-03",
+        "context": "Sobre la comprensión",
+        "source": "Sabiduría popular",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 264,
+        "text": "La paciencia tiene más poder que la fuerza.",
+        "author": "Plutarco",
+        "publish_date": "2026-10-04",
+        "context": "Sobre la paciencia",
+        "source": "Vidas paralelas",
+        "tags": [
+            "perseverancia",
+            "paz"
+        ]
+    },
+    {
+        "id": 265,
+        "text": "El carácter es el destino de un hombre.",
+        "author": "Heráclito",
+        "publish_date": "2026-10-05",
+        "context": "Sobre el carácter",
+        "source": "Fragmentos",
+        "tags": [
+            "vida",
+            "propósito"
+        ]
+    },
+    {
+        "id": 266,
+        "text": "Todo fluye, nada permanece.",
+        "author": "Heráclito",
+        "publish_date": "2026-10-06",
+        "context": "Sobre el cambio",
+        "source": "Fragmentos",
+        "tags": [
+            "cambio",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 267,
+        "text": "Los grandes resultados requieren grandes ambiciones.",
+        "author": "Heródoto",
+        "publish_date": "2026-10-07",
+        "context": "Sobre el esfuerzo",
+        "source": "Historias",
+        "tags": [
+            "éxito",
+            "acción"
+        ]
+    },
+    {
+        "id": 268,
+        "text": "Quien domina a otros es fuerte; quien se domina a sí mismo es poderoso.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-10-08",
+        "context": "Sobre el dominio propio",
+        "source": "Tao Te Ching",
+        "tags": [
+            "disciplina",
+            "superación"
+        ]
+    },
+    {
+        "id": 269,
+        "text": "El agua es la cosa más suave, pero puede penetrar la roca más dura.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-10-09",
+        "context": "Sobre la suavidad",
+        "source": "Tao Te Ching",
+        "tags": [
+            "perseverancia",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 270,
+        "text": "La simplicidad, la paciencia y la compasión son tus mayores tesoros.",
+        "author": "Lao Tsé",
+        "publish_date": "2026-10-10",
+        "context": "Sobre los tesoros",
+        "source": "Tao Te Ching",
+        "tags": [
+            "simplicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 271,
+        "text": "No busques el éxito. Dedícate a lo que amas y este llegará solo.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2026-10-11",
+        "context": "Sobre el éxito",
+        "source": "Ensayos",
+        "tags": [
+            "éxito",
+            "amor"
+        ]
+    },
+    {
+        "id": 272,
+        "text": "La constante atención al presente es el secreto del progreso espiritual.",
+        "author": "Buda",
+        "publish_date": "2026-10-12",
+        "context": "Sobre la atención",
+        "source": "Dhammapada",
+        "tags": [
+            "paz",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 273,
+        "text": "Nadie nos salva sino nosotros mismos. Nadie puede y nadie debe.",
+        "author": "Buda",
+        "publish_date": "2026-10-13",
+        "context": "Sobre la responsabilidad",
+        "source": "Sutras",
+        "tags": [
+            "superación",
+            "vida"
+        ]
+    },
+    {
+        "id": 274,
+        "text": "El dolor es seguro, el sufrimiento es opcional.",
+        "author": "Buda",
+        "publish_date": "2026-10-14",
+        "context": "Sobre la mentalidad",
+        "source": "Enseñanzas",
+        "tags": [
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 275,
+        "text": "Una mente en paz no genera preocupaciones innecesarias.",
+        "author": "Buda",
+        "publish_date": "2026-10-15",
+        "context": "Sobre la mente clara",
+        "source": "Sutras",
+        "tags": [
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 276,
+        "text": "Poco a poco se llena la jarra de agua.",
+        "author": "Buda",
+        "publish_date": "2026-10-16",
+        "context": "Sobre la constancia",
+        "source": "Dhammapada",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 277,
+        "text": "No busques la felicidad en el exterior; se encuentra en tu propio corazón.",
+        "author": "Buda",
+        "publish_date": "2026-10-17",
+        "context": "Sobre la felicidad",
+        "source": "Enseñanzas",
+        "tags": [
+            "felicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 278,
+        "text": "La mente es todo. Te conviertes en lo que piensas.",
+        "author": "Buda",
+        "publish_date": "2026-10-18",
+        "context": "Sobre el pensamiento",
+        "source": "Dhammapada",
+        "tags": [
+            "mentalidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 279,
+        "text": "Aferrarse a la ira es como beber veneno y esperar que la otra persona muera.",
+        "author": "Buda",
+        "publish_date": "2026-10-19",
+        "context": "Sobre el rencor",
+        "source": "Atribuida",
+        "tags": [
+            "paz",
+            "amor"
+        ]
+    },
+    {
+        "id": 280,
+        "text": "La paz viene de dentro. No la busques fuera.",
+        "author": "Buda",
+        "publish_date": "2026-10-20",
+        "context": "Sobre la paz interior",
+        "source": "Dhammapada",
+        "tags": [
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 281,
+        "text": "Para entender todo, es necesario olvidarlo todo.",
+        "author": "Buda",
+        "publish_date": "2026-10-21",
+        "context": "Sobre el desaprendizaje",
+        "source": "Sutras",
+        "tags": [
+            "aprendizaje",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 282,
+        "text": "La salud es el mayor regalo, la satisfacción la mayor riqueza, la fidelidad la mejor relación.",
+        "author": "Buda",
+        "publish_date": "2026-10-22",
+        "context": "Sobre la riqueza",
+        "source": "Dhammapada",
+        "tags": [
+            "simplicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 283,
+        "text": "Como una roca sólida no se mueve con el viento, el sabio no se altera por los elogios ni las críticas.",
+        "author": "Buda",
+        "publish_date": "2026-10-23",
+        "context": "Sobre la ecuanimidad",
+        "source": "Dhammapada",
+        "tags": [
+            "paz",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 284,
+        "text": "El hombre que ha superado sus miedos será verdaderamente libre.",
+        "author": "Buda",
+        "publish_date": "2026-10-24",
+        "context": "Sobre los miedos",
+        "source": "Sutras",
+        "tags": [
+            "valentía",
+            "superación"
+        ]
+    },
+    {
+        "id": 285,
+        "text": "El camino no está en el cielo. El camino está en el corazón.",
+        "author": "Buda",
+        "publish_date": "2026-10-25",
+        "context": "Sobre la introspección",
+        "source": "Dhammapada",
+        "tags": [
+            "paz",
+            "amor"
+        ]
+    },
+    {
+        "id": 286,
+        "text": "La verdad os hará libres.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-26",
+        "context": "Sobre la verdad",
+        "source": "Evangelios",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 287,
+        "text": "Pedid y se os dará; buscad y encontraréis.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-27",
+        "context": "Sobre la búsqueda",
+        "source": "Evangelio de Mateo",
+        "tags": [
+            "acción",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 288,
+        "text": "Amarás a tu prójimo como a ti mismo.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-28",
+        "context": "Sobre la empatía",
+        "source": "Evangelios",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 289,
+        "text": "No juzguéis para no ser juzgados.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-29",
+        "context": "Sobre el juicio",
+        "source": "Evangelio de Mateo",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 290,
+        "text": "Lo que quieras que hagan contigo, hazlo tú con los demás.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-30",
+        "context": "Regla de oro",
+        "source": "Evangelios",
+        "tags": [
+            "amor",
+            "vida"
+        ]
+    },
+    {
+        "id": 291,
+        "text": "El mayor entre vosotros será vuestro servidor.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-10-31",
+        "context": "Sobre la humildad",
+        "source": "Evangelios",
+        "tags": [
+            "propósito",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 292,
+        "text": "No solo de pan vive el hombre, sino de toda palabra de verdad.",
+        "author": "Jesús de Nazaret",
+        "publish_date": "2026-11-01",
+        "context": "Sobre el alimento espiritual",
+        "source": "Evangelios",
+        "tags": [
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 293,
+        "text": "La luz brilla en las tinieblas, y las tinieblas no prevalecieron contra ella.",
+        "author": "Juan el Apóstol",
+        "publish_date": "2026-11-02",
+        "context": "Sobre la esperanza",
+        "source": "Evangelio de Juan",
+        "tags": [
+            "esperanza",
+            "vida"
+        ]
+    },
+    {
+        "id": 294,
+        "text": "El amor echa fuera el temor.",
+        "author": "Juan el Apóstol",
+        "publish_date": "2026-11-03",
+        "context": "Sobre el amor y el miedo",
+        "source": "Epístolas",
+        "tags": [
+            "amor",
+            "valentía"
+        ]
+    },
+    {
+        "id": 295,
+        "text": "Pienso, luego existo.",
+        "author": "René Descartes",
+        "publish_date": "2026-11-04",
+        "context": "Sobre la existencia",
+        "source": "Discurso del método",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 296,
+        "text": "No hay nada repartido de modo más equitativo que la razón.",
+        "author": "René Descartes",
+        "publish_date": "2026-11-05",
+        "context": "Sobre el intelecto",
+        "source": "Discurso del método",
+        "tags": [
+            "reflexión",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 297,
+        "text": "Vivir sin filosofar es tener los ojos cerrados sin tratar de abrirlos jamás.",
+        "author": "René Descartes",
+        "publish_date": "2026-11-06",
+        "context": "Sobre la filosofía",
+        "source": "Principios de la filosofía",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 298,
+        "text": "Daría todo lo que sé por la mitad de lo que ignoro.",
+        "author": "René Descartes",
+        "publish_date": "2026-11-07",
+        "context": "Sobre la ignorancia",
+        "source": "Aforismos",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 299,
+        "text": "Con el fin de mejorar la mente, debemos aprender menos que pensar.",
+        "author": "René Descartes",
+        "publish_date": "2026-11-08",
+        "context": "Sobre el pensar",
+        "source": "Ensayos",
+        "tags": [
+            "mentalidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 300,
+        "text": "El éxito es la capacidad de levantarse tras cada caída.",
+        "author": "Oliver Goldsmith",
+        "publish_date": "2026-11-09",
+        "context": "Sobre levantarse",
+        "source": "Escritos",
+        "tags": [
+            "perseverancia",
+            "superación"
+        ]
+    },
+    {
+        "id": 301,
+        "text": "Lo que sabemos es una gota de agua; lo que ignoramos es el océano.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-10",
+        "context": "Sobre el conocimiento",
+        "source": "Escritos personales",
+        "tags": [
+            "aprendizaje",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 302,
+        "text": "Si he visto más lejos es porque estoy sentado sobre los hombros de gigantes.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-11",
+        "context": "Sobre la influencia",
+        "source": "Carta a Robert Hooke",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 303,
+        "text": "Construimos demasiados muros y no suficientes puentes.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-12",
+        "context": "Sobre las relaciones",
+        "source": "Aforismos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 304,
+        "text": "El tacto es la habilidad de llegar a un acuerdo sin crear un enemigo.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-13",
+        "context": "Sobre la diplomacia",
+        "source": "Aforismos",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 305,
+        "text": "La naturaleza se complace con la simplicidad.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-14",
+        "context": "Sobre la naturaleza",
+        "source": "Principia",
+        "tags": [
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 306,
+        "text": "La verdad es siempre simple, no compleja ni contradictoria.",
+        "author": "Isaac Newton",
+        "publish_date": "2026-11-15",
+        "context": "Sobre la verdad",
+        "source": "Escritos",
+        "tags": [
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 307,
+        "text": "El genio es paciencia eterna.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-16",
+        "context": "Sobre el genio",
+        "source": "Cartas",
+        "tags": [
+            "perseverancia",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 308,
+        "text": "Aún sigo aprendiendo.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-17",
+        "context": "A mis 87 años",
+        "source": "Dibujo con anotación",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 309,
+        "text": "Vi el ángel en el mármol y tallé hasta que lo liberé.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-18",
+        "context": "Sobre la escultura",
+        "source": "Cartas",
+        "tags": [
+            "creatividad",
+            "propósito"
+        ]
+    },
+    {
+        "id": 310,
+        "text": "El mayor peligro para nosotros no es que nuestra meta sea demasiado alta y la perdamos.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-19",
+        "context": "Sobre las metas",
+        "source": "Escritos",
+        "tags": [
+            "éxito",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 311,
+        "text": "No hay mayor daño que el tiempo perdido.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-20",
+        "context": "Sobre el tiempo",
+        "source": "Poemas",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 312,
+        "text": "La belleza es la purificación del exceso.",
+        "author": "Michelangelo",
+        "publish_date": "2026-11-21",
+        "context": "Sobre la belleza",
+        "source": "Poemas",
+        "tags": [
+            "simplicidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 313,
+        "text": "La fe es el pájaro que canta cuando el amanecer aún está oscuro.",
+        "author": "Rabindranath Tagore",
+        "publish_date": "2026-11-22",
+        "context": "Sobre la fe",
+        "source": "Poemas",
+        "tags": [
+            "esperanza",
+            "vida"
+        ]
+    },
+    {
+        "id": 314,
+        "text": "Es muy simple: solo se ve bien con el corazón.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-23",
+        "context": "Sobre la vista",
+        "source": "El principito",
+        "tags": [
+            "amor",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 315,
+        "text": "Si vienes, por ejemplo, a las cuatro de la tarde, comenzaré a ser feliz desde las tres.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-24",
+        "context": "Sobre la espera",
+        "source": "El principito",
+        "tags": [
+            "tiempo",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 316,
+        "text": "El hombre se descubre cuando se mide contra un obstáculo.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-25",
+        "context": "Sobre la prueba",
+        "source": "Tierra de hombres",
+        "tags": [
+            "superación",
+            "valentía"
+        ]
+    },
+    {
+        "id": 317,
+        "text": "La paz no es el fin del conflicto, sino el comienzo de la concordia.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-26",
+        "context": "Sobre la paz",
+        "source": "Ciudadela",
+        "tags": [
+            "paz",
+            "amor"
+        ]
+    },
+    {
+        "id": 318,
+        "text": "Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-27",
+        "context": "Sobre el amor",
+        "source": "Tierra de hombres",
+        "tags": [
+            "amor",
+            "propósito"
+        ]
+    },
+    {
+        "id": 319,
+        "text": "Para construir un barco, no reúnas a los hombres para recolectar madera... enséñales la nostalgia del mar infinito.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-28",
+        "context": "Sobre la motivación",
+        "source": "Ciudadela",
+        "tags": [
+            "creatividad",
+            "propósito"
+        ]
+    },
+    {
+        "id": 320,
+        "text": "El mundo está lleno de maravillas que pasan desapercibidas por falta de atención.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-29",
+        "context": "Sobre el asombro",
+        "source": "Cartas",
+        "tags": [
+            "simplicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 321,
+        "text": "El que viaja ligero, viaja feliz.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-11-30",
+        "context": "Sobre viajar",
+        "source": "Aforismos",
+        "tags": [
+            "simplicidad",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 322,
+        "text": "La perfección se alcanza no cuando no hay nada más que añadir, sino cuando no queda nada que quitar.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-12-01",
+        "context": "Sobre la perfección",
+        "source": "Tierra de hombres",
+        "tags": [
+            "simplicidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 323,
+        "text": "La verdad no es lo que se demuestra, sino lo que simplifica.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-12-02",
+        "context": "Sobre la verdad",
+        "source": "Ciudadela",
+        "tags": [
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 324,
+        "text": "Quien no da nada, no tiene nada.",
+        "author": "Antoine de Saint-Exupéry",
+        "publish_date": "2026-12-03",
+        "context": "Sobre el dar",
+        "source": "Ciudadela",
+        "tags": [
+            "simplicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 325,
+        "text": "El pasado es arcilla que el presente esculpe y el futuro endurece.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-04",
+        "context": "Sobre el tiempo",
+        "source": "Ficciones",
+        "tags": [
+            "tiempo",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 326,
+        "text": "He cometido el peor de los pecados que un hombre puede cometer: no he sido feliz.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-05",
+        "context": "Sobre la felicidad",
+        "source": "Poemas",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 327,
+        "text": "La literatura no es otra cosa que un sueño dirigido.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-06",
+        "context": "Sobre el arte",
+        "source": "Ensayos",
+        "tags": [
+            "creatividad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 328,
+        "text": "Cualquier destino, por largo y complicado que sea, consta en realidad de un solo momento.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-07",
+        "context": "Sobre el destino",
+        "source": "El Aleph",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 329,
+        "text": "Que otros se jacten de las páginas que han escrito; a mí me enorgullecen las que he leído.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-08",
+        "context": "Sobre la lectura",
+        "source": "Poemas",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 330,
+        "text": "El olvido es la única venganza y el único perdón.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-09",
+        "context": "Sobre el olvido",
+        "source": "El informe de Brodie",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 331,
+        "text": "No nos une el amor sino el espanto; será por eso que la quiero tanto.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-10",
+        "context": "Sobre Buenos Aires",
+        "source": "Fervor de Buenos Aires",
+        "tags": [
+            "amor",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 332,
+        "text": "Siempre imaginé que el Paraíso sería algún tipo de biblioteca.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-11",
+        "context": "Sobre los libros",
+        "source": "Poemas",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 333,
+        "text": "La duda es uno de los nombres de la inteligencia.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-12",
+        "context": "Sobre la duda",
+        "source": "Discursos",
+        "tags": [
+            "mentalidad",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 334,
+        "text": "Somos nuestra memoria, somos ese quimérico museo de formas inconstantes.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-13",
+        "context": "Sobre la identidad",
+        "source": "La cifra",
+        "tags": [
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 335,
+        "text": "Para atrás no hay que mirar ni para buscar impulso.",
+        "author": "Jorge Luis Borges",
+        "publish_date": "2026-12-14",
+        "context": "Sobre seguir adelante",
+        "source": "Aforismos",
+        "tags": [
+            "acción",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 336,
+        "text": "Andábamos sin buscarnos, pero sabiendo que andábamos para encontrarnos.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-15",
+        "context": "Sobre el encuentro",
+        "source": "Rayuela",
+        "tags": [
+            "amor",
+            "vida"
+        ]
+    },
+    {
+        "id": 337,
+        "text": "Ven a dormir conmigo: no haremos el amor, él nos hará.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-16",
+        "context": "Sobre el amor",
+        "source": "Poemas",
+        "tags": [
+            "amor",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 338,
+        "text": "La risa es el único lenguaje que no necesita traducción.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-17",
+        "context": "Sobre la alegría",
+        "source": "Ensayos",
+        "tags": [
+            "felicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 339,
+        "text": "Como si se pudiese elegir en el amor, como si no fuera un rayo que te parte los huesos.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-18",
+        "context": "Sobre el amor inevitable",
+        "source": "Rayuela",
+        "tags": [
+            "amor",
+            "vida"
+        ]
+    },
+    {
+        "id": 340,
+        "text": "Las palabras nunca alcanzan cuando lo que hay que decir desborda el alma.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-19",
+        "context": "Sobre la expresión",
+        "source": "Cartas",
+        "tags": [
+            "creatividad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 341,
+        "text": "Nada está perdido si se tiene el valor de comenzar de nuevo.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-20",
+        "context": "Sobre el reinicio",
+        "source": "Rayuela",
+        "tags": [
+            "valentía",
+            "acción"
+        ]
+    },
+    {
+        "id": 342,
+        "text": "No puede ser que vivamos de esta manera, en esta prisa inútil.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-21",
+        "context": "Sobre la prisa",
+        "source": "Rayuela",
+        "tags": [
+            "simplicidad",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 343,
+        "text": "La memoria es un espejo que miente de manera piadosa.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-22",
+        "context": "Sobre el recuerdo",
+        "source": "Cuentos",
+        "tags": [
+            "reflexión",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 344,
+        "text": "El hombre es un animal que escribe.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-23",
+        "context": "Sobre el arte",
+        "source": "Entrevistas",
+        "tags": [
+            "creatividad",
+            "vida"
+        ]
+    },
+    {
+        "id": 345,
+        "text": "Los libros van siendo el único refugio contra la estupidez del mundo.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-24",
+        "context": "Sobre el refugio",
+        "source": "Cartas",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 346,
+        "text": "Sé que no hay nada más bello que una mirada libre.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-25",
+        "context": "Sobre la mirada",
+        "source": "Poemas",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 347,
+        "text": "El verdadero amor no consiste en unir dos vidas, sino en compartir dos mundos.",
+        "author": "Julio Cortázar",
+        "publish_date": "2026-12-26",
+        "context": "Sobre el amor",
+        "source": "Escritos",
+        "tags": [
+            "amor",
+            "vida"
+        ]
+    },
+    {
+        "id": 348,
+        "text": "No te rindas, que la vida es eso, continuar el viaje, perseguir tus sueños.",
+        "author": "Mario Benedetti",
+        "publish_date": "2026-12-27",
+        "context": "No te rindas",
+        "source": "Poema",
+        "tags": [
+            "perseverancia",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 349,
+        "text": "Qué buen insomnio si se piensa en ti.",
+        "author": "Mario Benedetti",
+        "publish_date": "2026-12-28",
+        "context": "Sobre el recuerdo",
+        "source": "Poemas",
+        "tags": [
+            "amor",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 350,
+        "text": "La mariposa recordará por siempre que fue gusano.",
+        "author": "Mario Benedetti",
+        "publish_date": "2026-12-29",
+        "context": "Sobre el origen",
+        "source": "Ensayos",
+        "tags": [
+            "reflexión",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 351,
+        "text": "Me gusta la gente capaz de entender que el mayor error del ser humano es intentar sacarse de la cabeza lo que no sale del corazón.",
+        "author": "Mario Benedetti",
+        "publish_date": "2026-12-30",
+        "context": "Sobre el sentimiento",
+        "source": "La tregua",
+        "tags": [
+            "amor",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 352,
+        "text": "Cinco minutos bastan para soñar una vida, conque ten cuidado.",
+        "author": "Mario Benedetti",
+        "publish_date": "2026-12-31",
+        "context": "Sobre el tiempo",
+        "source": "La tregua",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 353,
+        "text": "Cuando creíamos que teníamos todas las respuestas, de pronto cambiaron todas las preguntas.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-01",
+        "context": "Sobre la incertidumbre",
+        "source": "Preguntas al azar",
+        "tags": [
+            "cambio",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 354,
+        "text": "Un corazón que no late no tiene miedo de nada.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-02",
+        "context": "Sobre la frialdad",
+        "source": "Poemas",
+        "tags": [
+            "valentía",
+            "vida"
+        ]
+    },
+    {
+        "id": 355,
+        "text": "A veces la vida es tan dura que uno necesita un respiro.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-03",
+        "context": "Sobre la pausa",
+        "source": "La tregua",
+        "tags": [
+            "simplicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 356,
+        "text": "Compañera, usted sabe que puede contar conmigo.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-04",
+        "context": "Hagamos un trato",
+        "source": "Poema",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 357,
+        "text": "Hay pocas cosas tan ensordecedoras como el silencio.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-05",
+        "context": "Sobre el silencio",
+        "source": "El olvido",
+        "tags": [
+            "simplicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 358,
+        "text": "Defender la alegría como una trinchera, defenderla del escándalo y la rutina.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-06",
+        "context": "Sobre la alegría",
+        "source": "Poema",
+        "tags": [
+            "felicidad",
+            "valentía"
+        ]
+    },
+    {
+        "id": 359,
+        "text": "La gente buena se salva por el amor.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-07",
+        "context": "Sobre la bondad",
+        "source": "Poemas",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 360,
+        "text": "En la vida hay que cometer errores para aprender dónde no volver a pisar.",
+        "author": "Mario Benedetti",
+        "publish_date": "2027-01-08",
+        "context": "Sobre los errores",
+        "source": "Escritos",
+        "tags": [
+            "aprendizaje",
+            "superación"
+        ]
+    },
+    {
+        "id": 361,
+        "text": "Podrán cortar todas las flores, pero no podrán detener la primavera.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-09",
+        "context": "Sobre la esperanza",
+        "source": "Canto general",
+        "tags": [
+            "esperanza",
+            "vida"
+        ]
+    },
+    {
+        "id": 362,
+        "text": "Si no escalas la montaña, jamás podrás disfrutar del paisaje.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-10",
+        "context": "Sobre el esfuerzo",
+        "source": "Poemas",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 363,
+        "text": "Queda prohibido no sonreír a los problemas, no luchar por lo que quieres.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-11",
+        "context": "Queda prohibido",
+        "source": "Poema atribuido",
+        "tags": [
+            "valentía",
+            "superación"
+        ]
+    },
+    {
+        "id": 364,
+        "text": "Es tan corto el amor y es tan largo el olvido.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-12",
+        "context": "Sobre la pérdida",
+        "source": "Poema 20",
+        "tags": [
+            "amor",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 365,
+        "text": "Me gustas cuando callas porque estás como ausente.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-13",
+        "context": "Poema 15",
+        "source": "Veinte poemas de amor",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 366,
+        "text": "Para que nada nos separe que nada nos una.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-14",
+        "context": "Sobre el desapego",
+        "source": "Poemas",
+        "tags": [
+            "simplicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 367,
+        "text": "El niño que no juega no es niño, pero el hombre que no juega perdió para siempre al niño que vivía en él.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-15",
+        "context": "Sobre el juego",
+        "source": "Memorias",
+        "tags": [
+            "vida",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 368,
+        "text": "En un beso sabrás todo lo que he callado.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-16",
+        "context": "Sobre el beso",
+        "source": "Poemas de amor",
+        "tags": [
+            "amor",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 369,
+        "text": "Si nada nos salva de la muerte, al menos que el amor nos salve de la vida.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-17",
+        "context": "Sobre el amor salvador",
+        "source": "Poemas",
+        "tags": [
+            "amor",
+            "vida"
+        ]
+    },
+    {
+        "id": 370,
+        "text": "Nace de mí mi muerte y de mí nace mi vida.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-18",
+        "context": "Sobre el renacimiento",
+        "source": "Residencia en la tierra",
+        "tags": [
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 371,
+        "text": "Quiero hacer contigo lo que la primavera hace con los cerezos.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-19",
+        "context": "Poema 14",
+        "source": "Veinte poemas de amor",
+        "tags": [
+            "amor",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 372,
+        "text": "A nadie te pareces desde que yo te amo.",
+        "author": "Pablo Neruda",
+        "publish_date": "2027-01-20",
+        "context": "Sobre la singularidad",
+        "source": "Poemas de amor",
+        "tags": [
+            "amor",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 373,
+        "text": "No hay más que un camino para aprender: la acción.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-21",
+        "context": "Sobre aprender",
+        "source": "El alquimista",
+        "tags": [
+            "acción",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 374,
+        "text": "Cuando quieres algo, todo el universo conspira para que lo consigas.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-22",
+        "context": "Sobre la conspiración universal",
+        "source": "El alquimista",
+        "tags": [
+            "esperanza",
+            "acción"
+        ]
+    },
+    {
+        "id": 375,
+        "text": "Solo una cosa hace que un sueño sea imposible de conseguir: el miedo al fracaso.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-23",
+        "context": "Sobre el miedo",
+        "source": "El alquimista",
+        "tags": [
+            "valentía",
+            "superación"
+        ]
+    },
+    {
+        "id": 376,
+        "text": "El secreto de la vida es caer siete veces y levantarse ocho.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-24",
+        "context": "Sobre levantarse",
+        "source": "El alquimista",
+        "tags": [
+            "perseverancia",
+            "superación"
+        ]
+    },
+    {
+        "id": 377,
+        "text": "No te ahogas al caer a un río, sino al mantenerte sumergido en él.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-25",
+        "context": "Sobre el hundimiento",
+        "source": "Aforismos",
+        "tags": [
+            "superación",
+            "acción"
+        ]
+    },
+    {
+        "id": 378,
+        "text": "Las cosas más simples de la vida son las más extraordinarias.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-26",
+        "context": "Sobre lo simple",
+        "source": "El alquimista",
+        "tags": [
+            "simplicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 379,
+        "text": "Las personas son capaces, en cualquier momento de sus vidas, de hacer lo que sueñan.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-27",
+        "context": "Sobre la capacidad",
+        "source": "El alquimista",
+        "tags": [
+            "vida",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 380,
+        "text": "No digas sí si tu corazón dice no.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-28",
+        "context": "Sobre la honestidad propia",
+        "source": "Guerrero de la luz",
+        "tags": [
+            "disciplina",
+            "paz"
+        ]
+    },
+    {
+        "id": 381,
+        "text": "Quien interfiere en el destino de los otros nunca descubrirá el suyo.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-29",
+        "context": "Sobre el camino propio",
+        "source": "El alquimista",
+        "tags": [
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 382,
+        "text": "Los ojos muestran la fuerza del alma.",
+        "author": "Paulo Coelho",
+        "publish_date": "2027-01-30",
+        "context": "Sobre la mirada",
+        "source": "Aforismos",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 383,
+        "text": "El camino del exceso conduce al palacio de la sabiduría.",
+        "author": "William Blake",
+        "publish_date": "2027-01-31",
+        "context": "Sobre los excesos",
+        "source": "Proverbios del infierno",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 384,
+        "text": "El pájaro tiene su nido, la araña su tela, el hombre la amistad.",
+        "author": "William Blake",
+        "publish_date": "2027-02-01",
+        "context": "Sobre la amistad",
+        "source": "Proverbios del infierno",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 385,
+        "text": "Quien desea pero no actúa, engendra peste.",
+        "author": "William Blake",
+        "publish_date": "2027-02-02",
+        "context": "Sobre la inacción",
+        "source": "Proverbios del infierno",
+        "tags": [
+            "acción",
+            "propósito"
+        ]
+    },
+    {
+        "id": 386,
+        "text": "Para ver el mundo en un grano de arena y el cielo en una flor silvestre.",
+        "author": "William Blake",
+        "publish_date": "2027-02-03",
+        "context": "Sobre el infinito",
+        "source": "Augurios de inocencia",
+        "tags": [
+            "simplicidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 387,
+        "text": "La verdad contada con mala intención supera a todas las mentiras que puedas inventar.",
+        "author": "William Blake",
+        "publish_date": "2027-02-04",
+        "context": "Sobre la intención",
+        "source": "Augurios de inocencia",
+        "tags": [
+            "reflexión",
+            "paz"
+        ]
+    },
+    {
+        "id": 388,
+        "text": "Si las puertas de la percepción se purificaran, todo aparecería al hombre como es: infinito.",
+        "author": "William Blake",
+        "publish_date": "2027-02-05",
+        "context": "Sobre la percepción",
+        "source": "El matrimonio del cielo y el infierno",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 389,
+        "text": "La imaginación no es un estado: es la existencia humana en sí misma.",
+        "author": "William Blake",
+        "publish_date": "2027-02-06",
+        "context": "Sobre la imaginación",
+        "source": "Poemas",
+        "tags": [
+            "creatividad",
+            "vida"
+        ]
+    },
+    {
+        "id": 390,
+        "text": "El agradecimiento es el cielo mismo.",
+        "author": "William Blake",
+        "publish_date": "2027-02-07",
+        "context": "Sobre la gratitud",
+        "source": "Cartas",
+        "tags": [
+            "paz",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 391,
+        "text": "El hombre que no cambia de opinión es como el agua estancada.",
+        "author": "William Blake",
+        "publish_date": "2027-02-08",
+        "context": "Sobre el cambio de idea",
+        "source": "Proverbios del infierno",
+        "tags": [
+            "cambio",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 392,
+        "text": "Un buen corazón vale más que todas las cabezas del mundo.",
+        "author": "Edward Bulwer-Lytton",
+        "publish_date": "2027-02-09",
+        "context": "Sobre la bondad",
+        "source": "Aforismos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 393,
+        "text": "El éxito no reside en el triunfo, sino en el esfuerzo continuo por mejorar.",
+        "author": "John C. Maxwell",
+        "publish_date": "2027-02-10",
+        "context": "Sobre mejorar",
+        "source": "Liderazgo",
+        "tags": [
+            "perseverancia",
+            "superación"
+        ]
+    },
+    {
+        "id": 394,
+        "text": "El crecimiento de hoy es el cimiento del mañana.",
+        "author": "John C. Maxwell",
+        "publish_date": "2027-02-11",
+        "context": "Sobre crecer",
+        "source": "Aforismos",
+        "tags": [
+            "aprendizaje",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 395,
+        "text": "El liderazgo es influencia, nada más, nada menos.",
+        "author": "John C. Maxwell",
+        "publish_date": "2027-02-12",
+        "context": "Sobre influir",
+        "source": "Las 21 leyes",
+        "tags": [
+            "propósito",
+            "acción"
+        ]
+    },
+    {
+        "id": 396,
+        "text": "La actitud determina la dirección en que viajas.",
+        "author": "John C. Maxwell",
+        "publish_date": "2027-02-13",
+        "context": "Sobre la actitud",
+        "source": "Aforismos",
+        "tags": [
+            "mentalidad",
+            "acción"
+        ]
+    },
+    {
+        "id": 397,
+        "text": "Si no estás fallando de vez en cuando, es una señal de que no estás haciendo nada innovador.",
+        "author": "Woody Allen",
+        "publish_date": "2027-02-14",
+        "context": "Sobre fallar",
+        "source": "Entrevistas",
+        "tags": [
+            "aprendizaje",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 398,
+        "text": "El 80% del éxito consiste simplemente en presentarse.",
+        "author": "Woody Allen",
+        "publish_date": "2027-02-15",
+        "context": "Sobre la constancia",
+        "source": "Discursos",
+        "tags": [
+            "perseverancia",
+            "action"
+        ]
+    },
+    {
+        "id": 399,
+        "text": "Me interesa el futuro porque es el sitio donde voy a pasar el resto de mi vida.",
+        "author": "Woody Allen",
+        "publish_date": "2027-02-16",
+        "context": "Sobre el futuro",
+        "source": "Aforismos",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 400,
+        "text": "El dinero no da la felicidad, pero produce una sensación tan parecida...",
+        "author": "Woody Allen",
+        "publish_date": "2027-02-17",
+        "context": "Ironía sobre la felicidad",
+        "source": "Aforismos",
+        "tags": [
+            "felicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 401,
+        "text": "La única forma de evitar el error es no hacer nada.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-18",
+        "context": "Sobre los errores",
+        "source": "Aforismos",
+        "tags": [
+            "acción",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 402,
+        "text": "El arte es la expresión de los pensamientos más profundos por el camino más sencillo.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-19",
+        "context": "Sobre el arte",
+        "source": "Cartas",
+        "tags": [
+            "creatividad",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 403,
+        "text": "No busques ser una persona de éxito, sino una persona de valor.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-20",
+        "context": "Sobre el valor",
+        "source": "Entrevistas",
+        "tags": [
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 404,
+        "text": "Locura es hacer lo mismo una y otra vez esperando obtener resultados diferentes.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-21",
+        "context": "Sobre el cambio",
+        "source": "Atribuida",
+        "tags": [
+            "cambio",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 405,
+        "text": "La mente que se abre a una nueva idea jamás volverá a su tamaño original.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-22",
+        "context": "Sobre las ideas",
+        "source": "Aforismos",
+        "tags": [
+            "aprendizaje",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 406,
+        "text": "La diferencia entre la estupidez y el genio es que el genio tiene sus límites.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-23",
+        "context": "Sobre el genio",
+        "source": "Aforismos",
+        "tags": [
+            "reflexión",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 407,
+        "text": "Hay dos cosas infinitas: el universo y la estupidez humana.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-24",
+        "context": "Sobre el infinito",
+        "source": "Aforismos",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 408,
+        "text": "La paz no se puede mantener por la fuerza; solo se puede lograr mediante la comprensión.",
+        "author": "Albert Einstein",
+        "publish_date": "2027-02-25",
+        "context": "Sobre la paz",
+        "source": "Escritos sobre la guerra",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 409,
+        "text": "La vida es corta, pero siempre hay tiempo para la cortesía.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-02-26",
+        "context": "Sobre el respeto",
+        "source": "Ensayos",
+        "tags": [
+            "amor",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 410,
+        "text": "El único modo de tener un amigo es serlo.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-02-27",
+        "context": "Sobre la amistad",
+        "source": "Ensayos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 411,
+        "text": "Aunque viajemos por todo el mundo para encontrar la belleza, debemos llevarla con nosotros o no la encontraremos.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-02-28",
+        "context": "Sobre la belleza interna",
+        "source": "Ensayos",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 412,
+        "text": "Graba esto en tu corazón: cada día es el mejor día del año.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-03-01",
+        "context": "Sobre valorar el día",
+        "source": "Ensayos",
+        "tags": [
+            "tiempo",
+            "esperanza"
+        ]
+    },
+    {
+        "id": 413,
+        "text": "No vayas a donde el camino te lleve, ve a donde no hay camino y deja un rastro.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-03-02",
+        "context": "Sobre ser pionero",
+        "source": "Poemas y ensayos",
+        "tags": [
+            "acción",
+            "propósito"
+        ]
+    },
+    {
+        "id": 414,
+        "text": "La confianza en sí mismo es el primer secreto del éxito.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-03-03",
+        "context": "Sobre el éxito",
+        "source": "Ensayos",
+        "tags": [
+            "éxito",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 415,
+        "text": "Para ser grande hay que ser incomprendido.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-03-04",
+        "context": "Sobre la grandeza",
+        "source": "Auto-confianza",
+        "tags": [
+            "reflexión",
+            "superación"
+        ]
+    },
+    {
+        "id": 416,
+        "text": "Lo que está detrás de nosotros y lo que está ante nosotros son pequeñeces comparado con lo que está dentro de nosotros.",
+        "author": "Ralph Waldo Emerson",
+        "publish_date": "2027-03-05",
+        "context": "Sobre el interior",
+        "source": "Auto-confianza",
+        "tags": [
+            "paz",
+            "superación"
+        ]
+    },
+    {
+        "id": 417,
+        "text": "El verdadero viaje de descubrimiento no consiste en buscar paisajes nuevos, sino en mirar con ojos nuevos.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-06",
+        "context": "Sobre el descubrimiento",
+        "source": "En busca del tiempo perdido",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 418,
+        "text": "El amor es el espacio y el tiempo medidos por el corazón.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-07",
+        "context": "Sobre el amor",
+        "source": "En busca del tiempo",
+        "tags": [
+            "amor",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 419,
+        "text": "A veces estamos demasiado dispuestos a creer que el presente es el único estado de cosas.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-08",
+        "context": "Sobre el presente",
+        "source": "En busca del tiempo",
+        "tags": [
+            "tiempo",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 420,
+        "text": "Los días son tal vez iguales para un reloj, pero no para un ser humano.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-09",
+        "context": "Sobre el fluir diario",
+        "source": "En busca del tiempo",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 421,
+        "text": "La felicidad es saludable para el cuerpo, pero es la pena la que desarrolla las fuerzas del espíritu.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-10",
+        "context": "Sobre el dolor y el espíritu",
+        "source": "En busca del tiempo",
+        "tags": [
+            "superación",
+            "vida"
+        ]
+    },
+    {
+        "id": 422,
+        "text": "El deseo nos hace florecer; la posesión nos marchita.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-11",
+        "context": "Sobre el deseo",
+        "source": "En busca del tiempo",
+        "tags": [
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 423,
+        "text": "Solo sanamos un dolor cuando lo experimentamos plenamente.",
+        "author": "Marcel Proust",
+        "publish_date": "2027-03-12",
+        "context": "Sobre sanar",
+        "source": "En busca del tiempo",
+        "tags": [
+            "paz",
+            "superación"
+        ]
+    },
+    {
+        "id": 424,
+        "text": "El éxito no es la clave de la felicidad. La felicidad es la clave del éxito.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-13",
+        "context": "Clave del éxito",
+        "source": "Ensayos",
+        "tags": [
+            "felicidad",
+            "éxito"
+        ]
+    },
+    {
+        "id": 425,
+        "text": "La ética es la responsabilidad de respetar toda vida.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-14",
+        "context": "Sobre la ética",
+        "source": "Civilización y ética",
+        "tags": [
+            "vida",
+            "amor"
+        ]
+    },
+    {
+        "id": 426,
+        "text": "Haz algo por los demás por lo cual no te paguen.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-15",
+        "context": "Sobre dar altruista",
+        "source": "Escritos",
+        "tags": [
+            "propósito",
+            "amor"
+        ]
+    },
+    {
+        "id": 427,
+        "text": "El ejemplo no es la mejor manera de influir en los demás; es la única.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-16",
+        "context": "Sobre influir",
+        "source": "Escritos",
+        "tags": [
+            "acción",
+            "propósito"
+        ]
+    },
+    {
+        "id": 428,
+        "text": "Un hombre es verdaderamente ético solo cuando obedece a la compulsión de ayudar a toda vida.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-17",
+        "context": "Sobre el valor",
+        "source": "Escritos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 429,
+        "text": "La juventud no es un período de la vida, es un estado mental.",
+        "author": "Albert Schweitzer",
+        "publish_date": "2027-03-18",
+        "context": "Sobre la juventud",
+        "source": "Aforismos",
+        "tags": [
+            "mentalidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 430,
+        "text": "El secreto de la felicidad es la libertad, y el secreto de la libertad es el coraje.",
+        "author": "Tucídides",
+        "publish_date": "2027-03-19",
+        "context": "Sobre la libertad",
+        "source": "Historia de la guerra del Peloponeso",
+        "tags": [
+            "valentía",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 431,
+        "text": "Los más valientes son aquellos que tienen una visión clara de lo que tienen por delante.",
+        "author": "Tucídides",
+        "publish_date": "2027-03-20",
+        "context": "Sobre la valentía",
+        "source": "Historia del Peloponeso",
+        "tags": [
+            "valentía",
+            "propósito"
+        ]
+    },
+    {
+        "id": 432,
+        "text": "La historia es un filósofo que enseña con ejemplos.",
+        "author": "Tucídides",
+        "publish_date": "2027-03-21",
+        "context": "Sobre la historia",
+        "source": "Historia del Peloponeso",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 433,
+        "text": "A la mayoría de la gente le cuesta menos esfuerzo mentir que buscar la verdad.",
+        "author": "Tucídides",
+        "publish_date": "2027-03-22",
+        "context": "Sobre la verdad",
+        "source": "Historia del Peloponeso",
+        "tags": [
+            "reflexión",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 434,
+        "text": "No busques que todo suceda como deseas, sino acéptalo como sucede para hallar paz.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-23",
+        "context": "Sobre la tranquilidad",
+        "source": "Enquiridión",
+        "tags": [
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 435,
+        "text": "El hombre sabio no se aflige por las cosas que no tiene, sino que se alegra por las que tiene.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-24",
+        "context": "Sobre la gratitud",
+        "source": "Discursos",
+        "tags": [
+            "felicidad",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 436,
+        "text": "Solo el hombre educado es libre.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-25",
+        "context": "Sobre la educación",
+        "source": "Discursos",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 437,
+        "text": "La vida es demasiado corta para gastarla en arrepentimientos.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-26",
+        "context": "Sobre el arrepentimiento",
+        "source": "Discursos",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 438,
+        "text": "No te dejes llevar por el primer impulso; reflexiona y luego actúa.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-27",
+        "context": "Sobre el autocontrol",
+        "source": "Enquiridión",
+        "tags": [
+            "disciplina",
+            "acción"
+        ]
+    },
+    {
+        "id": 439,
+        "text": "Queremos controlar lo externo, cuando lo único que podemos controlar es nuestra reacción.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-28",
+        "context": "Sobre el control",
+        "source": "Enquiridión",
+        "tags": [
+            "mentalidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 440,
+        "text": "El primer paso para el conocimiento es la admisión de la propia ignorancia.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-29",
+        "context": "Sobre el saber",
+        "source": "Discursos",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 441,
+        "text": "El dolor y la muerte no son terribles en sí mismos; lo terrible es nuestra opinión de ellos.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-30",
+        "context": "Sobre la muerte",
+        "source": "Enquiridión",
+        "tags": [
+            "mentalidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 442,
+        "text": "Si dicen algo malo de ti y es verdad, corrígete. Si es mentira, ríete.",
+        "author": "Epicteto",
+        "publish_date": "2027-03-31",
+        "context": "Sobre las críticas",
+        "source": "Enquiridión",
+        "tags": [
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 443,
+        "text": "Para aprender, primero hay que desaprender los prejuicios.",
+        "author": "Epicteto",
+        "publish_date": "2027-04-01",
+        "context": "Sobre los prejuicios",
+        "source": "Discursos",
+        "tags": [
+            "aprendizaje",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 444,
+        "text": "La libertad se consigue no mediante la satisfacción de los deseos, sino mediante su supresión.",
+        "author": "Epicteto",
+        "publish_date": "2027-04-02",
+        "context": "Sobre el deseo",
+        "source": "Discursos",
+        "tags": [
+            "simplicidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 445,
+        "text": "Ninguna pérdida nos debe doler más que la del tiempo, pues es irrecuperable.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-03",
+        "context": "Sobre el tiempo",
+        "source": "Fragmentos",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 446,
+        "text": "Tenemos dos oídos y una sola boca para escuchar más y hablar menos.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-04",
+        "context": "Sobre el escuchar",
+        "source": "Fragmentos",
+        "tags": [
+            "simplicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 447,
+        "text": "El bienestar se logra mediante pequeños pasos, pero no es una pequeña cosa.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-05",
+        "context": "Sobre el bienestar",
+        "source": "Fragmentos",
+        "tags": [
+            "perseverancia",
+            "vida"
+        ]
+    },
+    {
+        "id": 448,
+        "text": "Un amigo es otro yo.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-06",
+        "context": "Sobre la amistad",
+        "source": "Fragmentos",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 449,
+        "text": "El destino es la cadena que conecta las causas de los sucesos.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-07",
+        "context": "Sobre el destino",
+        "source": "Fragmentos",
+        "tags": [
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 450,
+        "text": "El sabio vivirá en armonía con la naturaleza.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-08",
+        "context": "Sobre la naturaleza",
+        "source": "Fragmentos",
+        "tags": [
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 451,
+        "text": "No busques el favor de la multitud; busca la aprobación de tu propia conciencia.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-09",
+        "context": "Sobre la conciencia",
+        "source": "Fragmentos",
+        "tags": [
+            "disciplina",
+            "paz"
+        ]
+    },
+    {
+        "id": 452,
+        "text": "El error no es caer; el error es permanecer en el suelo.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-10",
+        "context": "Sobre las caídas",
+        "source": "Fragmentos",
+        "tags": [
+            "perseverancia",
+            "superación"
+        ]
+    },
+    {
+        "id": 453,
+        "text": "La tranquilidad es el fruto del dominio de las pasiones.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-11",
+        "context": "Sobre la tranquilidad",
+        "source": "Fragmentos",
+        "tags": [
+            "paz",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 454,
+        "text": "Todo lo que sucede en el universo es parte de una gran ley racional.",
+        "author": "Zenón de Citio",
+        "publish_date": "2027-04-12",
+        "context": "Sobre la razón",
+        "source": "Fragmentos",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 455,
+        "text": "Cuando estás en armonía con el universo, todo fluye sin esfuerzo y con alegría.",
+        "author": "Deepak Chopra",
+        "publish_date": "2027-04-13",
+        "context": "Sobre el fluir de la vida",
+        "source": "Las 7 leyes espirituales del éxito",
+        "tags": [
+            "paz",
+            "felicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 456,
+        "text": "El pasado ya se ha ido, el futuro aún no está aquí. Hoy es el único momento que posees.",
+        "author": "Deepak Chopra",
+        "publish_date": "2027-04-14",
+        "context": "Sobre vivir el ahora",
+        "source": "Las 7 leyes espirituales del éxito",
+        "tags": [
+            "tiempo",
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 457,
+        "text": "Tu cuerpo es un reflejo de tus pensamientos, tus sentimientos y tu nivel de paz interior.",
+        "author": "Deepak Chopra",
+        "publish_date": "2027-04-15",
+        "context": "Sobre la conexión mente-cuerpo",
+        "source": "Las 7 leyes espirituales del éxito",
+        "tags": [
+            "paz",
+            "mentalidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 458,
+        "text": "El poder está siempre en el momento presente. Aquí es donde podemos comenzar a cambiar.",
+        "author": "Louise Hay",
+        "publish_date": "2027-04-16",
+        "context": "Sobre el momento presente",
+        "source": "Usted puede sanar su vida",
+        "tags": [
+            "tiempo",
+            "superación",
+            "paz"
+        ]
+    },
+    {
+        "id": 459,
+        "text": "Aprender a amarte y aceptarte tal como eres es la clave para sanar tu vida.",
+        "author": "Louise Hay",
+        "publish_date": "2027-04-17",
+        "context": "Sobre el amor propio",
+        "source": "Usted puede sanar su vida",
+        "tags": [
+            "amor",
+            "paz",
+            "superación"
+        ]
+    },
+    {
+        "id": 460,
+        "text": "Cada pensamiento que tenemos está creando nuestro futuro. Elige pensamientos de paz.",
+        "author": "Louise Hay",
+        "publish_date": "2027-04-18",
+        "context": "Sobre el poder del pensamiento",
+        "source": "Usted puede sanar su vida",
+        "tags": [
+            "mentalidad",
+            "paz",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 461,
+        "text": "El perdón a nosotros mismos y a los demás nos libera de la prisión del rencor.",
+        "author": "Louise Hay",
+        "publish_date": "2027-04-19",
+        "context": "Sobre el perdón",
+        "source": "Usted puede sanar su vida",
+        "tags": [
+            "amor",
+            "paz",
+            "superación"
+        ]
+    },
+    {
+        "id": 462,
+        "text": "Todo lo que doy regresa a mí multiplicado. Elijo dar solo amor y amabilidad.",
+        "author": "Louise Hay",
+        "publish_date": "2027-04-20",
+        "context": "Sobre la ley de correspondencia",
+        "source": "Usted puede sanar su vida",
+        "tags": [
+            "amor",
+            "paz",
+            "felicidad"
+        ]
+    },
+    {
+        "id": 463,
+        "text": "El tiempo es la imagen móvil de la eternidad.",
+        "author": "Platón",
+        "publish_date": "2027-04-21",
+        "context": "Sobre el tiempo",
+        "source": "Timeo",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 464,
+        "text": "La dirección en la que comienza la educación de un hombre determinará su vida futura.",
+        "author": "Platón",
+        "publish_date": "2027-04-22",
+        "context": "Sobre la educación",
+        "source": "La República",
+        "tags": [
+            "aprendizaje",
+            "propósito"
+        ]
+    },
+    {
+        "id": 465,
+        "text": "La filosofía es el camino más corto hacia la felicidad.",
+        "author": "Platón",
+        "publish_date": "2027-04-23",
+        "context": "Sobre la filosofía",
+        "source": "Fedón",
+        "tags": [
+            "felicidad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 466,
+        "text": "El amor es una enfermedad mental grave.",
+        "author": "Platón",
+        "publish_date": "2027-04-24",
+        "context": "Ironía sobre el amor",
+        "source": "El banquete",
+        "tags": [
+            "amor",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 467,
+        "text": "Los ojos son la ventana del alma.",
+        "author": "Platón",
+        "publish_date": "2027-04-25",
+        "context": "Sobre la mirada",
+        "source": "Fedro",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 468,
+        "text": "Quien no es un buen seguidor no puede ser un buen líder.",
+        "author": "Aristóteles",
+        "publish_date": "2027-04-26",
+        "context": "Sobre el liderazgo",
+        "source": "Política",
+        "tags": [
+            "disciplina",
+            "aprendizaje"
+        ]
+    },
+    {
+        "id": 469,
+        "text": "El amigo de todos no es amigo de nadie.",
+        "author": "Aristóteles",
+        "publish_date": "2027-04-27",
+        "context": "Sobre la amistad",
+        "source": "Ética a Nicómaco",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 470,
+        "text": "El fin del arte es representar no la apariencia externa de las cosas, sino su significado interno.",
+        "author": "Aristóteles",
+        "publish_date": "2027-04-28",
+        "context": "Sobre el arte",
+        "source": "Poética",
+        "tags": [
+            "creatividad",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 471,
+        "text": "La esperanza es el sueño del hombre despierto.",
+        "author": "Aristóteles",
+        "publish_date": "2027-04-29",
+        "context": "Sobre la esperanza",
+        "source": "Aforismos",
+        "tags": [
+            "esperanza",
+            "vida"
+        ]
+    },
+    {
+        "id": 472,
+        "text": "El ignorante afirma, el sabio duda y reflexiona.",
+        "author": "Aristóteles",
+        "publish_date": "2027-04-30",
+        "context": "Sobre la duda",
+        "source": "Ética a Nicómaco",
+        "tags": [
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 473,
+        "text": "La educación es un ornamento en la prosperidad y un refugio en la adversidad.",
+        "author": "Aristóteles",
+        "publish_date": "2027-05-01",
+        "context": "Sobre la educación",
+        "source": "Aforismos",
+        "tags": [
+            "aprendizaje",
+            "superación"
+        ]
+    },
+    {
+        "id": 474,
+        "text": "La paciencia es amarga, pero su fruto es dulce.",
+        "author": "Aristóteles",
+        "publish_date": "2027-05-02",
+        "context": "Sobre la paciencia",
+        "source": "Aforismos",
+        "tags": [
+            "perseverancia",
+            "paz"
+        ]
+    },
+    {
+        "id": 475,
+        "text": "El alma nunca piensa sin una imagen.",
+        "author": "Aristóteles",
+        "publish_date": "2027-05-03",
+        "context": "Sobre el pensamiento",
+        "source": "De anima",
+        "tags": [
+            "mentalidad",
+            "creatividad"
+        ]
+    },
+    {
+        "id": 476,
+        "text": "Adquirir el hábito de la lectura es construir un refugio contra casi todas las miserias de la vida.",
+        "author": "W. Somerset Maugham",
+        "publish_date": "2027-05-04",
+        "context": "Sobre la lectura",
+        "source": "Libros",
+        "tags": [
+            "aprendizaje",
+            "vida"
+        ]
+    },
+    {
+        "id": 477,
+        "text": "Cada acción que realizas es un voto por el tipo de persona en la que deseas convertirte.",
+        "author": "James Clear",
+        "publish_date": "2027-05-05",
+        "context": "Sobre la identidad y las acciones",
+        "source": "Hábitos Atómicos",
+        "tags": [
+            "acción",
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 478,
+        "text": "Un pequeño cambio del uno por ciento cada día se traduce en un crecimiento enorme a largo plazo.",
+        "author": "James Clear",
+        "publish_date": "2027-05-06",
+        "context": "Sobre el interés compuesto de los hábitos",
+        "source": "Hábitos Atómicos",
+        "tags": [
+            "perseverancia",
+            "acción",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 479,
+        "text": "Los hábitos son el interés compuesto de la superación personal.",
+        "author": "James Clear",
+        "publish_date": "2027-05-07",
+        "context": "Sobre el valor de la constancia",
+        "source": "Hábitos Atómicos",
+        "tags": [
+            "disciplina",
+            "superación",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 480,
+        "text": "La forma más efectiva de cambiar tus hábitos es concentrarte no en lo que quieres lograr, sino en quién deseas ser.",
+        "author": "James Clear",
+        "publish_date": "2027-05-08",
+        "context": "Sobre el cambio de identidad",
+        "source": "Hábitos Atómicos",
+        "tags": [
+            "mentalidad",
+            "propósito",
+            "superación"
+        ]
+    },
+    {
+        "id": 481,
+        "text": "El obstáculo es el camino. Lo que impide la acción puede convertirse en la acción misma.",
+        "author": "Ryan Holiday",
+        "publish_date": "2027-05-09",
+        "context": "Sobre la resiliencia estoica",
+        "source": "El obstáculo es el camino",
+        "tags": [
+            "superación",
+            "valentía",
+            "acción"
+        ]
+    },
+    {
+        "id": 482,
+        "text": "El ego es el enemigo de lo que quieres lograr y de lo que tienes.",
+        "author": "Ryan Holiday",
+        "publish_date": "2027-05-10",
+        "context": "Sobre el ego",
+        "source": "El ego es el enemigo",
+        "tags": [
+            "reflexión",
+            "mentalidad",
+            "paz"
+        ]
+    },
+    {
+        "id": 483,
+        "text": "La quietud es la clave para pensar con claridad, tomar decisiones sabias y mantener la paz interior.",
+        "author": "Ryan Holiday",
+        "publish_date": "2027-05-11",
+        "context": "Sobre el valor de la quietud",
+        "source": "La quietud es la clave",
+        "tags": [
+            "paz",
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 484,
+        "text": "No controlamos lo que sucede, controlamos cómo respondemos a lo que sucede.",
+        "author": "Ryan Holiday",
+        "publish_date": "2027-05-12",
+        "context": "Sobre la dicotomía de control",
+        "source": "Diario estoico",
+        "tags": [
+            "paz",
+            "mentalidad",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 485,
+        "text": "Si quieres tener paz, concéntrate en lo que está bajo tu control absoluto.",
+        "author": "Ryan Holiday",
+        "publish_date": "2027-05-13",
+        "context": "Sobre la paz y el control",
+        "source": "La quietud es la clave",
+        "tags": [
+            "paz",
+            "simplicidad",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 486,
+        "text": "El secreto de la felicidad es simple: averigua qué es lo que te gusta hacer y dirige toda tu energía hacia ello.",
+        "author": "Robin Sharma",
+        "publish_date": "2027-05-14",
+        "context": "Sobre encontrar tu pasión",
+        "source": "El monje que vendió su Ferrari",
+        "tags": [
+            "felicidad",
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 487,
+        "text": "Los límites de tu vida son simplemente los límites de tu propia mente.",
+        "author": "Robin Sharma",
+        "publish_date": "2027-05-15",
+        "context": "Sobre los límites mentales",
+        "source": "El monje que vendió su Ferrari",
+        "tags": [
+            "mentalidad",
+            "superación",
+            "vida"
+        ]
+    },
+    {
+        "id": 488,
+        "text": "El fracaso no es lo contrario del éxito; es parte indispensable del camino que te lleva a él.",
+        "author": "Robin Sharma",
+        "publish_date": "2027-05-16",
+        "context": "Sobre el valor del error",
+        "source": "El monje que vendió su Ferrari",
+        "tags": [
+            "aprendizaje",
+            "superación",
+            "éxito"
+        ]
+    },
+    {
+        "id": 489,
+        "text": "Pequeñas mejoras diarias producen con el tiempo resultados asombrosos.",
+        "author": "Robin Sharma",
+        "publish_date": "2027-05-17",
+        "context": "Sobre el progreso gradual",
+        "source": "El club de las 5 de la mañana",
+        "tags": [
+            "perseverancia",
+            "acción",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 490,
+        "text": "Tu día a día es una maqueta en miniatura de tu vida entera. Cuida tus mañanas.",
+        "author": "Robin Sharma",
+        "publish_date": "2027-05-18",
+        "context": "Sobre el día cotidiano",
+        "source": "El club de las 5 de la mañana",
+        "tags": [
+            "disciplina",
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 491,
+        "text": "Sé impecable con tus palabras; habla con integridad y di solo lo que realmente sientes.",
+        "author": "Don Miguel Ruiz",
+        "publish_date": "2027-05-19",
+        "context": "Primer acuerdo",
+        "source": "Los cuatro acuerdos",
+        "tags": [
+            "amor",
+            "paz",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 492,
+        "text": "No te tomes nada personalmente. Lo que los demás dicen y hacen es una proyección de su propia realidad.",
+        "author": "Don Miguel Ruiz",
+        "publish_date": "2027-05-20",
+        "context": "Segundo acuerdo",
+        "source": "Los cuatro acuerdos",
+        "tags": [
+            "paz",
+            "mentalidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 493,
+        "text": "No hagas suposiciones. Encuentra el valor de hacer preguntas y expresar lo que realmente quieres.",
+        "author": "Don Miguel Ruiz",
+        "publish_date": "2027-05-21",
+        "context": "Tercer acuerdo",
+        "source": "Los cuatro acuerdos",
+        "tags": [
+            "paz",
+            "acción",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 494,
+        "text": "Haz siempre lo máximo que puedas; bajo cualquier circunstancia, da simplemente tu mejor esfuerzo.",
+        "author": "Don Miguel Ruiz",
+        "publish_date": "2027-05-22",
+        "context": "Cuarto acuerdo",
+        "source": "Los cuatro acuerdos",
+        "tags": [
+            "disciplina",
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 495,
+        "text": "Haz cada cosa en la vida como si fuera lo último que haces.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-23",
+        "context": "Atención plena",
+        "source": "Meditaciones",
+        "tags": [
+            "acción",
+            "disciplina"
+        ]
+    },
+    {
+        "id": 496,
+        "text": "El obstáculo en el camino se convierte en el camino.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-24",
+        "context": "Sobre el obstáculo",
+        "source": "Meditaciones",
+        "tags": [
+            "superación",
+            "acción"
+        ]
+    },
+    {
+        "id": 497,
+        "text": "Nuestras vidas son campos de batalla donde luchamos contra nuestras propias debilidades.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-25",
+        "context": "Lucha interior",
+        "source": "Meditaciones",
+        "tags": [
+            "disciplina",
+            "superación"
+        ]
+    },
+    {
+        "id": 498,
+        "text": "El arte de vivir se asemeja más a la lucha que a la danza.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-26",
+        "context": "Sobre vivir",
+        "source": "Meditaciones",
+        "tags": [
+            "vida",
+            "perseverancia"
+        ]
+    },
+    {
+        "id": 499,
+        "text": "No des a las cosas pequeñas más tiempo del que merecen.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-27",
+        "context": "Sobre el tiempo",
+        "source": "Meditaciones",
+        "tags": [
+            "tiempo",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 500,
+        "text": "La razón es lo que nos une a los gods y nos diferencia de los animales.",
+        "author": "Marco Aurelio",
+        "publish_date": "2027-05-28",
+        "context": "Sobre la razón",
+        "source": "Meditaciones",
+        "tags": [
+            "reflexión",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 501,
+        "text": "El pasado no tiene poder sobre el momento presente.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2027-05-29",
+        "context": "Sobre el pasado",
+        "source": "El poder del ahora",
+        "tags": [
+            "tiempo",
+            "superación",
+            "vida"
+        ]
+    },
+    {
+        "id": 502,
+        "text": "La paz interior no se encuentra cambiando las circunstancias, sino dándote cuenta de quién eres en el nivel más profundo.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2027-05-30",
+        "context": "Sobre la paz profunda",
+        "source": "El silencio habla",
+        "tags": [
+            "paz",
+            "vida",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 503,
+        "text": "No te preocupes por el fruto de tus acciones; mantén tu atención en la acción misma.",
+        "author": "Eckhart Tolle",
+        "publish_date": "2027-05-31",
+        "context": "Sobre la atención en el hacer",
+        "source": "El poder del ahora",
+        "tags": [
+            "acción",
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 504,
+        "text": "Nuestro miedo más profundo no es que seamos inadecuados, sino que somos poderosos sin medida.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-01",
+        "context": "Sobre el potencial humano",
+        "source": "Volver al amor",
+        "tags": [
+            "valentía",
+            "esperanza",
+            "superación"
+        ]
+    },
+    {
+        "id": 505,
+        "text": "En cada momento decidimos, consciente o inconscientemente, alinearnos con el amor o con el miedo.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-02",
+        "context": "Sobre elegir con sabiduría",
+        "source": "Volver al amor",
+        "tags": [
+            "amor",
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 506,
+        "text": "El perdón no siempre es fácil, pero es el único camino que nos libera del dolor del pasado.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-03",
+        "context": "Sobre la liberación del perdón",
+        "source": "Volver al amor",
+        "tags": [
+            "amor",
+            "paz",
+            "superación"
+        ]
+    },
+    {
+        "id": 507,
+        "text": "Jugar a ser pequeño no le sirve al mundo. Nacimos para manifestar la gloria que llevamos dentro.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-04",
+        "context": "Sobre la autorrealización",
+        "source": "Volver al amor",
+        "tags": [
+            "superación",
+            "esperanza",
+            "vida"
+        ]
+    },
+    {
+        "id": 508,
+        "text": "Cuando elegimos el amor en lugar del miedo, experimentamos milagros en nuestra vida cotidiana.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-05",
+        "context": "Sobre los milagros cotidianos",
+        "source": "Volver al amor",
+        "tags": [
+            "amor",
+            "felicidad",
+            "vida"
+        ]
+    },
+    {
+        "id": 509,
+        "text": "Tu luz, no tu oscuridad, es lo que más te asusta.",
+        "author": "Marianne Williamson",
+        "publish_date": "2027-06-06",
+        "context": "Sobre el brillo personal",
+        "source": "Volver al amor",
+        "tags": [
+            "valentía",
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 510,
+        "text": "La productividad no se trata de hacer más cosas, sino de hacer las cosas correctas para el bien de otros.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-07",
+        "context": "Sobre la verdadera productividad",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "disciplina",
+            "propósito",
+            "simplicidad"
+        ]
+    },
+    {
+        "id": 511,
+        "text": "Aprovechar bien el tiempo no es correr más rápido, sino caminar con propósito y en paz.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-08",
+        "context": "Sobre el caminar con calma",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "tiempo",
+            "paz",
+            "propósito"
+        ]
+    },
+    {
+        "id": 512,
+        "text": "Nuestros límites no son nuestros enemigos; son el marco en el que aprendemos a ser humildes.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-09",
+        "context": "Sobre los límites humanos",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "mentalidad",
+            "aprendizaje",
+            "reflexión"
+        ]
+    },
+    {
+        "id": 513,
+        "text": "El descanso no es un premio por haber trabajado bien; es una necesidad física y espiritual.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-10",
+        "context": "Sobre el valor del descanso",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "simplicidad",
+            "paz",
+            "vida"
+        ]
+    },
+    {
+        "id": 514,
+        "text": "Decir no a lo bueno es el primer paso indispensable para poder decir sí a lo mejor.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-11",
+        "context": "Sobre saber priorizar",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "disciplina",
+            "mentalidad",
+            "acción"
+        ]
+    },
+    {
+        "id": 515,
+        "text": "La verdadera disciplina comienza en el corazón, alineando nuestras prioridades diarias.",
+        "author": "Ana Ávila",
+        "publish_date": "2027-06-12",
+        "context": "Sobre la disciplina",
+        "source": "Aprovecha bien el tiempo",
+        "tags": [
+            "disciplina",
+            "propósito",
+            "vida"
+        ]
+    },
+    {
+        "id": 516,
+        "text": "La maestría no es una cuestión de genética o de suerte, sino de dedicación y enfoque sostenido.",
+        "author": "Robert Greene",
+        "publish_date": "2027-06-13",
+        "context": "Sobre el aprendizaje profundo",
+        "source": "Maestría",
+        "tags": [
+            "perseverancia",
+            "aprendizaje",
+            "éxito"
+        ]
+    },
+    {
+        "id": 517,
+        "text": "Quien controla sus emociones controla su propio destino. La impulsividad es enemiga del poder.",
+        "author": "Robert Greene",
+        "publish_date": "2027-06-14",
+        "context": "Sobre el autocontrol emocional",
+        "source": "Las 48 leyes del poder",
+        "tags": [
+            "disciplina",
+            "mentalidad",
+            "superación"
+        ]
+    },
+    {
+        "id": 518,
+        "text": "El futuro pertenece a aquellos que aprenden más habilidades y las combinan de formas creativas.",
+        "author": "Robert Greene",
+        "publish_date": "2027-06-15",
+        "context": "Sobre el aprendizaje futuro",
+        "source": "Maestría",
+        "tags": [
+            "creatividad",
+            "aprendizaje",
+            "tiempo"
+        ]
+    },
+    {
+        "id": 519,
+        "text": "Vivir no es un bien, sino vivir bien.",
+        "author": "Séneca",
+        "publish_date": "2027-06-16",
+        "context": "Sobre vivir bien",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "vida",
+            "propósito"
+        ]
+    },
+    {
+        "id": 520,
+        "text": "La vida, si sabes usarla, es larga.",
+        "author": "Séneca",
+        "publish_date": "2027-06-17",
+        "context": "Sobre usar la vida",
+        "source": "Sobre la brevedad de la vida",
+        "tags": [
+            "tiempo",
+            "vida"
+        ]
+    },
+    {
+        "id": 521,
+        "text": "El sabio se basta a sí mismo para ser feliz, pero desea tener amigos.",
+        "author": "Séneca",
+        "publish_date": "2027-06-18",
+        "context": "Sobre la amistad",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "felicidad",
+            "amor"
+        ]
+    },
+    {
+        "id": 522,
+        "text": "Donde hay un ser humano, hay una oportunidad para la amabilidad.",
+        "author": "Séneca",
+        "publish_date": "2027-06-19",
+        "context": "Sobre la amabilidad",
+        "source": "Sobre la clemencia",
+        "tags": [
+            "amor",
+            "paz"
+        ]
+    },
+    {
+        "id": 523,
+        "text": "El hombre es un animal racional.",
+        "author": "Séneca",
+        "publish_date": "2027-06-20",
+        "context": "Sobre la racionalidad",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "reflexión",
+            "vida"
+        ]
+    },
+    {
+        "id": 524,
+        "text": "El camino a seguir es cuesta arriba, pero la vista es hermosa.",
+        "author": "Séneca",
+        "publish_date": "2027-06-21",
+        "context": "Sobre el camino",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "perseverancia",
+            "superación"
+        ]
+    },
+    {
+        "id": 525,
+        "text": "Todo principio tiene sus dificultades, pero la constancia las supera.",
+        "author": "Séneca",
+        "publish_date": "2027-06-22",
+        "context": "Sobre el comienzo",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "perseverancia",
+            "acción"
+        ]
+    },
+    {
+        "id": 526,
+        "text": "La ira es un ácido que puede hacer más daño al recipiente en el que se almacena.",
+        "author": "Séneca",
+        "publish_date": "2027-06-23",
+        "context": "Sobre la ira",
+        "source": "Sobre la ira",
+        "tags": [
+            "paz",
+            "mentalidad"
+        ]
+    },
+    {
+        "id": 527,
+        "text": "La libertad consiste en obedecer a la razón y controlar los apetitos.",
+        "author": "Séneca",
+        "publish_date": "2027-06-24",
+        "context": "Sobre la libertad",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "disciplina",
+            "paz"
+        ]
+    },
+    {
+        "id": 528,
+        "text": "Aquel que ha comenzado bien, tiene la mitad del trabajo hecho.",
+        "author": "Séneca",
+        "publish_date": "2027-06-25",
+        "context": "Sobre comenzar",
+        "source": "Cartas a Lucilio",
+        "tags": [
+            "acción",
+            "éxito"
+        ]
     }
 ]

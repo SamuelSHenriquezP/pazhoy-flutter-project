@@ -12,6 +12,8 @@ class QuoteCard extends StatelessWidget {
   final VoidCallback onToggleFavorite;
   final VoidCallback? onTap;
   final ScreenshotController? screenshotController;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   const QuoteCard({
     super.key,
@@ -20,26 +22,38 @@ class QuoteCard extends StatelessWidget {
     required this.onToggleFavorite,
     this.onTap,
     this.screenshotController,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     final styleProvider = context.watch<StyleProvider>();
     final style = styleProvider.style;
+    // Usa el color de texto tal como lo definió el usuario, sin modificaciones
+    final effectiveTextColor = style.textColor;
 
     Widget cardContent = Container(
       decoration: BoxDecoration(
         // Apply opacity to background color when there's no image
         color: style.backgroundImagePath == null ? style.backgroundColor : null,
         borderRadius: BorderRadius.circular(12),
-        image: style.backgroundImagePath != null
-            ? DecorationImage(
-                image: FileImage(File(style.backgroundImagePath!)),
-                fit: BoxFit.cover,
-                scale: style.imageScale,
-                alignment: style.imageAlignment,
-              )
-            : null,
+        image: (() {
+          if (style.backgroundImagePath == null) return null;
+          try {
+            final file = File(style.backgroundImagePath!);
+            if (!file.existsSync()) return null;
+            return DecorationImage(
+              image: FileImage(file),
+              fit: BoxFit.cover,
+              scale: style.imageScale,
+              alignment: style.imageAlignment,
+            );
+          } catch (e) {
+            debugPrint('Error loading background image: $e');
+            return null;
+          }
+        })(),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.1),
@@ -48,19 +62,23 @@ class QuoteCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          onLongPress: quote.isCustom ? () => _showCustomMenu(context) : null,
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
         children: [
-          // Overlay de color/opacidad
-          // When there's an image, this creates a colored overlay
-          // When there's no image, this adds transparency/tint to solid background
+          // Overlay de color/opacidad:
+          // Con imagen: tinta de backgroundColor encima de la imagen
+          // Sin imagen: tinta adicional sobre el color sólido (oscurecer/aclarar)
           if (style.opacity > 0.0)
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: style.backgroundImagePath != null
-                      ? style.backgroundColor.withValues(alpha: style.opacity)
-                      : Colors.white.withValues(alpha: style.opacity),
+                  color: style.backgroundColor.withValues(alpha: style.opacity),
                 ),
               ),
             ),
@@ -72,11 +90,11 @@ class QuoteCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Icon(
                     Icons.format_quote_rounded,
-                    color: Colors.grey,
+                    color: effectiveTextColor.withValues(alpha: 0.7),
                     size: 22,
                   ),
                 ),
@@ -86,6 +104,7 @@ class QuoteCard extends StatelessWidget {
                   style: style,
                   fontSize: style.fontSize,
                   isAuthor: false,
+                  resolvedTextColor: effectiveTextColor,
                 ),
                 const SizedBox(height: 16),
                 if (quote.author.isNotEmpty)
@@ -95,6 +114,7 @@ class QuoteCard extends StatelessWidget {
                     fontSize: 14,
                     isAuthor: true,
                     textAlign: TextAlign.right,
+                    resolvedTextColor: effectiveTextColor,
                   ),
                 if (quote.source != null && quote.source!.trim().isNotEmpty)
                   Padding(
@@ -104,7 +124,7 @@ class QuoteCard extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         fontSize: 12,
-                        color: style.textColor.withValues(alpha: 0.6),
+                        color: effectiveTextColor.withValues(alpha: 0.6),
                       ),
                     ),
                   ),
@@ -120,12 +140,42 @@ class QuoteCard extends StatelessWidget {
                 isFavorite ? Icons.favorite : Icons.favorite_border,
                 color: isFavorite
                     ? Colors.red
-                    : style.textColor.withValues(alpha: 0.5),
+                    : effectiveTextColor.withValues(alpha: 0.5),
               ),
               onPressed: onToggleFavorite,
             ),
           ),
+          // Badge de frase propia
+          if (quote.isCustom)
+            Positioned(
+              bottom: 8,
+              left: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                decoration: BoxDecoration(
+                  color: effectiveTextColor.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.edit_outlined, size: 11, color: effectiveTextColor.withValues(alpha: 0.6)),
+                    const SizedBox(width: 3),
+                    Text(
+                      'Mi frase',
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: effectiveTextColor.withValues(alpha: 0.6),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
         ],
+      ),
+        ),
       ),
     );
 
@@ -139,12 +189,51 @@ class QuoteCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: cardContent,
-      ),
+      child: cardContent,
     );
+  }
+
+  void _showCustomMenu(BuildContext context) {
+    // Encontrar la posición del widget para el menú
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    final Offset offset = box.localToGlobal(Offset.zero);
+    final Size size = box.size;
+
+    showMenu<String>(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        offset.dx + size.width / 2,
+        offset.dy + size.height / 2,
+        offset.dx + size.width,
+        offset.dy + size.height,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      items: [
+        const PopupMenuItem(
+          value: 'edit',
+          child: Row(
+            children: [
+              Icon(Icons.edit_outlined, size: 18),
+              SizedBox(width: 10),
+              Text('Editar'),
+            ],
+          ),
+        ),
+        const PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Icon(Icons.delete_outline, size: 18, color: Colors.red),
+              SizedBox(width: 10),
+              Text('Eliminar', style: TextStyle(color: Colors.red)),
+            ],
+          ),
+        ),
+      ],
+    ).then((value) {
+      if (value == 'edit') onEdit?.call();
+      if (value == 'delete') onDelete?.call();
+    });
   }
 }
 
@@ -154,6 +243,7 @@ class _StyledText extends StatelessWidget {
   final double fontSize;
   final bool isAuthor;
   final TextAlign? textAlign;
+  final Color resolvedTextColor;
 
   const _StyledText({
     required this.text,
@@ -161,13 +251,45 @@ class _StyledText extends StatelessWidget {
     required this.fontSize,
     required this.isAuthor,
     this.textAlign,
+    required this.resolvedTextColor,
   });
 
+  static String? _normalizeFontFamily(String? family) {
+    final normalized = family?.trim();
+    if (normalized == null || normalized.isEmpty) return null;
+    switch (normalized.toLowerCase()) {
+      case 'lato':
+        return 'Lato';
+      case 'roboto':
+        return 'Roboto';
+      case 'merriweather':
+        return 'Merriweather';
+      case 'montserrat':
+        return 'Montserrat';
+      case 'oswald':
+        return 'Oswald';
+      case 'playfair display':
+        return 'Playfair Display';
+      case 'dancing script':
+        return 'Dancing Script';
+      case 'pacifico':
+        return 'Pacifico';
+      case 'anton':
+        return 'Anton';
+      case 'lobster':
+        return 'Lobster';
+      default:
+        return normalized;
+    }
+  }
+
   static TextStyle _safeGetFont(String family, TextStyle textStyle) {
+    final normalized = _normalizeFontFamily(family);
+    if (normalized == null) return textStyle;
     try {
-      return GoogleFonts.getFont(family, textStyle: textStyle);
+      return GoogleFonts.getFont(normalized, textStyle: textStyle);
     } catch (_) {
-      return textStyle;
+      return textStyle.copyWith(fontFamily: normalized);
     }
   }
 
@@ -183,6 +305,7 @@ class _StyledText extends StatelessWidget {
     final baseStyle = style.fontFamily != null
         ? _safeGetFont(style.fontFamily!, baseTextStyle)
         : baseTextStyle;
+    final textColor = resolvedTextColor;
 
     // Si hay contorno, usamos Stack para dibujarlo detrás
     if (style.textOutlineColor != null && style.textOutlineWidth > 0) {
@@ -207,8 +330,8 @@ class _StyledText extends StatelessWidget {
             textAlign: textAlign ?? style.textAlign,
             style: baseStyle.copyWith(
               color: isAuthor
-                  ? style.textColor.withValues(alpha: 0.8)
-                  : style.textColor,
+                  ? textColor.withValues(alpha: 0.8)
+                  : textColor,
               shadows: style.textShadowColor != null
                   ? [
                       Shadow(
@@ -230,8 +353,8 @@ class _StyledText extends StatelessWidget {
       textAlign: textAlign ?? style.textAlign,
       style: baseStyle.copyWith(
         color: isAuthor
-            ? style.textColor.withValues(alpha: 0.8)
-            : style.textColor,
+            ? textColor.withValues(alpha: 0.8)
+            : textColor,
         shadows: style.textShadowColor != null
             ? [
                 Shadow(

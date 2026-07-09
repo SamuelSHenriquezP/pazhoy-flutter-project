@@ -22,30 +22,34 @@ class NotificationService {
 
   Future<void> init() async {
     if (_initialized) return;
-    tz.initializeTimeZones();
     try {
-      final timezoneInfo = await FlutterTimezone.getLocalTimezone();
-      tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
-    } catch (e) {
-      debugPrint('Error al inicializar la zona horaria del dispositivo: $e');
+      tz.initializeTimeZones();
       try {
-        tz.setLocalLocation(tz.getLocation('America/Bogota'));
-      } catch (_) {}
-    }
+        final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+        tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
+      } catch (e) {
+        debugPrint('Error al inicializar la zona horaria del dispositivo: $e');
+        try {
+          tz.setLocalLocation(tz.getLocation('America/Bogota'));
+        } catch (_) {}
+      }
 
-    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const darwinInit = DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-    );
-    const initSettings = InitializationSettings(
-      android: androidInit,
-      iOS: darwinInit,
-      macOS: darwinInit,
-    );
-    await _plugin.initialize(initSettings);
-    _initialized = true;
+      const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+      const darwinInit = DarwinInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      );
+      const initSettings = InitializationSettings(
+        android: androidInit,
+        iOS: darwinInit,
+        macOS: darwinInit,
+      );
+      await _plugin.initialize(initSettings);
+      _initialized = true;
+    } catch (e, st) {
+      debugPrint('Error general al inicializar NotificationService: $e\n$st');
+    }
   }
 
   Future<bool> requestPermissions() async {

@@ -8,6 +8,9 @@ class Quote {
   final String? source; // libro, artículo, origen
   final List<String> tags;
 
+  /// `true` si esta frase fue creada por el usuario (no viene del JSON del sistema).
+  final bool isCustom;
+
   // Campos precomputados para búsqueda rápida
   late final String _textLower = text.toLowerCase();
   late final String _authorLower = author.toLowerCase();
@@ -20,6 +23,7 @@ class Quote {
     this.context,
     this.source,
     this.tags = const [],
+    this.isCustom = false,
   });
 
   // Constructor desde JSON
@@ -69,6 +73,7 @@ class Quote {
       context: parseNullableString(json['context']),
       source: parseNullableString(json['source']),
       tags: parseTags(json['tags']),
+      isCustom: json['is_custom'] as bool? ?? false,
     );
   }
 
@@ -82,6 +87,7 @@ class Quote {
     if (context != null) map['context'] = context;
     if (source != null) map['source'] = source;
     if (tags.isNotEmpty) map['tags'] = tags;
+    if (isCustom) map['is_custom'] = true;
     return map;
   }
 
@@ -93,6 +99,7 @@ class Quote {
     String? context,
     String? source,
     List<String>? tags,
+    bool? isCustom,
   }) {
     return Quote(
       text: text ?? this.text,
@@ -102,6 +109,7 @@ class Quote {
       context: context ?? this.context,
       source: source ?? this.source,
       tags: tags ?? this.tags,
+      isCustom: isCustom ?? this.isCustom,
     );
   }
 

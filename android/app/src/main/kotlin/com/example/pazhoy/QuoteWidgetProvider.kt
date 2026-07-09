@@ -6,33 +6,24 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.util.TypedValue
-import android.view.View
 import android.widget.RemoteViews
+import es.antonborri.home_widget.HomeWidgetPlugin
 import org.json.JSONArray
-import java.io.File
 import kotlin.random.Random
 
 /**
  * Widget de pantalla de inicio para PazHoy.
- *
- * Modos:
- *  - "daily"     → muestra la frase del día (actualizada desde Flutter)
- *  - "favorites" → rota aleatoriamente entre las frases favoritas del usuario
- *  - "pinned"    → muestra la frase fijada manualmente por el usuario desde la app
- *
- * Soporta la personalización idéntica a la app en sí misma:
- *  - Color de fondo y color de texto.
- *  - Imagen de fondo personalizada del almacenamiento local.
- *  - Opacidad / overlay de color.
- *  - Alineación de texto y tamaño de fuente dinámico.
+ * Solo muestra texto (frase + autor), sin imágenes de fondo.
  */
 class QuoteWidgetProvider : AppWidgetProvider() {
 
     companion object {
         const val ACTION_REFRESH = "com.example.pazhoy.WIDGET_REFRESH"
-        const val PREFS_NAME = "HomeWidgetPreferences"
+
+        private const val DEFAULT_BG_COLOR = 0xCC1A1A2E.toInt()
+        private const val DEFAULT_TEXT = "Abre PazHoy para ver la frase del día."
+        private const val DEFAULT_AUTHOR = ""
     }
 
     override fun onUpdate(
@@ -53,7 +44,7 @@ class QuoteWidgetProvider : AppWidgetProvider() {
                 ComponentName(context, QuoteWidgetProvider::class.java)
             )
             for (id in ids) {
-                updateWidget(context, manager, id, forceRotate = true)
+                updateWidget(context, manager, id)
             }
         }
     }
@@ -61,130 +52,94 @@ class QuoteWidgetProvider : AppWidgetProvider() {
     private fun updateWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetId: Int,
-        forceRotate: Boolean = false
+        appWidgetId: Int
     ) {
-        val prefs: SharedPreferences =
-            context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        try {
+            val prefs = HomeWidgetPlugin.getData(context)
 
-        val mode = prefs.getString("widget_mode", "daily") ?: "daily"
+            android.util.Log.d("QuoteWidget", "Updating widget...")
 
-        val (text, author) = when (mode) {
+            val mode = prefs.getString("widget_mode", "daily") ?: "daily"
+            val (text, author) = resolveContent(prefs, mode)
+
+            val views = RemoteViews(context.packageName, R.layout.quote_widget)
+
+            // Texto
+            views.setTextViewText(R.id.widget_quote_text, text)
+            views.setTextViewText(
+                R.id.widget_quote_author,
+                if (author.isNotEmpty()) "— $author" else ""
+            )
+
+            // Colores
+            val defaultTextColor = android.graphics.Color.WHITE
+            val bgColor = getIntSafe(prefs, "widget_bg_color", DEFAULT_BG_COLOR)
+            val textColor = getIntSafe(prefs, "widget_text_color", defaultTextColor)
+            val fontSize = getFloatSafe(prefs, "widget_font_size", 14.0f)
+
+            views.setInt(R.id.widget_root, "setBackgroundColor", bgColor)
+            views.setTextColor(R.id.widget_quote_text, textColor)
+            views.setTextColor(R.id.widget_quote_author, (0xCC shl 24) or (textColor and 0x00FFFFFF))
+            views.setTextColor(R.id.widget_quote_mark, (0x80 shl 24) or (textColor and 0x00FFFFFF))
+
+            val clampedFontSize = fontSize.coerceIn(12f, 18f)
+            views.setTextViewTextSize(R.id.widget_quote_text, TypedValue.COMPLEX_UNIT_SP, clampedFontSize)
+
+            // Acción al tocar: abrir la app
+            val openAppPending = buildOpenAppPendingIntent(context)
+            views.setOnClickPendingIntent(R.id.widget_root, openAppPending)
+
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+            android.util.Log.d("QuoteWidget", "Widget updated successfully!")
+
+        } catch (e: Exception) {
+            android.util.Log.e("QuoteWidget", "ERROR updating widget: ${e.message}", e)
+            // Fallback mínimo
+            try {
+                val safeViews = RemoteViews(context.packageName, R.layout.quote_widget)
+                safeViews.setTextViewText(R.id.widget_quote_text, "Abre PazHoy para cargar frases")
+                safeViews.setTextViewText(R.id.widget_quote_author, "(toca para abrir la app)")
+                safeViews.setInt(R.id.widget_root, "setBackgroundColor", DEFAULT_BG_COLOR)
+                safeViews.setOnClickPendingIntent(R.id.widget_root, buildOpenAppPendingIntent(context))
+                appWidgetManager.updateAppWidget(appWidgetId, safeViews)
+            } catch (e2: Exception) {
+                android.util.Log.e("QuoteWidget", "FATAL: Even fallback failed: ${e2.message}", e2)
+            }
+        }
+    }
+
+    private fun buildOpenAppPendingIntent(context: Context): PendingIntent {
+        val intent = context.packageManager
+            .getLaunchIntentForPackage(context.packageName)
+            ?.apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP }
+            ?: Intent()
+        return PendingIntent.getActivity(
+            context, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    private fun resolveContent(
+        prefs: android.content.SharedPreferences,
+        mode: String
+    ): Pair<String, String> {
+        return when (mode) {
             "favorites" -> {
                 val json = prefs.getString("widget_favorites_json", null)
                 getRandomFavorite(json) ?: Pair(
-                    prefs.getString("widget_daily_text", "Abre la app para cargar frases.") ?: "",
-                    prefs.getString("widget_daily_author", "") ?: ""
+                    prefs.getString("widget_daily_text", DEFAULT_TEXT) ?: DEFAULT_TEXT,
+                    prefs.getString("widget_daily_author", DEFAULT_AUTHOR) ?: DEFAULT_AUTHOR
                 )
             }
-            else -> {
-                Pair(
-                    prefs.getString("widget_daily_text", "Abre la app para cargar frases.") ?: "",
-                    prefs.getString("widget_daily_author", "") ?: ""
-                )
-            }
+            "pinned" -> Pair(
+                prefs.getString("widget_pinned_text", DEFAULT_TEXT) ?: DEFAULT_TEXT,
+                prefs.getString("widget_pinned_author", DEFAULT_AUTHOR) ?: DEFAULT_AUTHOR
+            )
+            else -> Pair(
+                prefs.getString("widget_daily_text", DEFAULT_TEXT) ?: DEFAULT_TEXT,
+                prefs.getString("widget_daily_author", DEFAULT_AUTHOR) ?: DEFAULT_AUTHOR
+            )
         }
-
-        val views = RemoteViews(context.packageName, R.layout.quote_widget)
-        views.setTextViewText(R.id.widget_quote_text, text)
-        views.setTextViewText(
-            R.id.widget_quote_author,
-            if (author.isNotEmpty()) "— $author" else ""
-        )
-
-        // --- Personalización del Estilo ---
-        val defaultBgColor = android.graphics.Color.parseColor("#1A1A2E") // Azul oscuro por defecto de la app
-        val defaultTextColor = android.graphics.Color.WHITE
-
-        // Cargar variables de estilo desde Flutter (StyleProvider)
-        val bgColor = prefs.getInt("widget_bg_color", defaultBgColor)
-        val textColor = prefs.getInt("widget_text_color", defaultTextColor)
-        val bgImage = prefs.getString("widget_bg_image", null)
-        val bgOpacity = prefs.getFloat("widget_bg_opacity", 0.0f)
-        val fontSize = prefs.getFloat("widget_font_size", 16.0f)
-        val textAlign = prefs.getInt("widget_text_align", 17) // 17 es Gravity.CENTER
-
-        // 1. Aplicar colores de texto con su respectivo canal de opacidad
-        views.setTextColor(R.id.widget_quote_text, textColor)
-        views.setTextColor(R.id.widget_quote_author, (textColor and 0x00FFFFFF) or (0xCC shl 24)) // 80% opacity
-        views.setTextColor(R.id.widget_quote_mark, (textColor and 0x00FFFFFF) or (0x80 shl 24)) // 50% opacity
-
-        // 2. Aplicar alineación de texto y tamaño de fuente
-        views.setInt(R.id.widget_quote_text, "setGravity", textAlign)
-        val clampedFontSize = fontSize.coerceIn(12f, 22f) // Mantener tamaño balanceado en widget
-        views.setTextViewTextSize(R.id.widget_quote_text, TypedValue.COMPLEX_UNIT_SP, clampedFontSize)
-
-        // 3. Aplicar color de fondo
-        if (bgImage != null && bgImage.isNotEmpty()) {
-            views.setInt(R.id.widget_root, "setBackgroundColor", android.graphics.Color.TRANSPARENT)
-        } else {
-            views.setInt(R.id.widget_root, "setBackgroundColor", bgColor)
-        }
-
-        // 4. Aplicar imagen de fondo
-        if (bgImage != null && bgImage.isNotEmpty()) {
-            val file = File(bgImage)
-            if (file.exists()) {
-                try {
-                    val bitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
-                    if (bitmap != null) {
-                        views.setImageViewBitmap(R.id.widget_background_image, bitmap)
-                        views.setViewVisibility(R.id.widget_background_image, View.VISIBLE)
-                    } else {
-                        views.setViewVisibility(R.id.widget_background_image, View.GONE)
-                    }
-                } catch (e: Exception) {
-                    views.setViewVisibility(R.id.widget_background_image, View.GONE)
-                }
-            } else {
-                views.setViewVisibility(R.id.widget_background_image, View.GONE)
-            }
-        } else {
-            views.setViewVisibility(R.id.widget_background_image, View.GONE)
-        }
-
-        // 5. Aplicar capa de opacidad (overlay)
-        if (bgOpacity > 0.0f) {
-            val overlayBaseColor = if (bgImage != null && bgImage.isNotEmpty()) bgColor else android.graphics.Color.WHITE
-            val alpha = (bgOpacity * 255).toInt().coerceIn(0, 255)
-            val overlayColor = (alpha shl 24) or (overlayBaseColor and 0x00FFFFFF)
-            views.setInt(R.id.widget_background_overlay, "setBackgroundColor", overlayColor)
-            views.setViewVisibility(R.id.widget_background_overlay, View.VISIBLE)
-        } else {
-            views.setViewVisibility(R.id.widget_background_overlay, View.GONE)
-        }
-
-        // --- Acciones del Widget ---
-        // Tap en el cuerpo del widget → Abre la app
-        val openAppIntent = context.packageManager
-            .getLaunchIntentForPackage(context.packageName)
-            ?.apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-
-        val openAppPending = PendingIntent.getActivity(
-            context, 0, openAppIntent ?: Intent(),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        views.setOnClickPendingIntent(R.id.widget_quote_text, openAppPending)
-        views.setOnClickPendingIntent(R.id.widget_quote_mark, openAppPending)
-        views.setOnClickPendingIntent(R.id.widget_quote_author, openAppPending)
-
-        // Tap en botón refrescar → Rota frase (modo favoritos)
-        val refreshIntent = Intent(context, QuoteWidgetProvider::class.java).apply {
-            action = ACTION_REFRESH
-        }
-        val refreshPending = PendingIntent.getBroadcast(
-            context, 1, refreshIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        views.setOnClickPendingIntent(R.id.widget_refresh_button, refreshPending)
-
-        // Mostrar botón de refrescar sólo en modo "favoritos"
-        views.setViewVisibility(
-            R.id.widget_refresh_button,
-            if (mode == "favorites") View.VISIBLE else View.GONE
-        )
-
-        appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
     private fun getRandomFavorite(json: String?): Pair<String, String>? {
@@ -198,6 +153,22 @@ class QuoteWidgetProvider : AppWidgetProvider() {
             if (text.isEmpty()) null else Pair(text, author)
         } catch (e: Exception) {
             null
+        }
+    }
+
+    private fun getIntSafe(prefs: android.content.SharedPreferences, key: String, defaultValue: Int): Int {
+        return when (val value = prefs.all[key]) {
+            is Number -> value.toInt()
+            is String -> value.toIntOrNull() ?: defaultValue
+            else -> defaultValue
+        }
+    }
+
+    private fun getFloatSafe(prefs: android.content.SharedPreferences, key: String, defaultValue: Float): Float {
+        return when (val value = prefs.all[key]) {
+            is Number -> value.toFloat()
+            is String -> value.toFloatOrNull() ?: defaultValue
+            else -> defaultValue
         }
     }
 }

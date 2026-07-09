@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/quote.dart';
@@ -11,11 +10,15 @@ import '../providers/quotes_provider.dart';
 class QuoteDetailPage extends StatelessWidget {
   final Quote quote;
   final String heroTag;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   const QuoteDetailPage({
     super.key,
     required this.quote,
     required this.heroTag,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -30,9 +33,7 @@ class QuoteDetailPage extends StatelessWidget {
     final isFav = provider.favorites.contains(quote.id);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Frase'),
-      ),
+      appBar: AppBar(title: const Text('Frase')),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Acciones',
         onPressed: () => _showActionsModal(context, provider, isFav),
@@ -104,7 +105,11 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  void _showActionsModal(BuildContext context, QuotesProvider provider, bool isFav) {
+  void _showActionsModal(
+    BuildContext context,
+    QuotesProvider provider,
+    bool isFav,
+  ) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -139,9 +144,7 @@ class QuoteDetailPage extends StatelessWidget {
                       color: isFav ? Colors.redAccent : null,
                     ),
                     title: Text(
-                      isFav
-                          ? 'Quitar de favoritos'
-                          : 'Agregar a favoritos',
+                      isFav ? 'Quitar de favoritos' : 'Agregar a favoritos',
                     ),
                     onTap: () {
                       provider.toggleFavorite(quote.id);
@@ -155,27 +158,90 @@ class QuoteDetailPage extends StatelessWidget {
                       Navigator.pop(context);
                       try {
                         await provider.storage.setWidgetMode('pinned');
-                        await HomeWidget.saveWidgetData<String>('widget_mode', 'pinned');
-                        await HomeWidget.saveWidgetData<String>('widget_daily_text', quote.text);
-                        await HomeWidget.saveWidgetData<String>('widget_daily_author', quote.author.isNotEmpty ? quote.author : 'Anónimo');
-                        await HomeWidget.updateWidget(
-                          name: 'QuoteWidgetProvider',
-                          androidName: 'QuoteWidgetProvider',
+                        await provider.savePinnedQuoteToWidget(
+                          text: quote.text,
+                          author: quote.author,
                         );
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Frase fijada en el widget de la pantalla de inicio')),
+                            const SnackBar(
+                              content: Text(
+                                'Frase fijada en el widget de la pantalla de inicio',
+                              ),
+                            ),
                           );
                         }
                       } catch (e) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('No se pudo fijar en el widget: $e')),
+                            SnackBar(
+                              content: Text(
+                                'No se pudo fijar en el widget: $e',
+                              ),
+                            ),
                           );
                         }
                       }
                     },
                   ),
+                  // Opciones exclusivas para frases propias
+                  if (quote.isCustom) ...[
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.edit_outlined),
+                      title: const Text('Editar mi frase'),
+                      onTap: () {
+                        Navigator.pop(context); // Cierra bottom sheet
+                        Navigator.of(context).pop(); // Cierra details_page
+                        // Pequeño delay para que el modal se abra sobre la home_page sin conflicto
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          onEdit?.call();
+                        });
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.delete_outline, color: Colors.red),
+                      title: const Text('Eliminar frase', style: TextStyle(color: Colors.red)),
+                      onTap: () async {
+                        Navigator.pop(context); // Cierra bottom sheet solamente
+                        final confirmed = await showDialog<bool>(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            backgroundColor: Colors.white,
+                            title: const Text('Eliminar frase', style: TextStyle(color: Colors.black)),
+                            content: const Text(
+                              '¿Seguro que quieres eliminar esta frase? Esta acción no se puede deshacer.',
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(ctx).pop(false),
+                                style: TextButton.styleFrom(foregroundColor: Colors.black54),
+                                child: const Text('Cancelar'),
+                              ),
+                              FilledButton(
+                                onPressed: () => Navigator.of(ctx).pop(true),
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text('Eliminar'),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (confirmed == true && context.mounted) {
+                          await provider.deleteCustomQuote(quote.id);
+                          if (context.mounted) {
+                            Navigator.of(context).pop(); // Volver a home_page
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Frase eliminada')),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ],
                   const SizedBox(height: 8),
                 ],
               );

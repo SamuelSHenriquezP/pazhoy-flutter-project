@@ -23,7 +23,6 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
   int _selectedIndex = 0;
 
   final List<Map<String, dynamic>> _categories = [
-    {'icon': Icons.palette_outlined, 'label': 'Temas'},
     {'icon': Icons.text_fields, 'label': 'Texto'},
     {'icon': Icons.format_paint, 'label': 'Fondo'},
     {'icon': Icons.space_bar, 'label': 'Espacio'},
@@ -190,104 +189,16 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
     // Key is important for AnimatedSwitcher
     switch (index) {
       case 0:
-        return _PresetsSubmenu(key: const ValueKey(0));
+        return _TextSubmenu(key: const ValueKey(0));
       case 1:
-        return _TextSubmenu(key: const ValueKey(1));
+        return _BackgroundSubmenu(key: const ValueKey(1));
       case 2:
-        return _BackgroundSubmenu(key: const ValueKey(2));
+        return _SpacingSubmenu(key: const ValueKey(2));
       case 3:
-        return _SpacingSubmenu(key: const ValueKey(3));
-      case 4:
-        return _EffectsSubmenu(key: const ValueKey(4));
+        return _EffectsSubmenu(key: const ValueKey(3));
       default:
         return const SizedBox.shrink();
     }
-  }
-}
-
-class _PresetsSubmenu extends StatelessWidget {
-  const _PresetsSubmenu({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = context.watch<StyleProvider>();
-    final presets = StyleProvider.presets;
-
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Plantillas de Redes / Temas',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: presets.length,
-              separatorBuilder: (c, i) => const SizedBox(width: 12),
-              itemBuilder: (context, index) {
-                final entry = presets.entries.elementAt(index);
-                final name = entry.key;
-                final preset = entry.value;
-
-                return GestureDetector(
-                  onTap: () => provider.applyPreset(preset),
-                  child: Container(
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: preset.backgroundColor,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.black12,
-                        width: 1,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        )
-                      ],
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Mini Quote Visualizer
-                        Text(
-                          '“Abc”',
-                          style: TextStyle(
-                            color: preset.textColor,
-                            fontFamily: preset.fontFamily,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: preset.textColor.withValues(alpha: 0.8),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 
@@ -312,12 +223,47 @@ class _TextSubmenu extends StatelessWidget {
       'Lobster',
     ];
 
+    final previewStyle = _safeGetFont(
+      provider.style.fontFamily ?? 'Lato',
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+    );
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        const Text(
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.grey[50],
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: Colors.black12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Vista previa',
+                style: previewStyle.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '“La frase se verá con la tipografía activa en el editor.”',
+                style: previewStyle.copyWith(fontSize: 18),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
           'Tipografía',
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            fontFamily: provider.style.fontFamily,
+          ),
         ),
         const SizedBox(height: 8),
         SizedBox(
@@ -343,9 +289,13 @@ class _TextSubmenu extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           'Color',
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            fontFamily: provider.style.fontFamily,
+          ),
         ),
         const SizedBox(height: 8),
         _ColorPickerRow(
@@ -363,9 +313,13 @@ class _TextSubmenu extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           'Alineación',
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            fontFamily: provider.style.fontFamily,
+          ),
         ),
         const SizedBox(height: 8),
         SegmentedButton<TextAlign>(
@@ -400,9 +354,13 @@ class _TextSubmenu extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Tamaño',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                fontFamily: provider.style.fontFamily,
+              ),
             ),
             Text(
               '${provider.style.fontSize.toInt()}px',
@@ -476,22 +434,21 @@ class _BackgroundSubmenu extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Opacidad',
+              'Superposición de color',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
             Text(
-              '${((1.0 - provider.style.opacity) * 100).toInt()}%',
+              '${(provider.style.opacity * 100).toInt()}%',
               style: const TextStyle(fontSize: 12),
             ),
           ],
         ),
         Slider(
-          value:
-              1.0 - provider.style.opacity, // Invert: 0->1 becomes 1->0 opacity
+          value: provider.style.opacity,
           min: 0.0,
           max: 1.0,
           activeColor: Colors.black,
-          onChanged: (val) => provider.setOpacity(1.0 - val),
+          onChanged: (val) => provider.setOpacity(val),
         ),
       ],
     );
