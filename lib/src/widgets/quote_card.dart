@@ -35,8 +35,11 @@ class QuoteCard extends StatelessWidget {
 
     Widget cardContent = Container(
       decoration: BoxDecoration(
-        // Apply opacity to background color when there's no image
-        color: style.backgroundImagePath == null ? style.backgroundColor : null,
+        // Apply opacity to background color when there's no image and no gradient
+        color: style.backgroundImagePath == null && style.backgroundGradient == null ? style.backgroundColor : null,
+        gradient: (style.backgroundImagePath == null && style.backgroundGradient != null && style.backgroundGradient! < StyleProvider.predefinedGradients.length)
+            ? StyleProvider.predefinedGradients[style.backgroundGradient!]
+            : null,
         borderRadius: BorderRadius.circular(12),
         image: (() {
           if (style.backgroundImagePath == null) return null;

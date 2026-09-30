@@ -102,23 +102,43 @@ class LocalStorageService {
 
   // --- Frases Personalizadas del Usuario ---
   static const String _customQuotesKey = 'user_custom_quotes';
+  static const String _customQuotesBackupKey = 'user_custom_quotes_backup';
 
   Future<List<Map<String, dynamic>>> getCustomQuotesRaw() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    
+    // Try primary
     try {
-      final prefs = _prefs ?? await SharedPreferences.getInstance();
       final jsonStr = prefs.getString(_customQuotesKey);
-      if (jsonStr == null) return [];
-      final list = json.decode(jsonStr) as List<dynamic>;
-      return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        final list = json.decode(jsonStr) as List<dynamic>;
+        return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
     } catch (e) {
-      debugPrint('Error loading custom quotes: $e');
-      return [];
+      debugPrint('Error loading custom quotes, trying backup: $e');
     }
+
+    // Try backup
+    try {
+      final backupStr = prefs.getString(_customQuotesBackupKey);
+      if (backupStr != null && backupStr.isNotEmpty) {
+        final list = json.decode(backupStr) as List<dynamic>;
+        return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+    } catch (e) {
+      debugPrint('Error loading custom quotes backup: $e');
+    }
+
+    return [];
   }
 
   Future<void> saveCustomQuotesRaw(List<Map<String, dynamic>> quotes) async {
     try {
       final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final current = prefs.getString(_customQuotesKey);
+      if (current != null && current.isNotEmpty) {
+        await prefs.setString(_customQuotesBackupKey, current);
+      }
       final jsonStr = json.encode(quotes);
       await prefs.setString(_customQuotesKey, jsonStr);
     } catch (e) {
@@ -168,23 +188,43 @@ class LocalStorageService {
   }
 
   // --- Colecciones ---
+  static const String _collectionsBackupKey = 'user_collections_backup';
 
   Future<List<Map<String, dynamic>>> getCollections() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+
+    // Try primary
     try {
-      final prefs = _prefs ?? await SharedPreferences.getInstance();
       final jsonStr = prefs.getString(_collectionsKey);
-      if (jsonStr == null) return [];
-      final list = json.decode(jsonStr) as List<dynamic>;
-      return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        final list = json.decode(jsonStr) as List<dynamic>;
+        return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
     } catch (e) {
-      debugPrint('Error loading collections: $e');
-      return [];
+      debugPrint('Error loading collections, trying backup: $e');
     }
+
+    // Try backup
+    try {
+      final backupStr = prefs.getString(_collectionsBackupKey);
+      if (backupStr != null && backupStr.isNotEmpty) {
+        final list = json.decode(backupStr) as List<dynamic>;
+        return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+      }
+    } catch (e) {
+      debugPrint('Error loading collections backup: $e');
+    }
+
+    return [];
   }
 
   Future<void> saveCollections(List<Map<String, dynamic>> collections) async {
     try {
       final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final current = prefs.getString(_collectionsKey);
+      if (current != null && current.isNotEmpty) {
+        await prefs.setString(_collectionsBackupKey, current);
+      }
       final jsonStr = json.encode(collections);
       await prefs.setString(_collectionsKey, jsonStr);
     } catch (e) {

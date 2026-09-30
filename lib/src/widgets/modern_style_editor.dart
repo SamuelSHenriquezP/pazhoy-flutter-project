@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/style_provider.dart';
+import '../providers/premium_provider.dart';
+import '../services/ad_service.dart';
+import '../pages/support_page.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 TextStyle _safeGetFont(String family, [TextStyle? textStyle]) {
@@ -210,20 +213,26 @@ class _TextSubmenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<StyleProvider>();
-    final fonts = [
+    final isPremium = context.watch<PremiumProvider>().isPremium;
+    final freeFonts = [
       'Lato',
       'Roboto',
       'Merriweather',
       'Montserrat',
       'Oswald',
+    ];
+    final premiumFonts = [
       'Playfair Display',
       'Dancing Script',
       'Pacifico',
       'Anton',
       'Lobster',
+      'Cinzel',
+      'Great Vibes',
+      'Cormorant Garamond',
     ];
-
-
+    
+    final fonts = [...freeFonts, ...premiumFonts];
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -247,10 +256,48 @@ class _TextSubmenu extends StatelessWidget {
             itemBuilder: (context, index) {
               final font = fonts[index];
               final isSelected = provider.style.fontFamily == font;
+              final isPremiumFont = premiumFonts.contains(font);
+
               return ChoiceChip(
-                label: Text(font, style: _safeGetFont(font)),
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(font, style: _safeGetFont(font)),
+                    if (isPremiumFont && !isPremium) ...[
+                      const SizedBox(width: 4),
+                      Icon(Icons.lock_outline, size: 14, color: isSelected ? Colors.white : Colors.amber),
+                    ]
+                  ],
+                ),
                 selected: isSelected,
-                onSelected: (_) => provider.setFontFamily(font),
+                onSelected: (_) {
+                  if (isPremiumFont && !isPremium) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: const Text('Fuente Premium', style: TextStyle(color: Colors.black)),
+                        content: const Text('Las tipografías elegantes son exclusivas para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlas!', style: TextStyle(color: Colors.black87)),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancelar', style: TextStyle(color: Colors.black)),
+                          ),
+                          FilledButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportPage()));
+                            },
+                            style: FilledButton.styleFrom(backgroundColor: Colors.black, foregroundColor: Colors.white),
+                            child: const Text('Apoyar'),
+                          ),
+                        ],
+                      ),
+                    );
+                    return;
+                  }
+                  provider.setFontFamily(font);
+                },
                 showCheckmark: false,
                 selectedColor: Colors.black,
                 labelStyle: TextStyle(
@@ -352,12 +399,20 @@ class _TextSubmenu extends StatelessWidget {
   }
 }
 
-class _BackgroundSubmenu extends StatelessWidget {
+class _BackgroundSubmenu extends StatefulWidget {
   const _BackgroundSubmenu({super.key});
+
+  @override
+  State<_BackgroundSubmenu> createState() => _BackgroundSubmenuState();
+}
+
+class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
+  bool _isLoadingAd = false;
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<StyleProvider>();
+    final isPremium = context.watch<PremiumProvider>().isPremium;
     final hasImage = provider.style.backgroundImagePath != null;
 
     return ListView(
@@ -367,9 +422,17 @@ class _BackgroundSubmenu extends StatelessWidget {
           children: [
             Expanded(
               child: FilledButton.icon(
-                onPressed: provider.pickBackgroundImage,
-                icon: const Icon(Icons.image),
-                label: const Text('Galería'),
+                onPressed: _isLoadingAd ? null : () {
+                  setState(() => _isLoadingAd = true);
+                  AdService.instance.showRewardedAd(() {
+                    if (mounted) setState(() => _isLoadingAd = false);
+                    provider.pickBackgroundImage();
+                  });
+                },
+                icon: _isLoadingAd 
+                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                    : const Icon(Icons.image),
+                label: const Text('Galería (Ver Video)'),
                 style: FilledButton.styleFrom(backgroundColor: Colors.black),
               ),
             ),
@@ -400,6 +463,43 @@ class _BackgroundSubmenu extends StatelessWidget {
             Colors.pink[50]!,
             Colors.teal[50]!,
           ],
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Degradados Premium',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        _GradientPickerRow(
+          selectedIndex: provider.style.backgroundGradient,
+          onGradientChanged: (index) {
+            if (!isPremium && index != null) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  backgroundColor: Colors.white,
+                  title: const Text('Degradados Premium', style: TextStyle(color: Colors.black)),
+                  content: const Text('Los hermosos fondos con degradado son exclusivos para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlos!', style: TextStyle(color: Colors.black87)),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancelar', style: TextStyle(color: Colors.black)),
+                    ),
+                    FilledButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportPage()));
+                      },
+                      style: FilledButton.styleFrom(backgroundColor: Colors.black, foregroundColor: Colors.white),
+                      child: const Text('Apoyar'),
+                    ),
+                  ],
+                ),
+              );
+              return;
+            }
+            provider.setBackgroundGradient(index);
+          },
         ),
         const SizedBox(height: 16),
         Row(
@@ -733,6 +833,78 @@ class _ColorPickerRow extends StatelessWidget {
                     ? [
                         BoxShadow(
                           color: color.withValues(alpha: 0.4),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _GradientPickerRow extends StatelessWidget {
+  final int? selectedIndex;
+  final ValueChanged<int?> onGradientChanged;
+
+  const _GradientPickerRow({
+    required this.selectedIndex,
+    required this.onGradientChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: StyleProvider.predefinedGradients.length + 1,
+        separatorBuilder: (c, i) => const SizedBox(width: 12),
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            // "None" option
+            final isSelected = selectedIndex == null;
+            return GestureDetector(
+              onTap: () => onGradientChanged(null),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isSelected ? Colors.black : Colors.grey[300]!,
+                    width: isSelected ? 2 : 1,
+                  ),
+                ),
+                child: const Icon(Icons.block, color: Colors.red, size: 20),
+              ),
+            );
+          }
+
+          final gradientIndex = index - 1;
+          final isSelected = selectedIndex == gradientIndex;
+          final gradient = StyleProvider.predefinedGradients[gradientIndex];
+
+          return GestureDetector(
+            onTap: () => onGradientChanged(gradientIndex),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                gradient: gradient,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.black : Colors.grey[300]!,
+                  width: isSelected ? 2 : 1,
+                ),
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: gradient.colors.first.withValues(alpha: 0.4),
                           blurRadius: 8,
                         ),
                       ]

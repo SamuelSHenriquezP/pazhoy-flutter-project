@@ -34,7 +34,7 @@ class NotificationService {
         } catch (_) {}
       }
 
-      const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+      const androidInit = AndroidInitializationSettings('launcher_icon');
       const darwinInit = DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
@@ -47,12 +47,22 @@ class NotificationService {
       );
       await _plugin.initialize(initSettings);
       _initialized = true;
+
+      // Reprogramar la notificación diaria después de iniciar el plugin si ya estaba activada.
+      final prefs = await SharedPreferences.getInstance();
+      final enabled = prefs.getBool(_enabledKey) ?? false;
+      if (enabled) {
+        final hour = prefs.getInt(_hourKey) ?? 9;
+        final minute = prefs.getInt(_minuteKey) ?? 0;
+        await scheduleDailyNotification(hour: hour, minute: minute);
+      }
     } catch (e, st) {
       debugPrint('Error general al inicializar NotificationService: $e\n$st');
     }
   }
 
   Future<bool> requestPermissions() async {
+    await init();
     final android = _plugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
     final ios = _plugin.resolvePlatformSpecificImplementation<
@@ -60,14 +70,20 @@ class NotificationService {
     final macos = _plugin.resolvePlatformSpecificImplementation<
         MacOSFlutterLocalNotificationsPlugin>();
 
-    final androidGranted = await android?.requestNotificationsPermission();
-    final iosGranted = await ios?.requestPermissions(alert: true, sound: true);
-    final macosGranted =
-        await macos?.requestPermissions(alert: true, sound: true);
+    if (android != null) {
+      final granted = await android.requestNotificationsPermission();
+      return granted ?? true; // On Android 12 and below, requestNotificationsPermission returns null
+    }
+    if (ios != null) {
+      final granted = await ios.requestPermissions(alert: true, sound: true);
+      return granted ?? false;
+    }
+    if (macos != null) {
+      final granted = await macos.requestPermissions(alert: true, sound: true);
+      return granted ?? false;
+    }
 
-    return (androidGranted ?? false) ||
-        (iosGranted ?? false) ||
-        (macosGranted ?? false);
+    return false;
   }
 
   /// Schedule a daily notification at [hour]:[minute].
@@ -75,6 +91,7 @@ class NotificationService {
     required int hour,
     required int minute,
   }) async {
+    await init();
     await _plugin.cancelAll();
 
     final now = tz.TZDateTime.now(tz.local);
@@ -110,7 +127,7 @@ class NotificationService {
       '¡No olvides leer tu frase del día!',
       scheduledDate,
       details,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -123,6 +140,7 @@ class NotificationService {
   }
 
   Future<void> cancel() async {
+    await init();
     await _plugin.cancelAll();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_enabledKey, false);

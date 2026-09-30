@@ -7,8 +7,10 @@ import 'src/data/quotes_repository.dart';
 import 'src/services/local_storage_service.dart';
 import 'src/providers/style_provider.dart';
 import 'src/providers/quotes_provider.dart';
+import 'src/providers/premium_provider.dart';
 import 'src/pages/home_page.dart';
 import 'src/services/notification_service.dart';
+import 'src/services/ad_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +35,9 @@ Future<void> main() async {
   NotificationService.instance.init().catchError((e, st) {
     debugPrint('Error al inicializar NotificationService de forma asíncrona: $e\n$st');
   });
+
+  // Inicializar AdMob
+  AdService.instance.init();
 
   final repo = QuotesRepository();
   final quotesProvider = QuotesProvider(repo: repo, storage: storage)..init();
@@ -64,6 +69,7 @@ class PazHoyApp extends StatelessWidget {
             create: (_) => QuotesProvider(repo: repo, storage: storage)..init(),
           ),
         ChangeNotifierProvider(create: (_) => StyleProvider()..init()),
+        ChangeNotifierProvider(create: (_) => PremiumProvider()..init()),
       ],
       child: const _LifecycleWatcher(child: MaterialAppWrapper()),
     );

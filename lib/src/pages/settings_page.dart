@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quotes_provider.dart';
 import '../services/notification_service.dart';
+import '../providers/premium_provider.dart';
+import 'support_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -65,10 +67,21 @@ class _SettingsPageState extends State<SettingsPage> {
         hour: _notifTime.hour,
         minute: _notifTime.minute,
       );
-    } else {
-      await NotificationService.instance.cancel();
+      if (mounted) setState(() => _notifsEnabled = true);
+      return;
     }
-    if (mounted) setState(() => _notifsEnabled = value);
+
+    try {
+      await NotificationService.instance.cancel();
+      if (mounted) setState(() => _notifsEnabled = false);
+    } catch (e, st) {
+      debugPrint('Error cancelando notificaciones: $e\n$st');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No se pudo desactivar las notificaciones')),
+        );
+      }
+    }
   }
 
   Future<void> _setWidgetMode(String mode) async {
@@ -102,6 +115,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ? const Center(child: CircularProgressIndicator())
           : ListView(
               children: [
+                const _PremiumCard(),
                 const _SectionHeader(title: 'Apariencia'),
                 const _ThemeTile(),
                 const Divider(),
@@ -172,6 +186,82 @@ class _SettingsPageState extends State<SettingsPage> {
                 const SizedBox(height: 24),
               ],
             ),
+    );
+  }
+}
+
+class _PremiumCard extends StatelessWidget {
+  const _PremiumCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final isPremium = context.watch<PremiumProvider>().isPremium;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const SupportPage()),
+          );
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                colorScheme.primaryContainer,
+                colorScheme.secondaryContainer,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: colorScheme.primary.withValues(alpha: 0.2),
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                isPremium ? Icons.favorite : Icons.volunteer_activism,
+                color: colorScheme.primary,
+                size: 32,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isPremium ? 'Colaborador Premium' : 'Apoya PazHoy',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onPrimaryContainer,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      isPremium
+                          ? 'Gracias por hacer posible esta app.'
+                          : 'Conviértete en colaborador y obtén extras.',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.chevron_right,
+                color: colorScheme.primary,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

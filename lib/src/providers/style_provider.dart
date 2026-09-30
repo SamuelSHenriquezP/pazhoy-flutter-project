@@ -19,6 +19,7 @@ class QuoteStyle {
   final double lineHeight;
   final TextAlign textAlign;
   final double opacity;
+  final int? backgroundGradient;
 
   // Effects
   final Color? textShadowColor;
@@ -45,6 +46,7 @@ class QuoteStyle {
     this.textOutlineColor,
     this.textOutlineWidth = 1.0,
     this.fontSize = 18.0,
+    this.backgroundGradient,
   });
 
   QuoteStyle copyWith({
@@ -67,6 +69,8 @@ class QuoteStyle {
     bool clearTextOutlineColor = false,
     double? textOutlineWidth,
     double? fontSize,
+    int? backgroundGradient,
+    bool clearBackgroundGradient = false,
   }) {
     return QuoteStyle(
       fontFamily: fontFamily ?? this.fontFamily,
@@ -90,6 +94,9 @@ class QuoteStyle {
           : (textOutlineColor ?? this.textOutlineColor),
       textOutlineWidth: textOutlineWidth ?? this.textOutlineWidth,
       fontSize: fontSize ?? this.fontSize,
+      backgroundGradient: clearBackgroundGradient
+          ? null
+          : (backgroundGradient ?? this.backgroundGradient),
     );
   }
 
@@ -114,6 +121,7 @@ class QuoteStyle {
       'textOutlineColor': textOutlineColor?.toARGB32(),
       'textOutlineWidth': textOutlineWidth,
       'fontSize': fontSize,
+      'backgroundGradient': backgroundGradient,
     };
   }
 
@@ -146,6 +154,7 @@ class QuoteStyle {
           : null,
       textOutlineWidth: (json['textOutlineWidth'] as num?)?.toDouble() ?? 1.0,
       fontSize: (json['fontSize'] as num?)?.toDouble() ?? 18.0,
+      backgroundGradient: json['backgroundGradient'] as int?,
     );
   }
 }
@@ -154,6 +163,39 @@ class StyleProvider extends ChangeNotifier {
   QuoteStyle _style = const QuoteStyle();
   final ImagePicker _picker = ImagePicker();
   static const String _styleKey = 'quote_style';
+
+  static const List<LinearGradient> predefinedGradients = [
+    LinearGradient(
+      colors: [Color(0xFFE0C3FC), Color(0xFF8EC5FC)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    LinearGradient(
+      colors: [Color(0xFFfad0c4), Color(0xFFffd1ff)],
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+    ),
+    LinearGradient(
+      colors: [Color(0xFFffecd2), Color(0xFFfcb69f)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    ),
+    LinearGradient(
+      colors: [Color(0xFFa18cd1), Color(0xFFfbc2eb)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    LinearGradient(
+      colors: [Color(0xFFfdfbfb), Color(0xFFebedee)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    LinearGradient(
+      colors: [Color(0xFF4facfe), Color(0xFF00f2fe)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+  ];
 
   QuoteStyle get style => _style;
 
@@ -297,7 +339,16 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Background ---
   void setBackgroundColor(Color color) {
-    _style = _style.copyWith(backgroundColor: color);
+    _style = _style.copyWith(backgroundColor: color, clearBackgroundGradient: true);
+    notifyListeners();
+    _saveStyle();
+  }
+
+  void setBackgroundGradient(int? index) {
+    _style = _style.copyWith(
+      backgroundGradient: index,
+      clearBackgroundGradient: index == null,
+    );
     notifyListeners();
     _saveStyle();
   }
@@ -361,6 +412,7 @@ class StyleProvider extends ChangeNotifier {
       textOutlineColor: _style.textOutlineColor,
       textOutlineWidth: _style.textOutlineWidth,
       fontSize: _style.fontSize,
+      backgroundGradient: _style.backgroundGradient,
     );
     notifyListeners();
     _saveStyle();
