@@ -1,4 +1,4 @@
-package com.example.pazhoy
+package com.inventustechstudio.pazhoy
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -172,3 +172,4 @@ class QuoteWidgetProvider : AppWidgetProvider() {
         }
     }
 }
+

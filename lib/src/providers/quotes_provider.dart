@@ -665,8 +665,8 @@ class QuotesProvider with ChangeNotifier {
         debugPrint('[WIDGET] Intento ${i + 1}/$retries de actualizar widget nativo...');
         await HomeWidget.updateWidget(
           name: 'QuoteWidgetProvider',
-          androidName: 'com.example.pazhoy.QuoteWidgetProvider',
-          qualifiedAndroidName: 'com.example.pazhoy.QuoteWidgetProvider',
+          androidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
+          qualifiedAndroidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
         );
         debugPrint('[WIDGET] ✓ Widget actualizado exitosamente en intento ${i + 1}');
         return;

@@ -22,7 +22,7 @@ Future<void> main() async {
   // CRÍTICO: registrar el ID del grupo de la app para que home_widget pueda
   // escribir en las SharedPreferences que el widget nativo de Android lee.
   // Sin esto, todos los HomeWidget.saveWidgetData son ignorados silenciosamente.
-  await HomeWidget.setAppGroupId('com.example.pazhoy');
+  await HomeWidget.setAppGroupId('com.inventustechstudio.pazhoy');
 
   final storage = LocalStorageService();
   try {

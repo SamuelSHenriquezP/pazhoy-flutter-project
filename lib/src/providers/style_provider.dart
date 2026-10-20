@@ -278,8 +278,8 @@ class StyleProvider extends ChangeNotifier {
 
       await HomeWidget.updateWidget(
         name: 'QuoteWidgetProvider',
-        androidName: 'com.example.pazhoy.QuoteWidgetProvider',
-        qualifiedAndroidName: 'com.example.pazhoy.QuoteWidgetProvider',
+        androidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
+        qualifiedAndroidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
       );
       debugPrint('StyleProvider - Style synchronized to HomeWidget');
     } catch (e) {
