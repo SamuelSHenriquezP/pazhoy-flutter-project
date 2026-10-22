@@ -88,6 +88,16 @@ class MockLocalStorageService implements LocalStorageService {
   Future<void> saveCustomQuotesRaw(List<Map<String, dynamic>> quotes) async {
     customQuotes = quotes;
   }
+
+  Map<int, Map<String, dynamic>> editedQuotes = {};
+
+  @override
+  Future<Map<int, Map<String, dynamic>>> getEditedQuotes() async => editedQuotes;
+
+  @override
+  Future<void> saveEditedQuote(int id, Map<String, dynamic> data) async {
+    editedQuotes[id] = data;
+  }
 }
 
 void main() {

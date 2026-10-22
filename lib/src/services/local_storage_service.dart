@@ -146,6 +146,34 @@ class LocalStorageService {
     }
   }
 
+  // --- Frases del Sistema Editadas por el Usuario ---
+  static const String _editedQuotesKey = 'user_edited_system_quotes';
+
+  Future<Map<int, Map<String, dynamic>>> getEditedQuotes() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    final jsonStr = prefs.getString(_editedQuotesKey);
+    if (jsonStr == null || jsonStr.isEmpty) return {};
+    try {
+      final decoded = json.decode(jsonStr) as Map<String, dynamic>;
+      return decoded.map((k, v) => MapEntry(int.parse(k), Map<String, dynamic>.from(v as Map)));
+    } catch (e) {
+      debugPrint('Error loading edited quotes: $e');
+      return {};
+    }
+  }
+
+  Future<void> saveEditedQuote(int id, Map<String, dynamic> data) async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final current = await getEditedQuotes();
+      current[id] = data;
+      final encodable = current.map((k, v) => MapEntry(k.toString(), v));
+      await prefs.setString(_editedQuotesKey, json.encode(encodable));
+    } catch (e) {
+      debugPrint('Error saving edited quote: $e');
+    }
+  }
+
   // --- Rachas (Streaks) ---
   
   /// Actualiza la racha del usuario basándose en la última fecha de apertura.
