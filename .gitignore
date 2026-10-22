@@ -1,4 +1,4 @@
-﻿# Miscellaneous
+# Miscellaneous
 *.class
 *.log
 *.pyc
@@ -37,15 +37,24 @@ lib/generated_plugin_registrant.dart
 # Android related
 *.jks
 *.keystore
+*.apk
+*.aab
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/build/
+/android/build/
+**/android/build/
+**/android/.gradle/
 /android/.gradle
 /android/captures
+**/android/local.properties
 /android/local.properties
 /android/gradlew
 /android/gradlew.bat
 /android/.idea
+**/key.properties*
+!**/key.properties.example
 
 # iOS related
 **/ios/**/*.mode1v3
@@ -141,8 +150,5 @@ coverage/
 *.freezed.dart
 *.config.dart
 
-# Allow release APKs
-!release/
-!release/*.apk
-
-key.properties
+# Release binaries
+release/
