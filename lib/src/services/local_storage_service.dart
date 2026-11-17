@@ -13,6 +13,7 @@ class LocalStorageService {
   static const String _streakCountKey = 'streak_count';
   static const String _streakLastDateKey = 'streak_last_date';
   static const String _collectionsKey = 'user_collections';
+  static const String _counterResetMigrationKey = 'pazhoy_reset_2026_11_17';
 
   SharedPreferences? _prefs;
 
@@ -25,6 +26,20 @@ class LocalStorageService {
       debugPrint('Error al inicializar SharedPreferences: $e\n$st');
       rethrow; // opcional: relanzar el error si quieres detener el arranque
     }
+  }
+
+  /// Reinicia una sola vez los contadores e índice inicial al relanzar la cronología.
+  Future<void> applyResetIfNeeded() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    final alreadyApplied = prefs.getBool(_counterResetMigrationKey) ?? false;
+    if (alreadyApplied) return;
+
+    await prefs.remove(_lastIndexKey);
+    await prefs.remove(_dailyShownKey);
+    await prefs.setInt(_streakCountKey, 0);
+    await prefs.remove(_streakLastDateKey);
+    await prefs.remove(_editedQuotesKey);
+    await prefs.setBool(_counterResetMigrationKey, true);
   }
 
   /// Obtiene los IDs de favoritos almacenados localmente.

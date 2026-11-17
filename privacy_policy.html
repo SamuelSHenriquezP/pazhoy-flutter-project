@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -92,11 +92,12 @@
         </ul>
 
         <h2>3. Permisos del Dispositivo</h2>
-        <p>La aplicación puede solicitar ciertos permisos del sistema operativo Android únicamente cuando son estrictamente necesarios para su funcionamiento:</p>
+        <p>La aplicación solicita únicamente los permisos necesarios para sus funciones de reflexión diaria:</p>
         <ul>
-            <li><strong>Notificaciones / Alarmas exactas:</strong> Para enviar recordatorios o alertas programadas directamente en tu teléfono según tus preferencias.</li>
-            <li><strong>Vibración:</strong> Para retroalimentación táctil (*haptic feedback*) durante las interacciones.</li>
-            <li><strong>Inicio al reiniciar (*RECEIVE_BOOT_COMPLETED*):</strong> Para reprogramar tus recordatorios locales si el teléfono se reinicia.</li>
+            <li><strong>Notificaciones y Alarmas Exactas (<code>POST_NOTIFICATIONS</code>, <code>SCHEDULE_EXACT_ALARM</code>):</strong> Para enviarte tus recordatorios diarios de frases en el horario que configures.</li>
+            <li><strong>Inicio al reiniciar (<code>RECEIVE_BOOT_COMPLETED</code>):</strong> Para reprogramar automáticamente tus recordatorios diarios locales cuando reinicias tu dispositivo.</li>
+            <li><strong>Galería e Imágenes (<code>READ_MEDIA_IMAGES</code> / <code>WRITE_EXTERNAL_STORAGE</code>):</strong> Únicamente cuando eliges guardar una tarjeta de frase como imagen en tu galería o seleccionar un fondo personalizado.</li>
+            <li><strong>Acceso a Internet (<code>INTERNET</code>):</strong> Para la descarga de tipografías (Google Fonts) y recursos visuales básicos.</li>
         </ul>
 
         <h2>4. Servicios de Terceros</h2>

@@ -7,6 +7,11 @@ class Quote {
   final String? context; // descripción / notas
   final String? source; // libro, artículo, origen
   final List<String> tags;
+  final String? eventId;
+  final String? eventTitle;
+  final String? eventSubtitle;
+  final String? eventIcon;
+  final String? eventColor;
 
   /// `true` si esta frase fue creada por el usuario (no viene del JSON del sistema).
   final bool isCustom;
@@ -23,6 +28,11 @@ class Quote {
     this.context,
     this.source,
     this.tags = const [],
+    this.eventId,
+    this.eventTitle,
+    this.eventSubtitle,
+    this.eventIcon,
+    this.eventColor,
     this.isCustom = false,
   });
 
@@ -73,6 +83,11 @@ class Quote {
       context: parseNullableString(json['context']),
       source: parseNullableString(json['source']),
       tags: parseTags(json['tags']),
+      eventId: parseNullableString(json['event_id']),
+      eventTitle: parseNullableString(json['event_title']),
+      eventSubtitle: parseNullableString(json['event_subtitle']),
+      eventIcon: parseNullableString(json['event_icon']),
+      eventColor: parseNullableString(json['event_color']),
       isCustom: json['is_custom'] as bool? ?? false,
     );
   }
@@ -87,6 +102,11 @@ class Quote {
     if (context != null) map['context'] = context;
     if (source != null) map['source'] = source;
     if (tags.isNotEmpty) map['tags'] = tags;
+    if (eventId != null) map['event_id'] = eventId;
+    if (eventTitle != null) map['event_title'] = eventTitle;
+    if (eventSubtitle != null) map['event_subtitle'] = eventSubtitle;
+    if (eventIcon != null) map['event_icon'] = eventIcon;
+    if (eventColor != null) map['event_color'] = eventColor;
     if (isCustom) map['is_custom'] = true;
     return map;
   }
@@ -99,6 +119,11 @@ class Quote {
     String? context,
     String? source,
     List<String>? tags,
+    String? eventId,
+    String? eventTitle,
+    String? eventSubtitle,
+    String? eventIcon,
+    String? eventColor,
     bool? isCustom,
   }) {
     return Quote(
@@ -109,6 +134,11 @@ class Quote {
       context: context ?? this.context,
       source: source ?? this.source,
       tags: tags ?? this.tags,
+      eventId: eventId ?? this.eventId,
+      eventTitle: eventTitle ?? this.eventTitle,
+      eventSubtitle: eventSubtitle ?? this.eventSubtitle,
+      eventIcon: eventIcon ?? this.eventIcon,
+      eventColor: eventColor ?? this.eventColor,
       isCustom: isCustom ?? this.isCustom,
     );
   }

@@ -15,6 +15,7 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<QuotesProvider>();
+    final eventsCount = provider.events.length;
     final authorCount = provider.groupByAuthor.keys.length;
     final sourceCount = provider.groupBySource.keys.length;
     final tagCount = provider.groupByTag.keys.length;
@@ -22,7 +23,7 @@ class ExplorePage extends StatelessWidget {
     final collectionsCount = provider.collections.length;
 
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         backgroundColor: const Color(0xFFF9FAFB),
         appBar: AppBar(
@@ -36,6 +37,7 @@ class ExplorePage extends StatelessWidget {
             indicatorWeight: 3,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: [
+              Tab(text: 'Eventos ($eventsCount)'),
               Tab(text: 'Carpetas ($collectionsCount)'),
               Tab(text: 'Autores ($authorCount)'),
               Tab(text: 'Origen ($sourceCount)'),
@@ -45,6 +47,7 @@ class ExplorePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
+            _buildEventsList(context, provider),
             _buildCollectionsGrid(context, provider),
             _buildAuthorsList(context, provider.groupByAuthor, provider.sortedAuthors),
             _buildSourcesList(context, provider.groupBySource, provider.sortedSources),
@@ -52,6 +55,197 @@ class ExplorePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  IconData _eventIconFromKey(String key) {
+    switch (key) {
+      case 'auto_stories':
+        return Icons.auto_stories_outlined;
+      case 'favorite':
+        return Icons.favorite_outline_rounded;
+      case 'explore':
+        return Icons.explore_outlined;
+      case 'wb_twilight':
+        return Icons.wb_twilight_rounded;
+      case 'psychology':
+        return Icons.psychology_outlined;
+      case 'spa':
+        return Icons.spa_outlined;
+      case 'shield':
+        return Icons.shield_outlined;
+      case 'self_improvement':
+        return Icons.self_improvement_outlined;
+      case 'filter_vintage':
+        return Icons.filter_vintage_outlined;
+      case 'menu_book':
+        return Icons.menu_book_rounded;
+      case 'trending_up':
+        return Icons.trending_up_rounded;
+      case 'eco':
+        return Icons.eco_outlined;
+      default:
+        return Icons.event_outlined;
+    }
+  }
+
+  String _formatShortDate(DateTime d) {
+    const months = [
+      '', 'ene', 'feb', 'mar', 'abr', 'may', 'jun',
+      'jul', 'ago', 'sep', 'oct', 'nov', 'dic',
+    ];
+    return '${d.day} ${months[d.month]} ${d.year}';
+  }
+
+  Widget _buildEventsList(BuildContext context, QuotesProvider provider) {
+    final events = provider.events;
+    if (events.isEmpty) {
+      return const EmptyStateWidget(
+        title: 'Eventos',
+        message: 'No hay temporadas programadas aún.',
+        icon: Icons.event_outlined,
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      itemCount: events.length,
+      itemBuilder: (context, index) {
+        final ev = events[index];
+        final accent = ev.accentColor;
+        final statusLabel = ev.isActive
+            ? 'EN CURSO'
+            : ev.isCompleted
+                ? 'COMPLETADO'
+                : 'PRÓXIMAMENTE';
+        final dateRange = '${_formatShortDate(ev.startDate)} – ${_formatShortDate(ev.endDate)}';
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 14),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: ev.isActive ? accent.withValues(alpha: 0.45) : Colors.grey.shade200,
+              width: ev.isActive ? 1.5 : 1.0,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => EventDetailPage(event: ev)),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: accent.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Icon(_eventIconFromKey(ev.iconKey), color: accent, size: 22),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ev.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                dateRange,
+                                style: TextStyle(
+                                  fontSize: 12.5,
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: ev.isActive
+                                ? accent
+                                : ev.isCompleted
+                                    ? Colors.grey.shade200
+                                    : accent.withValues(alpha: 0.10),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            statusLabel,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.4,
+                              color: ev.isActive
+                                  ? Colors.white
+                                  : ev.isCompleted
+                                      ? Colors.grey.shade700
+                                      : accent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      ev.subtitle,
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        color: Colors.grey.shade700,
+                        height: 1.35,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${ev.unlockedQuotes.length} de ${ev.allQuotes.length} días disponibles',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: accent,
+                          ),
+                        ),
+                        const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.black26),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -503,6 +697,220 @@ class _ListByKeyPage extends StatelessWidget {
                 );
               },
             ),
+    );
+  }
+}
+
+class EventDetailPage extends StatelessWidget {
+  final QuoteSeasonEvent event;
+  const EventDetailPage({super.key, required this.event});
+
+  String _formatDate(DateTime d) {
+    const months = [
+      '', 'ene', 'feb', 'mar', 'abr', 'may', 'jun',
+      'jul', 'ago', 'sep', 'oct', 'nov', 'dic',
+    ];
+    return '${d.day} ${months[d.month]} ${d.year}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<QuotesProvider>();
+    final favorites = provider.favorites;
+    final accent = event.accentColor;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9FAFB),
+      appBar: AppBar(
+        title: Text(event.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+        backgroundColor: const Color(0xFFF9FAFB),
+        scrolledUnderElevation: 0,
+        elevation: 0,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        itemCount: event.allQuotes.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: accent.withValues(alpha: 0.25)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.isActive
+                        ? 'TEMPORADA EN CURSO'
+                        : event.isCompleted
+                            ? 'TEMPORADA COMPLETADA'
+                            : 'PRÓXIMA TEMPORADA',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                      color: accent,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    event.subtitle,
+                    style: TextStyle(
+                      fontSize: 14.5,
+                      height: 1.45,
+                      color: Colors.grey.shade800,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Del ${_formatDate(event.startDate)} al ${_formatDate(event.endDate)} · ${event.unlockedQuotes.length}/7 disponibles',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final q = event.allQuotes[index - 1];
+          final pd = q.publishDate;
+          final isUnlocked = pd == null ||
+              !DateTime.utc(pd.year, pd.month, pd.day).isAfter(event.todayUtc);
+          final dayNum = index;
+
+          if (!isUnlocked) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.7),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.lock_outline_rounded, size: 18, color: Colors.grey.shade500),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Día $dayNum de la temporada',
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5, color: Colors.black87),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'Disponible el ${_formatDate(pd)}',
+                          style: TextStyle(fontSize: 12.5, color: Colors.grey.shade600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final isFav = favorites.contains(q.id);
+          return Container(
+            margin: const EdgeInsets.only(bottom: 14),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => QuoteDetailPage(quote: q, heroTag: 'quote-event-${q.id}'),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: accent.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              'Día $dayNum',
+                              style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: accent),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            tooltip: isFav ? 'Quitar de favoritos' : 'Agregar a favoritos',
+                            icon: Icon(
+                              isFav ? Icons.favorite : Icons.favorite_border,
+                              color: isFav ? Colors.redAccent : Colors.black26,
+                            ),
+                            onPressed: () => provider.toggleFavorite(q.id),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        q.text,
+                        style: const TextStyle(fontSize: 16, height: 1.5, color: Colors.black87),
+                      ),
+                      if (q.author.isNotEmpty) ...[
+                        const SizedBox(height: 10),
+                        Text(
+                          '— ${q.author}${q.source != null ? ' · ${q.source}' : ''}',
+                          style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black54, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

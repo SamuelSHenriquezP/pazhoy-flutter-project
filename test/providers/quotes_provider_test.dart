@@ -26,6 +26,9 @@ class MockLocalStorageService implements LocalStorageService {
   Future<void> init() async {}
 
   @override
+  Future<void> applyResetIfNeeded() async {}
+
+  @override
   Future<Set<int>> getFavorites() async => favorites;
 
   @override

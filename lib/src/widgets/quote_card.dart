@@ -150,14 +150,14 @@ class QuoteCard extends StatelessWidget {
                   onPressed: onToggleFavorite,
                 ),
               ),
-              // Badge de frase propia
-              if (quote.isCustom)
+              // Badge de frase propia o temporada/evento
+              if (quote.isCustom || quote.eventTitle != null)
                 Positioned(
                   bottom: 8,
                   left: 8,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
+                      horizontal: 7,
                       vertical: 3,
                     ),
                     decoration: BoxDecoration(
@@ -168,17 +168,19 @@ class QuoteCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.edit_outlined,
+                          quote.isCustom
+                              ? Icons.auto_awesome_outlined
+                              : Icons.event_outlined,
                           size: 11,
-                          color: effectiveTextColor.withValues(alpha: 0.6),
+                          color: effectiveTextColor.withValues(alpha: 0.65),
                         ),
-                        const SizedBox(width: 3),
+                        const SizedBox(width: 4),
                         Text(
-                          'Mi frase',
+                          quote.isCustom ? 'Mi frase' : quote.eventTitle!,
                           style: TextStyle(
-                            fontSize: 9,
-                            color: effectiveTextColor.withValues(alpha: 0.6),
-                            fontWeight: FontWeight.w500,
+                            fontSize: 9.5,
+                            color: effectiveTextColor.withValues(alpha: 0.65),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -221,16 +223,17 @@ class QuoteCard extends StatelessWidget {
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       items: [
-        const PopupMenuItem(
-          value: 'edit',
-          child: Row(
-            children: [
-              Icon(Icons.edit_outlined, size: 18),
-              SizedBox(width: 10),
-              Text('Editar'),
-            ],
+        if (onEdit != null)
+          const PopupMenuItem(
+            value: 'edit',
+            child: Row(
+              children: [
+                Icon(Icons.palette_outlined, size: 18),
+                SizedBox(width: 10),
+                Text('Personalizar estilo'),
+              ],
+            ),
           ),
-        ),
         const PopupMenuItem(
           value: 'delete',
           child: Row(

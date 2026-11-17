@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import '../models/quote.dart';
 import '../providers/quotes_provider.dart';
 import '../widgets/quote_card.dart';
+import '../widgets/modern_style_editor.dart';
 
 class QuoteDetailPage extends StatelessWidget {
   final Quote quote;
@@ -47,11 +48,11 @@ class QuoteDetailPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         actions: [
-          // Botón directo para editar la frase desde aquí
+          // Botón para personalizar el diseño visual de la tarjeta
           IconButton(
-            icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Editar frase',
-            onPressed: () => _showEditQuoteModal(context, provider, currentQuote),
+            icon: const Icon(Icons.palette_outlined),
+            tooltip: 'Personalizar tarjeta',
+            onPressed: () => _openVisualEditor(context, currentQuote),
           ),
           if (currentQuote.isCustom)
             IconButton(
@@ -67,6 +68,36 @@ class QuoteDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (currentQuote.eventTitle != null) ...[
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF32505A).withValues(alpha: 0.10),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: const Color(0xFF32505A).withValues(alpha: 0.25),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.auto_awesome_outlined, size: 14, color: Color(0xFF32505A)),
+                        const SizedBox(width: 6),
+                        Text(
+                          currentQuote.eventTitle!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF32505A),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               // Main Quote Card
               Hero(
                 tag: heroTag,
@@ -82,7 +113,7 @@ class QuoteDetailPage extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              // Action Buttons Row (Favorito, Guardar, Editar, Copiar, Compartir)
+              // Action Buttons Row (Favorito, Guardar, Estilo, Copiar, Compartir)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -98,10 +129,10 @@ class QuoteDetailPage extends StatelessWidget {
                     onTap: () => _showCollectionsModal(context, provider, currentQuote),
                   ),
                   _buildActionButton(
-                    icon: Icons.edit_note_rounded,
-                    label: 'Editar',
+                    icon: Icons.palette_outlined,
+                    label: 'Estilo',
                     color: theme.colorScheme.primary,
-                    onTap: () => _showEditQuoteModal(context, provider, currentQuote),
+                    onTap: () => _openVisualEditor(context, currentQuote),
                   ),
                   _buildActionButton(
                     icon: Icons.copy_rounded,
@@ -248,193 +279,64 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  // --- Modal de Edición Directa de Frase ---
-  void _showEditQuoteModal(BuildContext context, QuotesProvider provider, Quote q) {
-    final textCtrl = TextEditingController(text: q.text);
-    final authorCtrl = TextEditingController(text: q.author);
-    final contextCtrl = TextEditingController(text: q.context ?? '');
-    final sourceCtrl = TextEditingController(text: q.source ?? '');
-    final tagsCtrl = TextEditingController(text: q.tags.join(', '));
-    final formKey = GlobalKey<FormState>();
-
+  // --- Editor Visual de la Tarjeta (sin modificar el texto de la frase) ---
+  void _openVisualEditor(BuildContext context, Quote q) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF3F4F6),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       builder: (ctx) {
-        return Padding(
-          padding: EdgeInsets.only(
-            left: 24,
-            right: 24,
-            top: 20,
-            bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
-          ),
-          child: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Handle
-                  Center(
-                    child: Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
+        final provider = context.watch<QuotesProvider>();
+        final isFav = provider.favorites.contains(q.id);
+        return SafeArea(
+          top: false,
+          child: SizedBox(
+            height: MediaQuery.of(ctx).size.height * 0.88,
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius: BorderRadius.circular(2),
                   ),
-                  const SizedBox(height: 16),
-                  Row(
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 12, 6),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.edit_note_rounded, size: 26, color: Theme.of(context).colorScheme.primary),
-                          const SizedBox(width: 8),
-                          const Text(
-                            'Editar Frase',
-                            style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      const Text(
+                        'Personalizar tarjeta',
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close_rounded, size: 20),
-                        onPressed: () => Navigator.pop(ctx),
+                        icon: const Icon(Icons.check_rounded),
+                        tooltip: 'Listo',
+                        onPressed: () => Navigator.of(ctx).pop(),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-
-                  // Campo Texto de la Frase
-                  TextFormField(
-                    controller: textCtrl,
-                    maxLines: 4,
-                    minLines: 2,
-                    decoration: InputDecoration(
-                      labelText: 'Frase o pensamiento',
-                      hintText: 'Escribe aquí la frase...',
-                      alignLabelWithHint: true,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-                    ),
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) {
-                        return 'La frase no puede estar vacía';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Campo Autor
-                  TextFormField(
-                    controller: authorCtrl,
-                    decoration: InputDecoration(
-                      labelText: 'Autor o pensador',
-                      prefixIcon: const Icon(Icons.person_outline_rounded),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Campo Contexto Histórico
-                  TextFormField(
-                    controller: contextCtrl,
-                    maxLines: 2,
-                    minLines: 1,
-                    decoration: InputDecoration(
-                      labelText: 'Contexto histórico / Reflexión (opcional)',
-                      prefixIcon: const Icon(Icons.info_outline),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Campo Fuente Literaria
-                  TextFormField(
-                    controller: sourceCtrl,
-                    decoration: InputDecoration(
-                      labelText: 'Fuente literaria u obra (opcional)',
-                      prefixIcon: const Icon(Icons.menu_book_outlined),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Campo Etiquetas
-                  TextFormField(
-                    controller: tagsCtrl,
-                    decoration: InputDecoration(
-                      labelText: 'Etiquetas (separadas por coma)',
-                      prefixIcon: const Icon(Icons.tag_rounded),
-                      hintText: 'ej. paz, vida, superación',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Botones Guardar y Cancelar
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          ),
-                          onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Cancelar'),
-                        ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: QuoteCard(
+                        quote: q,
+                        isFavorite: isFav,
+                        onToggleFavorite: () => provider.toggleFavorite(q.id),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: FilledButton.icon(
-                          style: FilledButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          ),
-                          icon: const Icon(Icons.check_rounded, size: 18),
-                          label: const Text('Guardar'),
-                          onPressed: () async {
-                            if (!formKey.currentState!.validate()) return;
-
-                            final rawTags = tagsCtrl.text
-                                .split(',')
-                                .map((t) => t.trim().toLowerCase())
-                                .where((t) => t.isNotEmpty)
-                                .toList();
-
-                            await provider.updateQuote(
-                              id: q.id,
-                              text: textCtrl.text,
-                              author: authorCtrl.text,
-                              context: contextCtrl.text,
-                              source: sourceCtrl.text,
-                              tags: rawTags.isNotEmpty ? rawTags : null,
-                            );
-
-                            if (context.mounted) {
-                              Navigator.pop(ctx);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Frase actualizada correctamente'),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                const ModernStyleEditor(),
+              ],
             ),
           ),
         );
@@ -531,11 +433,11 @@ class QuoteDetailPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.edit_outlined),
-                title: const Text('Editar frase'),
+                leading: const Icon(Icons.palette_outlined),
+                title: const Text('Personalizar tarjeta'),
                 onTap: () {
                   Navigator.pop(context);
-                  _showEditQuoteModal(context, provider, q);
+                  _openVisualEditor(context, q);
                 },
               ),
               ListTile(

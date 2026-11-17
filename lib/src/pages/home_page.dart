@@ -117,9 +117,6 @@ class _HomePageState extends State<HomePage> {
         builder: (_) => QuoteDetailPage(
           quote: q,
           heroTag: 'quote-${q.id}',
-          onEdit: q.isCustom
-              ? () => _showEditQuoteModal(context, provider, q)
-              : null,
           onDelete: q.isCustom
               ? () => _confirmDeleteQuote(context, provider, q)
               : null,
@@ -296,163 +293,6 @@ class _HomePageState extends State<HomePage> {
       },
     ).whenComplete(() {
       // Liberar controladores si el usuario cierra sin guardar
-      try { textController.dispose(); } catch (_) {}
-      try { authorController.dispose(); } catch (_) {}
-      try { sourceController.dispose(); } catch (_) {}
-    });
-  }
-
-  void _showEditQuoteModal(BuildContext context, QuotesProvider provider, Quote quote) {
-    final formKey = GlobalKey<FormState>();
-    final textController = TextEditingController(text: quote.text);
-    final authorController = TextEditingController(
-      text: quote.author == 'Yo' ? 'Yo' : quote.author,
-    );
-    final sourceController = TextEditingController(text: quote.source ?? '');
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 20,
-            right: 20,
-            top: 20,
-          ),
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Editar mi frase',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close, color: Colors.grey),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: textController,
-                    maxLines: 3,
-                    maxLength: 250,
-                    style: const TextStyle(color: Colors.black87),
-                    decoration: InputDecoration(
-                      labelText: 'Frase o reflexión',
-                      labelStyle: const TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) {
-                        return 'Por favor escribe una frase';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: authorController,
-                    style: const TextStyle(color: Colors.black87),
-                    decoration: InputDecoration(
-                      labelText: 'Autor',
-                      labelStyle: const TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: sourceController,
-                    style: const TextStyle(color: Colors.black87),
-                    decoration: InputDecoration(
-                      labelText: 'Origen / Libro (Opcional)',
-                      labelStyle: const TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  FilledButton(
-                    onPressed: () async {
-                      if (formKey.currentState?.validate() ?? false) {
-                        final text = textController.text.trim();
-                        final author = authorController.text.trim();
-                        final source = sourceController.text.trim();
-
-                        Navigator.pop(context);
-                        textController.dispose();
-                        authorController.dispose();
-                        sourceController.dispose();
-
-                        await provider.editCustomQuote(
-                          id: quote.id,
-                          text: text,
-                          author: author.isNotEmpty ? author : null,
-                          source: source.isNotEmpty ? source : null,
-                        );
-
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Frase actualizada')),
-                          );
-                        }
-                      }
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      'Guardar Cambios',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    ).whenComplete(() {
       try { textController.dispose(); } catch (_) {}
       try { authorController.dispose(); } catch (_) {}
       try { sourceController.dispose(); } catch (_) {}
@@ -686,6 +526,68 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
+          if (!_isEditing && provider.activeEvent != null)
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 14,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(24),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EventDetailPage(event: provider.activeEvent!),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.92),
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.06),
+                            blurRadius: 10,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.auto_awesome_outlined,
+                            size: 14,
+                            color: provider.activeEvent!.accentColor,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Evento · ${provider.activeEvent!.title}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: provider.activeEvent!.accentColor,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 11,
+                            color: provider.activeEvent!.accentColor.withValues(alpha: 0.7),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
           // Editor Overlay
           if (_isEditing)
             Positioned(
@@ -813,9 +715,7 @@ class _HomePageState extends State<HomePage> {
                     screenshotController: isCurrent
                         ? _screenshotController
                         : null,
-                    onEdit: q.isCustom
-                        ? () => _showEditQuoteModal(context, provider, q)
-                        : null,
+                    onEdit: () => setState(() => _isEditing = true),
                     onDelete: q.isCustom
                         ? () => _confirmDeleteQuote(context, provider, q)
                         : null,
