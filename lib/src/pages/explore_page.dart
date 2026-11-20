@@ -107,145 +107,258 @@ class ExplorePage extends StatelessWidget {
       );
     }
 
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      itemCount: events.length,
-      itemBuilder: (context, index) {
-        final ev = events[index];
-        final accent = ev.accentColor;
-        final statusLabel = ev.isActive
-            ? 'EN CURSO'
-            : ev.isCompleted
-                ? 'COMPLETADO'
-                : 'PRÓXIMAMENTE';
-        final dateRange = '${_formatShortDate(ev.startDate)} – ${_formatShortDate(ev.endDate)}';
+    final activeEvents = events.where((e) => e.isActive).toList();
+    final upcomingEvents = events.where((e) => e.isUpcoming).toList()
+      ..sort((a, b) => a.startDate.compareTo(b.startDate));
+    final completedEvents = events.where((e) => e.isCompleted).toList()
+      ..sort((a, b) => b.startDate.compareTo(a.startDate));
 
-        return Container(
-          margin: const EdgeInsets.only(bottom: 14),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: ev.isActive ? accent.withValues(alpha: 0.45) : Colors.grey.shade200,
-              width: ev.isActive ? 1.5 : 1.0,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+    final currentCycleUpcoming = upcomingEvents.take(12).toList();
+    final futureCycleEvents = upcomingEvents.skip(12).toList();
+
+    // Group future years cleanly so the primary list stays focused
+    final futureByYear = <int, List<QuoteSeasonEvent>>{};
+    for (final ev in futureCycleEvents) {
+      futureByYear.putIfAbsent(ev.startDate.year, () => []).add(ev);
+    }
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+      children: [
+        if (activeEvents.isNotEmpty) ...[
+          _buildEventsSectionTitle('EN CURSO AHORA'),
+          const SizedBox(height: 10),
+          for (final ev in activeEvents) _buildEventCard(context, ev, isHero: true),
+          const SizedBox(height: 18),
+        ],
+        if (currentCycleUpcoming.isNotEmpty) ...[
+          _buildEventsSectionTitle('PRÓXIMAS TEMPORADAS'),
+          const SizedBox(height: 10),
+          for (final ev in currentCycleUpcoming) _buildEventCard(context, ev),
+        ],
+        if (completedEvents.isNotEmpty) ...[
+          const SizedBox(height: 18),
+          _buildEventsSectionTitle('TEMPORADAS COMPLETADAS'),
+          const SizedBox(height: 10),
+          for (final ev in completedEvents) _buildEventCard(context, ev),
+        ],
+        if (futureByYear.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              tilePadding: const EdgeInsets.symmetric(horizontal: 12),
+              childrenPadding: const EdgeInsets.only(top: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.grey.shade200),
               ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => EventDetailPage(event: ev)),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              collapsedShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.grey.shade200),
+              ),
+              backgroundColor: Colors.white,
+              collapsedBackgroundColor: Colors.white,
+              title: Text(
+                'Calendario futuro (${futureCycleEvents.length} temporadas)',
+                style: const TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black87,
+                ),
+              ),
+              children: [
+                for (final entry in futureByYear.entries) ...[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: _buildEventsSectionTitle('AÑO ${entry.key}'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
                       children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: accent.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Icon(_eventIconFromKey(ev.iconKey), color: accent, size: 22),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                ev.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                dateRange,
-                                style: TextStyle(
-                                  fontSize: 12.5,
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: ev.isActive
-                                ? accent
-                                : ev.isCompleted
-                                    ? Colors.grey.shade200
-                                    : accent.withValues(alpha: 0.10),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            statusLabel,
-                            style: TextStyle(
-                              fontSize: 10,
+                        for (final ev in entry.value) _buildEventCard(context, ev),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildEventsSectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 1.1,
+        color: Colors.grey.shade600,
+      ),
+    );
+  }
+
+  Widget _buildEventCard(
+    BuildContext context,
+    QuoteSeasonEvent ev, {
+    bool isHero = false,
+  }) {
+    final accent = ev.accentColor;
+    final statusLabel = ev.isActive
+        ? 'EN CURSO'
+        : ev.isCompleted
+            ? 'COMPLETADO'
+            : 'PRÓXIMO';
+    final dateRange = '${_formatShortDate(ev.startDate)} – ${_formatShortDate(ev.endDate)}';
+    final progress = ev.allQuotes.isEmpty
+        ? 0.0
+        : (ev.unlockedQuotes.length / ev.allQuotes.length).clamp(0.0, 1.0);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: ev.isActive ? accent.withValues(alpha: 0.5) : Colors.grey.shade200,
+          width: isHero ? 1.6 : 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: ev.isActive ? 0.06 : 0.03),
+            blurRadius: isHero ? 14 : 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => EventDetailPage(event: ev)),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: accent.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Icon(_eventIconFromKey(ev.iconKey), color: accent, size: 22),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ev.title,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 0.4,
-                              color: ev.isActive
-                                  ? Colors.white
-                                  : ev.isCompleted
-                                      ? Colors.grey.shade700
-                                      : accent,
+                              fontSize: 16,
+                              color: Colors.black87,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      ev.subtitle,
-                      style: TextStyle(
-                        fontSize: 13.5,
-                        color: Colors.grey.shade700,
-                        height: 1.35,
+                          const SizedBox(height: 2),
+                          Text(
+                            dateRange,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${ev.unlockedQuotes.length} de ${ev.allQuotes.length} días disponibles',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: accent,
-                          ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: ev.isActive
+                            ? accent
+                            : ev.isCompleted
+                                ? Colors.grey.shade200
+                                : accent.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        statusLabel,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.4,
+                          color: ev.isActive
+                              ? Colors.white
+                              : ev.isCompleted
+                                  ? Colors.grey.shade700
+                                  : accent,
                         ),
-                        const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.black26),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 11),
+                Text(
+                  ev.subtitle,
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    color: Colors.grey.shade700,
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                if (ev.isActive || ev.isCompleted) ...[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      minHeight: 5,
+                      backgroundColor: accent.withValues(alpha: 0.12),
+                      color: accent,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ev.isUpcoming
+                          ? '${ev.allQuotes.length} días programados'
+                          : '${ev.unlockedQuotes.length} de ${ev.allQuotes.length} días disponibles',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: accent,
+                      ),
+                    ),
+                    const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.black26),
+                  ],
+                ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -663,6 +776,18 @@ class _ListByKeyPage extends StatelessWidget {
                               children: [
                                 const Icon(Icons.format_quote_rounded, color: Colors.black12, size: 32),
                                 const Spacer(),
+                                if (provider.hasReflection(q.id))
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10, top: 2),
+                                    child: Tooltip(
+                                      message: 'Tiene reflexión privada',
+                                      child: Icon(
+                                        Icons.edit_note_rounded,
+                                        size: 19,
+                                        color: Colors.blueGrey.shade400,
+                                      ),
+                                    ),
+                                  ),
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(),
@@ -774,11 +899,23 @@ class EventDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Del ${_formatDate(event.startDate)} al ${_formatDate(event.endDate)} · ${event.unlockedQuotes.length}/7 disponibles',
+                    'Del ${_formatDate(event.startDate)} al ${_formatDate(event.endDate)} · ${event.unlockedQuotes.length}/${event.allQuotes.length} disponibles',
                     style: TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: event.allQuotes.isEmpty
+                          ? 0.0
+                          : (event.unlockedQuotes.length / event.allQuotes.length).clamp(0.0, 1.0),
+                      minHeight: 5,
+                      backgroundColor: accent.withValues(alpha: 0.12),
+                      color: accent,
                     ),
                   ),
                 ],
@@ -878,6 +1015,17 @@ class EventDetailPage extends StatelessWidget {
                               style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: accent),
                             ),
                           ),
+                          if (provider.hasReflection(q.id)) ...[
+                            const SizedBox(width: 8),
+                            Tooltip(
+                              message: 'Tiene reflexión privada',
+                              child: Icon(
+                                Icons.edit_note_rounded,
+                                size: 18,
+                                color: accent.withValues(alpha: 0.8),
+                              ),
+                            ),
+                          ],
                           const Spacer(),
                           IconButton(
                             padding: EdgeInsets.zero,

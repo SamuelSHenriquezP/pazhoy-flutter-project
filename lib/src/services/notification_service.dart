@@ -5,12 +5,14 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../providers/quotes_provider.dart';
 
 class NotificationService {
   NotificationService._();
   static final NotificationService instance = NotificationService._();
 
   static const int _dailyNotifId = 0;
+  static const int _eventNotifId = 1;
   static const String _enabledKey = 'notif_enabled';
   static const String _hourKey = 'notif_hour';
   static const String _minuteKey = 'notif_minute';
@@ -63,16 +65,23 @@ class NotificationService {
 
   Future<bool> requestPermissions() async {
     await init();
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    final ios = _plugin.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
-    final macos = _plugin.resolvePlatformSpecificImplementation<
-        MacOSFlutterLocalNotificationsPlugin>();
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    final ios = _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
+    final macos = _plugin
+        .resolvePlatformSpecificImplementation<
+          MacOSFlutterLocalNotificationsPlugin
+        >();
 
     if (android != null) {
       final granted = await android.requestNotificationsPermission();
-      return granted ?? true; // On Android 12 and below, requestNotificationsPermission returns null
+      return granted ??
+          true; // On Android 12 and below, requestNotificationsPermission returns null
     }
     if (ios != null) {
       final granted = await ios.requestPermissions(alert: true, sound: true);
@@ -92,7 +101,7 @@ class NotificationService {
     required int minute,
   }) async {
     await init();
-    await _plugin.cancelAll();
+    await _plugin.cancel(_dailyNotifId);
 
     final now = tz.TZDateTime.now(tz.local);
     var scheduledDate = tz.TZDateTime(
@@ -137,6 +146,75 @@ class NotificationService {
     await prefs.setBool(_enabledKey, true);
     await prefs.setInt(_hourKey, hour);
     await prefs.setInt(_minuteKey, minute);
+  }
+
+  /// Programa un aviso especial cuando inicia la próxima temporada o evento mensual.
+  Future<void> scheduleNextEventReminder(
+    QuoteSeasonEvent? nextOrActiveEvent, {
+    List<QuoteSeasonEvent>? events,
+  }) async {
+    try {
+      await init();
+      for (int index = 0; index < 32; index++) {
+        await _plugin.cancel(_eventNotifId + index);
+      }
+
+      final seasons =
+          events ?? [?nextOrActiveEvent];
+      if (seasons.isEmpty) return;
+
+      final prefs = await SharedPreferences.getInstance();
+      final enabled = prefs.getBool(_enabledKey) ?? false;
+      if (!enabled) return;
+
+      final hour = prefs.getInt(_hourKey) ?? 9;
+      final minute = prefs.getInt(_minuteKey) ?? 0;
+
+      final now = tz.TZDateTime.now(tz.local);
+      int scheduled = 0;
+      for (final event in seasons) {
+        if (scheduled >= 32) break;
+        final start = event.startDate;
+        final scheduledDate = tz.TZDateTime(
+          tz.local,
+          start.year,
+          start.month,
+          start.day,
+          hour,
+          minute,
+        );
+
+        if (!scheduledDate.isAfter(now)) continue;
+
+        const androidDetails = AndroidNotificationDetails(
+          'pazhoy_events',
+          'Temporadas mensuales',
+          channelDescription:
+              'Avisos cuando inicia una nueva temporada mensual de reflexión',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+        );
+        const darwinDetails = DarwinNotificationDetails();
+        const details = NotificationDetails(
+          android: androidDetails,
+          iOS: darwinDetails,
+          macOS: darwinDetails,
+        );
+
+        await _plugin.zonedSchedule(
+          _eventNotifId + scheduled++,
+          'Nueva temporada · ${event.title}',
+          event.subtitle,
+          scheduledDate,
+          details,
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+        );
+      }
+    } catch (e, st) {
+      debugPrint('Error programando aviso de temporada: $e\n$st');
+    }
   }
 
   Future<void> cancel() async {

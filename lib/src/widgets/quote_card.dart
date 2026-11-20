@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,8 @@ class QuoteCard extends StatelessWidget {
   final ScreenshotController? screenshotController;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final bool exportOnly;
+  final QuoteStyle? styleOverride;
 
   const QuoteCard({
     super.key,
@@ -24,134 +27,191 @@ class QuoteCard extends StatelessWidget {
     this.screenshotController,
     this.onEdit,
     this.onDelete,
+    this.exportOnly = false,
+    this.styleOverride,
   });
 
   @override
   Widget build(BuildContext context) {
-    final styleProvider = context.watch<StyleProvider>();
-    final style = styleProvider.style;
-    // Usa el color de texto tal como lo definió el usuario, sin modificaciones
-    final effectiveTextColor = style.textColor;
-
-    Widget cardContent = Container(
-      decoration: BoxDecoration(
-        // Apply opacity to background color when there's no image and no gradient
-        color: style.backgroundImagePath == null && style.backgroundGradient == null ? style.backgroundColor : null,
-        gradient: (style.backgroundImagePath == null && style.backgroundGradient != null && style.backgroundGradient! < StyleProvider.predefinedGradients.length)
-            ? StyleProvider.predefinedGradients[style.backgroundGradient!]
-            : null,
-        borderRadius: BorderRadius.circular(12),
-        image: (() {
-          if (style.backgroundImagePath == null) return null;
-          try {
-            final file = File(style.backgroundImagePath!);
-            if (!file.existsSync()) return null;
-            return DecorationImage(
-              image: FileImage(file),
-              fit: BoxFit.cover,
-              scale: style.imageScale,
-              alignment: style.imageAlignment,
-            );
-          } catch (e) {
-            debugPrint('Error loading background image: $e');
-            return null;
-          }
-        })(),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    final style = styleOverride ?? context.watch<StyleProvider>().style;
+    final design = style.design;
+    final textColor = style.textColor;
+    final ratio = style.aspectRatio.ratio;
+    final padding = design.padding(style.contentPadding);
+    final radius = BorderRadius.circular(design.cornerRadius);
+    final column = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Icon(
+            Icons.format_quote_rounded,
+            color: textColor.withValues(alpha: 0.7),
+            size: 22,
+          ),
+        ),
+        const SizedBox(height: 8),
+        _StyledText(
+          text: quote.text,
+          style: style,
+          fontSize: style.fontSize,
+          isAuthor: false,
+          resolvedTextColor: textColor,
+        ),
+        if (design.divider != QuoteDivider.none) ...[
+          const SizedBox(height: 12),
+          Center(
+            child: switch (design.divider) {
+              QuoteDivider.line => SizedBox(
+                width: 64,
+                child: Divider(color: textColor, thickness: 1.5),
+              ),
+              QuoteDivider.dots => Text(
+                '•  •  •',
+                style: TextStyle(color: textColor),
+              ),
+              QuoteDivider.diamond => Icon(
+                Icons.diamond_outlined,
+                color: textColor,
+                size: 18,
+              ),
+              QuoteDivider.none => const SizedBox.shrink(),
+            },
           ),
         ],
+        if (design.showAuthor && quote.author.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _StyledText(
+            text: '— ${quote.author}',
+            style: style,
+            fontSize: design.authorSize,
+            isAuthor: true,
+            textAlign: TextAlign.right,
+            resolvedTextColor: design.authorColor ?? textColor,
+          ),
+        ],
+        if (design.showAuthor &&
+            quote.source != null &&
+            quote.source!.trim().isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              quote.source!,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 12,
+                color: (design.authorColor ?? textColor).withValues(alpha: 0.6),
+              ),
+            ),
+          ),
+      ],
+    );
+
+    DecorationImage? image;
+    final imagePath = style.backgroundImagePath;
+    if (imagePath != null && File(imagePath).existsSync()) {
+      image = DecorationImage(
+        image: FileImage(File(imagePath)),
+        fit: BoxFit.cover,
+        scale: style.imageScale,
+        alignment: style.imageAlignment,
+      );
+    }
+    final gradientIndex = style.backgroundGradient;
+    final gradient =
+        design.customGradient ??
+        (gradientIndex != null &&
+                gradientIndex >= 0 &&
+                gradientIndex < StyleProvider.predefinedGradients.length
+            ? StyleProvider.predefinedGradients[gradientIndex]
+            : null);
+    final background = ColorFiltered(
+      colorFilter: ColorFilter.matrix(design.backgroundColorMatrix),
+      child: ImageFiltered(
+        enabled: design.backgroundBlur > 0,
+        imageFilter: ui.ImageFilter.blur(
+          sigmaX: design.backgroundBlur,
+          sigmaY: design.backgroundBlur,
+          tileMode: TileMode.clamp,
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: style.backgroundColor,
+            gradient: image == null ? gradient : null,
+            image: image,
+          ),
+        ),
       ),
+    );
+
+    Widget content = ClipRRect(
+      borderRadius: radius,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap,
-          onLongPress: quote.isCustom ? () => _showCustomMenu(context) : null,
-          borderRadius: BorderRadius.circular(12),
+          onTap: exportOnly ? null : onTap,
+          onLongPress: !exportOnly && quote.isCustom
+              ? () => _showCustomMenu(context)
+              : null,
           child: Stack(
             children: [
-              // Overlay de color/opacidad:
-              // Con imagen: tinta de backgroundColor encima de la imagen
-              // Sin imagen: tinta adicional sobre el color sólido (oscurecer/aclarar)
-              if (style.opacity > 0.0)
+              Positioned.fill(child: background),
+              if (style.opacity > 0)
                 Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: style.backgroundColor.withValues(
-                        alpha: style.opacity,
-                      ),
+                  child: ColoredBox(
+                    color: style.backgroundColor.withValues(
+                      alpha: style.opacity,
                     ),
                   ),
                 ),
-
-              // Contenido
-              Padding(
-                padding: EdgeInsets.all(style.contentPadding),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Icon(
-                        Icons.format_quote_rounded,
-                        color: effectiveTextColor.withValues(alpha: 0.7),
-                        size: 22,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    _StyledText(
-                      text: quote.text,
-                      style: style,
-                      fontSize: style.fontSize,
-                      isAuthor: false,
-                      resolvedTextColor: effectiveTextColor,
-                    ),
-                    const SizedBox(height: 16),
-                    if (quote.author.isNotEmpty)
-                      _StyledText(
-                        text: '— ${quote.author}',
-                        style: style,
-                        fontSize: 14,
-                        isAuthor: true,
-                        textAlign: TextAlign.right,
-                        resolvedTextColor: effectiveTextColor,
-                      ),
-                    if (quote.source != null && quote.source!.trim().isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(
-                          quote.source!,
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: effectiveTextColor.withValues(alpha: 0.6),
-                          ),
+              if (ratio == null)
+                Padding(padding: padding, child: column)
+              else
+                Positioned.fill(
+                  child: Padding(
+                    padding: padding,
+                    child: Align(
+                      alignment: Alignment(0, design.verticalPosition),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: SizedBox(
+                          width: (360 - padding.horizontal).clamp(40, 360),
+                          child: column,
                         ),
                       ),
-                  ],
-                ),
-              ),
-              // Botón de favoritos
-              Positioned(
-                top: 4,
-                right: 4,
-                child: IconButton(
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite
-                        ? Colors.red
-                        : effectiveTextColor.withValues(alpha: 0.5),
+                    ),
                   ),
-                  onPressed: onToggleFavorite,
                 ),
-              ),
-              // Badge de frase propia o temporada/evento
-              if (quote.isCustom || quote.eventTitle != null)
+              if (design.frameWidth > 0)
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: radius,
+                        border: Border.all(
+                          color: design.frameColor,
+                          width: design.frameWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              if (!exportOnly)
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite
+                          ? Colors.red
+                          : textColor.withValues(alpha: 0.5),
+                    ),
+                    onPressed: onToggleFavorite,
+                  ),
+                ),
+              if (quote.isCustom && !exportOnly)
                 Positioned(
                   bottom: 8,
                   left: 8,
@@ -161,29 +221,12 @@ class QuoteCard extends StatelessWidget {
                       vertical: 3,
                     ),
                     decoration: BoxDecoration(
-                      color: effectiveTextColor.withValues(alpha: 0.12),
+                      color: textColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          quote.isCustom
-                              ? Icons.auto_awesome_outlined
-                              : Icons.event_outlined,
-                          size: 11,
-                          color: effectiveTextColor.withValues(alpha: 0.65),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          quote.isCustom ? 'Mi frase' : quote.eventTitle!,
-                          style: TextStyle(
-                            fontSize: 9.5,
-                            color: effectiveTextColor.withValues(alpha: 0.65),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      'Mi frase',
+                      style: TextStyle(fontSize: 9.5, color: textColor),
                     ),
                   ),
                 ),
@@ -192,18 +235,34 @@ class QuoteCard extends StatelessWidget {
         ),
       ),
     );
-
-    // Si tenemos controlador, envolvemos en Screenshot
-    if (screenshotController != null) {
-      cardContent = Screenshot(
-        controller: screenshotController!,
-        child: cardContent,
+    if (ratio != null) {
+      content = AspectRatio(
+        aspectRatio: ratio,
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: SizedBox(width: 360, height: 360 / ratio, child: content),
+        ),
       );
     }
-
+    if (exportOnly) return content;
+    if (screenshotController != null) {
+      content = Screenshot(controller: screenshotController!, child: content);
+    }
+    if (ratio != null) {
+      content = Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight:
+                MediaQuery.sizeOf(context).height *
+                (style.aspectRatio == QuoteCardAspectRatio.story ? 0.56 : 0.52),
+          ),
+          child: content,
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: cardContent,
+      child: content,
     );
   }
 
@@ -302,7 +361,18 @@ class _StyledText extends StatelessWidget {
     final normalized = _normalizeFontFamily(family);
     if (normalized == null) return textStyle;
     try {
-      return GoogleFonts.getFont(normalized, textStyle: textStyle);
+      // Reuse the regular face; Flutter synthesizes emphasis without fetching
+      // an extra font variant when bold or italic is toggled.
+      return GoogleFonts.getFont(
+        normalized,
+        textStyle: textStyle.copyWith(
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+        ),
+      ).copyWith(
+        fontWeight: textStyle.fontWeight,
+        fontStyle: textStyle.fontStyle,
+      );
     } catch (_) {
       return textStyle.copyWith(fontFamily: normalized);
     }
@@ -315,7 +385,15 @@ class _StyledText extends StatelessWidget {
       height: style.lineHeight,
       letterSpacing: style.letterSpacing,
       wordSpacing: style.wordSpacing,
-      fontStyle: isAuthor ? FontStyle.italic : FontStyle.normal,
+      fontWeight: !isAuthor && style.design.bold
+          ? FontWeight.bold
+          : FontWeight.normal,
+      fontStyle: isAuthor || style.design.italic
+          ? FontStyle.italic
+          : FontStyle.normal,
+      decoration: !isAuthor && style.design.underline
+          ? TextDecoration.underline
+          : TextDecoration.none,
     );
     final baseStyle = style.fontFamily != null
         ? _safeGetFont(style.fontFamily!, baseTextStyle)
@@ -344,7 +422,9 @@ class _StyledText extends StatelessWidget {
             text,
             textAlign: textAlign ?? style.textAlign,
             style: baseStyle.copyWith(
-              color: isAuthor ? textColor.withValues(alpha: 0.8) : textColor,
+              color: isAuthor && style.design.authorColor == null
+                  ? textColor.withValues(alpha: 0.8)
+                  : textColor,
               shadows: style.textShadowColor != null
                   ? [
                       Shadow(
@@ -365,7 +445,9 @@ class _StyledText extends StatelessWidget {
       text,
       textAlign: textAlign ?? style.textAlign,
       style: baseStyle.copyWith(
-        color: isAuthor ? textColor.withValues(alpha: 0.8) : textColor,
+        color: isAuthor && style.design.authorColor == null
+            ? textColor.withValues(alpha: 0.8)
+            : textColor,
         shadows: style.textShadowColor != null
             ? [
                 Shadow(

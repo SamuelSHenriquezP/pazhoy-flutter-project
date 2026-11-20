@@ -121,7 +121,7 @@ class LocalStorageService {
 
   Future<List<Map<String, dynamic>>> getCustomQuotesRaw() async {
     final prefs = _prefs ?? await SharedPreferences.getInstance();
-    
+
     // Try primary
     try {
       final jsonStr = prefs.getString(_customQuotesKey);
@@ -170,7 +170,9 @@ class LocalStorageService {
     if (jsonStr == null || jsonStr.isEmpty) return {};
     try {
       final decoded = json.decode(jsonStr) as Map<String, dynamic>;
-      return decoded.map((k, v) => MapEntry(int.parse(k), Map<String, dynamic>.from(v as Map)));
+      return decoded.map(
+        (k, v) => MapEntry(int.parse(k), Map<String, dynamic>.from(v as Map)),
+      );
     } catch (e) {
       debugPrint('Error loading edited quotes: $e');
       return {};
@@ -190,7 +192,7 @@ class LocalStorageService {
   }
 
   // --- Rachas (Streaks) ---
-  
+
   /// Actualiza la racha del usuario basándose en la última fecha de apertura.
   /// Devuelve un mapa con { 'streak': int, 'increased': bool }
   Future<Map<String, dynamic>> updateAndGetStreak() async {
@@ -206,7 +208,8 @@ class LocalStorageService {
     }
 
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    final yesterdayStr = '${yesterday.year}-${yesterday.month.toString().padLeft(2, '0')}-${yesterday.day.toString().padLeft(2, '0')}';
+    final yesterdayStr =
+        '${yesterday.year}-${yesterday.month.toString().padLeft(2, '0')}-${yesterday.day.toString().padLeft(2, '0')}';
 
     if (lastDate == yesterdayStr) {
       // Racha continua
@@ -216,7 +219,7 @@ class LocalStorageService {
       // Racha perdida o es el primer día
       currentStreak = 1;
       // Si el lastDate es null, es la primera vez, consideramos que "aumentó"
-      increased = (lastDate != null) ? false : true; 
+      increased = (lastDate != null) ? false : true;
     }
 
     await prefs.setInt(_streakCountKey, currentStreak);
@@ -224,7 +227,7 @@ class LocalStorageService {
 
     return {'streak': currentStreak, 'increased': increased};
   }
-  
+
   Future<int> getStreakCount() async {
     final prefs = _prefs ?? await SharedPreferences.getInstance();
     return prefs.getInt(_streakCountKey) ?? 0;
@@ -272,6 +275,59 @@ class LocalStorageService {
       await prefs.setString(_collectionsKey, jsonStr);
     } catch (e) {
       debugPrint('Error saving collections: $e');
+    }
+  }
+
+  // --- Reflexiones privadas ---
+  static const String _reflectionsKey = 'user_quote_reflections';
+  static const String _reflectionHistoryKey = 'user_reflection_history';
+
+  Future<Map<String, String>> getReflectionHistory() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    try {
+      final data =
+          json.decode(prefs.getString(_reflectionHistoryKey) ?? '{}')
+              as Map<String, dynamic>;
+      return data.map((key, value) => MapEntry(key, value.toString()));
+    } catch (_) {
+      return {};
+    }
+  }
+
+  Future<void> saveReflectionHistory(Map<String, String> history) async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(_reflectionHistoryKey, json.encode(history));
+  }
+
+  Future<Map<int, String>> getReflections() async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    final jsonStr = prefs.getString(_reflectionsKey);
+    if (jsonStr == null || jsonStr.isEmpty) return {};
+    try {
+      final decoded = json.decode(jsonStr) as Map<String, dynamic>;
+      final result = <int, String>{};
+      decoded.forEach((key, value) {
+        final parsedId = int.tryParse(key);
+        if (parsedId != null && value is String && value.trim().isNotEmpty) {
+          result[parsedId] = value;
+        }
+      });
+      return result;
+    } catch (e) {
+      debugPrint('Error loading reflections: $e');
+      return {};
+    }
+  }
+
+  Future<void> saveReflections(Map<int, String> reflections) async {
+    try {
+      final prefs = _prefs ?? await SharedPreferences.getInstance();
+      final encodable = reflections.map(
+        (key, value) => MapEntry(key.toString(), value),
+      );
+      await prefs.setString(_reflectionsKey, json.encode(encodable));
+    } catch (e) {
+      debugPrint('Error saving reflections: $e');
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pazhoy/src/models/quote.dart';
 import 'package:pazhoy/src/providers/quotes_provider.dart';
 import 'package:pazhoy/src/data/quotes_repository.dart';
@@ -95,11 +96,33 @@ class MockLocalStorageService implements LocalStorageService {
   Map<int, Map<String, dynamic>> editedQuotes = {};
 
   @override
-  Future<Map<int, Map<String, dynamic>>> getEditedQuotes() async => editedQuotes;
+  Future<Map<int, Map<String, dynamic>>> getEditedQuotes() async =>
+      editedQuotes;
 
   @override
   Future<void> saveEditedQuote(int id, Map<String, dynamic> data) async {
     editedQuotes[id] = data;
+  }
+
+  Map<int, String> reflections = {};
+  Map<String, String> reflectionHistory = {};
+
+  @override
+  Future<Map<String, String>> getReflectionHistory() async =>
+      Map.from(reflectionHistory);
+
+  @override
+  Future<void> saveReflectionHistory(Map<String, String> data) async {
+    reflectionHistory = Map.from(data);
+  }
+
+  @override
+  Future<Map<int, String>> getReflections() async =>
+      Map<int, String>.from(reflections);
+
+  @override
+  Future<void> saveReflections(Map<int, String> data) async {
+    reflections = Map<int, String>.from(data);
   }
 }
 
@@ -108,12 +131,11 @@ void main() {
 
   // Mock the home_widget platform method channel
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-      .setMockMethodCallHandler(
-    const MethodChannel('home_widget'),
-    (MethodCall methodCall) async {
-      return null;
-    },
-  );
+      .setMockMethodCallHandler(const MethodChannel('home_widget'), (
+        MethodCall methodCall,
+      ) async {
+        return null;
+      });
 
   late MockQuotesRepository mockRepo;
   late MockLocalStorageService mockStorage;
@@ -208,5 +230,72 @@ void main() {
       expect(provider.favorites.contains(1), false);
       expect(mockStorage.favorites.contains(1), false);
     });
+
+    test(
+      'saveReflection stores, updates, and removes reflection by quoteId',
+      () async {
+        mockRepo.mockQuotes = [
+          Quote(text: 'A', author: 'A', id: 10),
+          Quote(text: 'B', author: 'B', id: 20),
+        ];
+        await provider.init();
+
+        expect(provider.getReflection(10), '');
+        expect(provider.hasReflection(10), false);
+
+        await provider.saveReflection(10, '  Me recuerda mantener la calma.  ');
+        expect(provider.getReflection(10), 'Me recuerda mantener la calma.');
+        expect(provider.hasReflection(10), true);
+        expect(mockStorage.reflections[10], 'Me recuerda mantener la calma.');
+        expect(
+          provider.reflectionHistory.values,
+          contains('Me recuerda mantener la calma.'),
+        );
+
+        // Re-init loads persisted reflection
+        final reloaded = QuotesProvider(repo: mockRepo, storage: mockStorage);
+        await reloaded.init();
+        expect(reloaded.getReflection(10), 'Me recuerda mantener la calma.');
+        expect(reloaded.hasReflection(20), false);
+
+        // Empty text removes reflection
+        await reloaded.saveReflection(10, '   ');
+        expect(reloaded.getReflection(10), '');
+        expect(reloaded.hasReflection(10), false);
+        expect(mockStorage.reflections.containsKey(10), false);
+      },
+    );
+
+    test(
+      'Reflections persist across instances via LocalStorageService and SharedPreferences',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        final storage = LocalStorageService();
+        await storage.init();
+
+        mockRepo.mockQuotes = [Quote(text: 'Paz', author: 'Autor', id: 42)];
+        final firstProvider = QuotesProvider(repo: mockRepo, storage: storage);
+        await firstProvider.init();
+        await firstProvider.saveReflection(42, 'Respirar antes de responder.');
+
+        final freshStorage = LocalStorageService();
+        await freshStorage.init();
+        final secondProvider = QuotesProvider(
+          repo: mockRepo,
+          storage: freshStorage,
+        );
+        await secondProvider.init();
+
+        expect(
+          secondProvider.getReflection(42),
+          'Respirar antes de responder.',
+        );
+        expect(secondProvider.hasReflection(42), true);
+        expect(
+          secondProvider.reflectionHistory.values,
+          contains('Respirar antes de responder.'),
+        );
+      },
+    );
   });
 }

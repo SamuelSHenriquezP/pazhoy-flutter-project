@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/style_provider.dart';
+import 'advanced_style_editor.dart';
 import '../providers/premium_provider.dart';
 import '../services/ad_service.dart';
 import '../pages/support_page.dart';
@@ -38,12 +39,14 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        const _QuickFormatAndPresetsBar(),
+
         // Submenu Area (Animated)
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          height: _selectedIndex == -1 ? 0 : 220, // Height for submenu
-          margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+          height: _selectedIndex == -1 ? 0 : 185, // Height for submenu
+          margin: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -60,20 +63,20 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
               : ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: AnimatedSwitcher(
-                     duration: const Duration(milliseconds: 300),
-                     transitionBuilder: (child, animation) {
-                       return FadeTransition(
-                         opacity: animation,
-                         child: SlideTransition(
-                           position: Tween<Offset>(
-                             begin: const Offset(0.0, 0.2),
-                             end: Offset.zero,
-                           ).animate(animation),
-                           child: child,
-                         ),
-                       );
-                     },
-                     child: _buildSubmenuContent(_selectedIndex),
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0.0, 0.2),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: _buildSubmenuContent(_selectedIndex),
                   ),
                 ),
         ),
@@ -205,6 +208,118 @@ class _ModernStyleEditorState extends State<ModernStyleEditor> {
   }
 }
 
+// --- Quick Format & Presets Bar ---
+
+class _QuickFormatAndPresetsBar extends StatelessWidget {
+  const _QuickFormatAndPresetsBar();
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<StyleProvider>();
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Formato',
+                style: TextStyle(fontSize: 11.5, color: Colors.black54),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final item in quoteFormatChoices)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: ChoiceChip(
+                            label: Text(
+                              item.label,
+                              style: const TextStyle(fontSize: 11),
+                            ),
+                            selected: provider.style.aspectRatio == item.ratio,
+                            visualDensity: VisualDensity.compact,
+                            onSelected: (_) =>
+                                provider.setAspectRatio(item.ratio),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 32,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: StyleProvider.presets.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 6),
+              itemBuilder: (context, index) {
+                final preset = StyleProvider.presets[index];
+                return ActionChip(
+                  visualDensity: VisualDensity.compact,
+                  avatar: CircleAvatar(
+                    backgroundColor: preset.style.backgroundColor,
+                    child: Icon(
+                      Icons.format_quote,
+                      size: 12,
+                      color: preset.style.textColor,
+                    ),
+                  ),
+                  label: Text(
+                    preset.name,
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  onPressed: () => provider.applyPreset(preset),
+                );
+              },
+            ),
+          ),
+          Row(
+            children: [
+              IconButton(
+                tooltip: 'Deshacer',
+                visualDensity: VisualDensity.compact,
+                icon: const Icon(Icons.undo, size: 20),
+                onPressed: provider.canUndo ? provider.undo : null,
+              ),
+              IconButton(
+                tooltip: 'Rehacer',
+                visualDensity: VisualDensity.compact,
+                icon: const Icon(Icons.redo, size: 20),
+                onPressed: provider.canRedo ? provider.redo : null,
+              ),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () => AdvancedStyleEditor.show(context),
+                icon: const Icon(Icons.tune, size: 18),
+                label: const Text('Más edición'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 // --- Submenus (Ported Logic) ---
 
 class _TextSubmenu extends StatelessWidget {
@@ -231,13 +346,12 @@ class _TextSubmenu extends StatelessWidget {
       'Great Vibes',
       'Cormorant Garamond',
     ];
-    
+
     final fonts = [...freeFonts, ...premiumFonts];
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-
         Text(
           'Tipografía',
           style: TextStyle(
@@ -265,8 +379,12 @@ class _TextSubmenu extends StatelessWidget {
                     Text(font, style: _safeGetFont(font)),
                     if (isPremiumFont && !isPremium) ...[
                       const SizedBox(width: 4),
-                      Icon(Icons.lock_outline, size: 14, color: isSelected ? Colors.white : Colors.amber),
-                    ]
+                      Icon(
+                        Icons.lock_outline,
+                        size: 14,
+                        color: isSelected ? Colors.white : Colors.amber,
+                      ),
+                    ],
                   ],
                 ),
                 selected: isSelected,
@@ -276,19 +394,36 @@ class _TextSubmenu extends StatelessWidget {
                       context: context,
                       builder: (context) => AlertDialog(
                         backgroundColor: Colors.white,
-                        title: const Text('Fuente Premium', style: TextStyle(color: Colors.black)),
-                        content: const Text('Las tipografías elegantes son exclusivas para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlas!', style: TextStyle(color: Colors.black87)),
+                        title: const Text(
+                          'Fuente Premium',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        content: const Text(
+                          'Las tipografías elegantes son exclusivas para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlas!',
+                          style: TextStyle(color: Colors.black87),
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancelar', style: TextStyle(color: Colors.black)),
+                            child: const Text(
+                              'Cancelar',
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
                           FilledButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportPage()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const SupportPage(),
+                                ),
+                              );
                             },
-                            style: FilledButton.styleFrom(backgroundColor: Colors.black, foregroundColor: Colors.white),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              foregroundColor: Colors.white,
+                            ),
                             child: const Text('Apoyar'),
                           ),
                         ],
@@ -388,6 +523,8 @@ class _TextSubmenu extends StatelessWidget {
           ],
         ),
         Slider(
+          onChangeStart: (_) => context.read<StyleProvider>().beginEdit(),
+          onChangeEnd: (_) => context.read<StyleProvider>().endEdit(),
           value: provider.style.fontSize,
           min: 10.0,
           max: 36.0,
@@ -422,15 +559,24 @@ class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
           children: [
             Expanded(
               child: FilledButton.icon(
-                onPressed: _isLoadingAd ? null : () {
-                  setState(() => _isLoadingAd = true);
-                  AdService.instance.showRewardedAd(() {
-                    if (mounted) setState(() => _isLoadingAd = false);
-                    provider.pickBackgroundImage();
-                  });
-                },
-                icon: _isLoadingAd 
-                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                onPressed: _isLoadingAd
+                    ? null
+                    : () {
+                        setState(() => _isLoadingAd = true);
+                        AdService.instance.showRewardedAd(() {
+                          if (mounted) setState(() => _isLoadingAd = false);
+                          provider.pickBackgroundImage();
+                        });
+                      },
+                icon: _isLoadingAd
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                     : const Icon(Icons.image),
                 label: const Text('Galería (Ver Video)'),
                 style: FilledButton.styleFrom(backgroundColor: Colors.black),
@@ -478,19 +624,36 @@ class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
                 context: context,
                 builder: (context) => AlertDialog(
                   backgroundColor: Colors.white,
-                  title: const Text('Degradados Premium', style: TextStyle(color: Colors.black)),
-                  content: const Text('Los hermosos fondos con degradado son exclusivos para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlos!', style: TextStyle(color: Colors.black87)),
+                  title: const Text(
+                    'Degradados Premium',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  content: const Text(
+                    'Los hermosos fondos con degradado son exclusivos para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlos!',
+                    style: TextStyle(color: Colors.black87),
+                  ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancelar', style: TextStyle(color: Colors.black)),
+                      child: const Text(
+                        'Cancelar',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                     FilledButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportPage()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SupportPage(),
+                          ),
+                        );
                       },
-                      style: FilledButton.styleFrom(backgroundColor: Colors.black, foregroundColor: Colors.white),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                      ),
                       child: const Text('Apoyar'),
                     ),
                   ],
@@ -516,6 +679,8 @@ class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
           ],
         ),
         Slider(
+          onChangeStart: (_) => context.read<StyleProvider>().beginEdit(),
+          onChangeEnd: (_) => context.read<StyleProvider>().endEdit(),
           value: provider.style.opacity,
           min: 0.0,
           max: 1.0,
@@ -614,6 +779,8 @@ class _EffectsSubmenu extends StatelessWidget {
             ],
           ),
           Slider(
+            onChangeStart: (_) => context.read<StyleProvider>().beginEdit(),
+            onChangeEnd: (_) => context.read<StyleProvider>().endEdit(),
             value: provider.style.textShadowBlur,
             min: 0.0,
             max: 20.0,
@@ -662,6 +829,8 @@ class _EffectsSubmenu extends StatelessWidget {
             ],
           ),
           Slider(
+            onChangeStart: (_) => context.read<StyleProvider>().beginEdit(),
+            onChangeEnd: (_) => context.read<StyleProvider>().endEdit(),
             value: provider.style.textOutlineWidth,
             min: 0.5,
             max: 5.0,
@@ -703,6 +872,8 @@ class _SliderRow extends StatelessWidget {
         SizedBox(
           height: 30,
           child: Slider(
+            onChangeStart: (_) => context.read<StyleProvider>().beginEdit(),
+            onChangeEnd: (_) => context.read<StyleProvider>().endEdit(),
             value: value,
             min: min,
             max: max,

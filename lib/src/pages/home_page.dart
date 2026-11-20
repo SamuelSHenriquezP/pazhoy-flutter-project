@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'dart:io';
+import '../providers/style_provider.dart';
 
 import '../models/quote.dart';
 import '../providers/quotes_provider.dart';
@@ -36,7 +38,8 @@ class _HomePageState extends State<HomePage> {
     final provider = context.read<QuotesProvider>();
     final n = provider.quotes.length;
     if (!provider.isLoading && _pageController == null && n > 0) {
-      final initial = (provider.dailyIndexLogical ?? provider.currentIndex).clamp(0, n - 1);
+      final initial = (provider.dailyIndexLogical ?? provider.currentIndex)
+          .clamp(0, n - 1);
       _pageController = PageController(initialPage: initial);
       if (provider.currentIndex != initial) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -69,11 +72,19 @@ class _HomePageState extends State<HomePage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.local_fire_department_outlined, color: Colors.orange, size: 64),
+            const Icon(
+              Icons.local_fire_department_outlined,
+              color: Colors.orange,
+              size: 64,
+            ),
             const SizedBox(height: 16),
             Text(
               '¡Racha de $streak día${streak > 1 ? 's' : ''}!',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             const SizedBox(height: 8),
             const Text(
@@ -87,7 +98,9 @@ class _HomePageState extends State<HomePage> {
               style: FilledButton.styleFrom(
                 backgroundColor: Colors.black,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               child: const Text('Continuar'),
             ),
@@ -266,7 +279,9 @@ class _HomePageState extends State<HomePage> {
 
                         messenger.showSnackBar(
                           const SnackBar(
-                            content: Text('¡Frase creada con éxito! Desliza hasta el final para verla.'),
+                            content: Text(
+                              '¡Frase creada con éxito! Desliza hasta el final para verla.',
+                            ),
                           ),
                         );
                       }
@@ -281,7 +296,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: const Text(
                       'Guardar Frase',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -293,18 +311,31 @@ class _HomePageState extends State<HomePage> {
       },
     ).whenComplete(() {
       // Liberar controladores si el usuario cierra sin guardar
-      try { textController.dispose(); } catch (_) {}
-      try { authorController.dispose(); } catch (_) {}
-      try { sourceController.dispose(); } catch (_) {}
+      try {
+        textController.dispose();
+      } catch (_) {}
+      try {
+        authorController.dispose();
+      } catch (_) {}
+      try {
+        sourceController.dispose();
+      } catch (_) {}
     });
   }
 
-  Future<void> _confirmDeleteQuote(BuildContext context, QuotesProvider provider, Quote quote) async {
+  Future<void> _confirmDeleteQuote(
+    BuildContext context,
+    QuotesProvider provider,
+    Quote quote,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Colors.white,
-        title: const Text('Eliminar frase', style: TextStyle(color: Colors.black)),
+        title: const Text(
+          'Eliminar frase',
+          style: TextStyle(color: Colors.black),
+        ),
         content: Text(
           '¿Eliminar esta frase?\n\n«${quote.text.length > 80 ? '${quote.text.substring(0, 80)}...' : quote.text}»',
           style: const TextStyle(color: Colors.black87),
@@ -329,20 +360,16 @@ class _HomePageState extends State<HomePage> {
     if (confirmed == true) {
       await provider.deleteCustomQuote(quote.id);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Frase eliminada')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Frase eliminada')));
       }
     }
   }
 
   Future<void> _saveImage() async {
     try {
-      final directory = await getTemporaryDirectory();
-      final imagePath = await _screenshotController.captureAndSave(
-        directory.path,
-        fileName: 'quote_save.png',
-      );
+      final imagePath = await _captureExport('quote_save');
 
       if (imagePath != null) {
         await Gal.putImage(imagePath);
@@ -364,11 +391,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _shareImage() async {
     try {
-      final directory = await getTemporaryDirectory();
-      final imagePath = await _screenshotController.captureAndSave(
-        directory.path,
-        fileName: 'quote_share.png',
-      );
+      final imagePath = await _captureExport('quote_share');
 
       if (imagePath != null) {
         await SharePlus.instance.share(
@@ -390,7 +413,46 @@ class _HomePageState extends State<HomePage> {
 
   bool _isEditing = false;
 
-  Widget _buildFloatingIconButton(IconData icon, String tooltip, VoidCallback onPressed, {Color? color, Color? iconColor}) {
+  Future<String?> _captureExport(String name) async {
+    final provider = context.read<QuotesProvider>();
+    if (provider.quotes.isEmpty) return null;
+    final quote = provider
+        .quotes[provider.currentIndex.clamp(0, provider.quotes.length - 1)];
+    final style = context.read<StyleProvider>().style;
+    final exportStyle = style.aspectRatio == QuoteCardAspectRatio.auto
+        ? style.copyWith(aspectRatio: QuoteCardAspectRatio.square)
+        : style;
+    final size = exportStyle.aspectRatio.exportLogicalSize;
+    final bytes = await _screenshotController.captureFromWidget(
+      Material(
+        color: exportStyle.backgroundColor,
+        child: QuoteCard(
+          quote: quote,
+          isFavorite: false,
+          onToggleFavorite: () {},
+          styleOverride: exportStyle,
+          exportOnly: true,
+        ),
+      ),
+      context: context,
+      targetSize: size,
+      pixelRatio: exportStyle.aspectRatio.exportPixelRatio,
+    );
+    final directory = await getTemporaryDirectory();
+    final file = File(
+      '${directory.path}/${name}_${DateTime.now().microsecondsSinceEpoch}.png',
+    );
+    await file.writeAsBytes(bytes);
+    return file.path;
+  }
+
+  Widget _buildFloatingIconButton(
+    IconData icon,
+    String tooltip,
+    VoidCallback onPressed, {
+    Color? color,
+    Color? iconColor,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: color ?? Colors.white.withValues(alpha: 0.9),
@@ -436,7 +498,9 @@ class _HomePageState extends State<HomePage> {
                       _animateToLogicalIndex(idx, provider);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('No hay frase del día disponible')),
+                        const SnackBar(
+                          content: Text('No hay frase del día disponible'),
+                        ),
                       );
                     }
                   },
@@ -506,13 +570,18 @@ class _HomePageState extends State<HomePage> {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Theme.of(context).scaffoldBackgroundColor, Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9)],
+                colors: [
+                  Theme.of(context).scaffoldBackgroundColor,
+                  Theme.of(
+                    context,
+                  ).scaffoldBackgroundColor.withValues(alpha: 0.9),
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
           ),
-          
+
           // Main Content Area
           GestureDetector(
             onTap: () {
@@ -521,7 +590,7 @@ class _HomePageState extends State<HomePage> {
             child: AnimatedPadding(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              padding: EdgeInsets.only(bottom: _isEditing ? 300 : 0),
+              padding: EdgeInsets.only(bottom: _isEditing ? 370 : 0),
               child: _buildBody(provider),
             ),
           ),
@@ -540,12 +609,16 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => EventDetailPage(event: provider.activeEvent!),
+                          builder: (_) =>
+                              EventDetailPage(event: provider.activeEvent!),
                         ),
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 7,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.92),
                         borderRadius: BorderRadius.circular(24),
@@ -578,7 +651,9 @@ class _HomePageState extends State<HomePage> {
                           Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 11,
-                            color: provider.activeEvent!.accentColor.withValues(alpha: 0.7),
+                            color: provider.activeEvent!.accentColor.withValues(
+                              alpha: 0.7,
+                            ),
                           ),
                         ],
                       ),
@@ -609,27 +684,48 @@ class _HomePageState extends State<HomePage> {
                   _buildFloatingIconButton(Icons.shuffle, 'Aleatorio', () {
                     final list = provider.quotes;
                     if (list.isEmpty) return;
-                    _animateToLogicalIndex(Random().nextInt(list.length), provider);
+                    _animateToLogicalIndex(
+                      Random().nextInt(list.length),
+                      provider,
+                    );
                   }),
                   const SizedBox(width: 16),
-                  _buildFloatingIconButton(Icons.save_alt, 'Guardar', _saveImage),
+                  _buildFloatingIconButton(
+                    Icons.save_alt,
+                    'Guardar',
+                    _saveImage,
+                  ),
                   const SizedBox(width: 16),
-                  _buildFloatingIconButton(Icons.share, 'Compartir', _shareImage),
+                  _buildFloatingIconButton(
+                    Icons.share,
+                    'Compartir',
+                    _shareImage,
+                  ),
                   const SizedBox(width: 16),
-                  _buildFloatingIconButton(Icons.palette_outlined, 'Personalizar estilo', () {
-                    setState(() => _isEditing = true);
-                  }),
+                  _buildFloatingIconButton(
+                    Icons.palette_outlined,
+                    'Personalizar estilo',
+                    () {
+                      setState(() => _isEditing = true);
+                    },
+                  ),
                 ],
               ),
             ),
-            
+
           if (_isEditing)
             Positioned(
               top: MediaQuery.of(context).padding.top + 16, // Top right corner
               right: 20,
-              child: _buildFloatingIconButton(Icons.check, 'Listo', () {
-                setState(() => _isEditing = false);
-              }, color: Colors.black, iconColor: Colors.white),
+              child: _buildFloatingIconButton(
+                Icons.check,
+                'Listo',
+                () {
+                  setState(() => _isEditing = false);
+                },
+                color: Colors.black,
+                iconColor: Colors.white,
+              ),
             ),
 
           // Bottom Glassmorphism Dock
@@ -671,7 +767,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (_pageController == null && list.isNotEmpty) {
-      final initial = (provider.dailyIndexLogical ?? provider.currentIndex).clamp(0, list.length - 1);
+      final initial = (provider.dailyIndexLogical ?? provider.currentIndex)
+          .clamp(0, list.length - 1);
       _pageController = PageController(initialPage: initial);
       if (provider.currentIndex != initial) {
         WidgetsBinding.instance.addPostFrameCallback((_) {

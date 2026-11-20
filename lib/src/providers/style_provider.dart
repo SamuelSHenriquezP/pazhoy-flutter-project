@@ -5,8 +5,41 @@ import 'package:home_widget/home_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'quote_design.dart';
+export 'quote_design.dart';
+
+/// Formato de relación de aspecto para la vista previa y exportación de la tarjeta.
+enum QuoteCardAspectRatio { auto, square, story, portrait, landscape }
+
+extension QuoteCardFormat on QuoteCardAspectRatio {
+  double? get ratio => switch (this) {
+    QuoteCardAspectRatio.auto => null,
+    QuoteCardAspectRatio.square => 1,
+    QuoteCardAspectRatio.story => 9 / 16,
+    QuoteCardAspectRatio.portrait => 4 / 5,
+    QuoteCardAspectRatio.landscape => 16 / 9,
+  };
+
+  Size get exportLogicalSize => Size(360, 360 / (ratio ?? 1));
+  double get exportPixelRatio =>
+      this == QuoteCardAspectRatio.landscape ? 1920 / 360 : 3;
+}
+
+/// Preset visual curado de un solo toque para [QuoteStyle].
+class QuoteStylePreset {
+  final String id;
+  final String name;
+  final QuoteStyle style;
+
+  const QuoteStylePreset({
+    required this.id,
+    required this.name,
+    required this.style,
+  });
+}
 
 class QuoteStyle {
+  final QuoteDesign design;
   final String? fontFamily;
   final Color backgroundColor;
   final Color textColor;
@@ -20,6 +53,7 @@ class QuoteStyle {
   final TextAlign textAlign;
   final double opacity;
   final int? backgroundGradient;
+  final QuoteCardAspectRatio aspectRatio;
 
   // Effects
   final Color? textShadowColor;
@@ -29,6 +63,7 @@ class QuoteStyle {
   final double fontSize;
 
   const QuoteStyle({
+    this.design = const QuoteDesign(),
     this.fontFamily,
     this.backgroundColor = Colors.white,
     this.textColor = Colors.black87,
@@ -47,13 +82,17 @@ class QuoteStyle {
     this.textOutlineWidth = 1.0,
     this.fontSize = 18.0,
     this.backgroundGradient,
+    this.aspectRatio = QuoteCardAspectRatio.auto,
   });
 
   QuoteStyle copyWith({
+    QuoteDesign? design,
     String? fontFamily,
+    bool clearFontFamily = false,
     Color? backgroundColor,
     Color? textColor,
     String? backgroundImagePath,
+    bool clearBackgroundImage = false,
     double? imageScale,
     Alignment? imageAlignment,
     double? contentPadding,
@@ -71,12 +110,16 @@ class QuoteStyle {
     double? fontSize,
     int? backgroundGradient,
     bool clearBackgroundGradient = false,
+    QuoteCardAspectRatio? aspectRatio,
   }) {
     return QuoteStyle(
-      fontFamily: fontFamily ?? this.fontFamily,
+      design: design ?? this.design,
+      fontFamily: clearFontFamily ? null : (fontFamily ?? this.fontFamily),
       backgroundColor: backgroundColor ?? this.backgroundColor,
       textColor: textColor ?? this.textColor,
-      backgroundImagePath: backgroundImagePath ?? this.backgroundImagePath,
+      backgroundImagePath: clearBackgroundImage
+          ? null
+          : (backgroundImagePath ?? this.backgroundImagePath),
       imageScale: imageScale ?? this.imageScale,
       imageAlignment: imageAlignment ?? this.imageAlignment,
       contentPadding: contentPadding ?? this.contentPadding,
@@ -97,12 +140,27 @@ class QuoteStyle {
       backgroundGradient: clearBackgroundGradient
           ? null
           : (backgroundGradient ?? this.backgroundGradient),
+      aspectRatio: aspectRatio ?? this.aspectRatio,
     );
+  }
+
+  static QuoteCardAspectRatio _parseAspectRatio(dynamic raw) {
+    if (raw is String) {
+      for (final value in QuoteCardAspectRatio.values) {
+        if (value.name == raw) return value;
+      }
+    } else if (raw is int &&
+        raw >= 0 &&
+        raw < QuoteCardAspectRatio.values.length) {
+      return QuoteCardAspectRatio.values[raw];
+    }
+    return QuoteCardAspectRatio.auto;
   }
 
   // JSON serialization
   Map<String, dynamic> toJson() {
     return {
+      'design': design.toJson(),
       'fontFamily': fontFamily,
       'backgroundColor': backgroundColor.toARGB32(),
       'textColor': textColor.toARGB32(),
@@ -122,11 +180,15 @@ class QuoteStyle {
       'textOutlineWidth': textOutlineWidth,
       'fontSize': fontSize,
       'backgroundGradient': backgroundGradient,
+      'aspectRatio': aspectRatio.name,
     };
   }
 
   factory QuoteStyle.fromJson(Map<String, dynamic> json) {
     return QuoteStyle(
+      design: json['design'] is Map<String, dynamic>
+          ? QuoteDesign.fromJson(json['design'] as Map<String, dynamic>)
+          : const QuoteDesign(),
       fontFamily: json['fontFamily'] as String?,
       backgroundColor: Color(
         json['backgroundColor'] as int? ?? Colors.white.toARGB32(),
@@ -155,6 +217,7 @@ class QuoteStyle {
       textOutlineWidth: (json['textOutlineWidth'] as num?)?.toDouble() ?? 1.0,
       fontSize: (json['fontSize'] as num?)?.toDouble() ?? 18.0,
       backgroundGradient: json['backgroundGradient'] as int?,
+      aspectRatio: _parseAspectRatio(json['aspectRatio']),
     );
   }
 }
@@ -163,6 +226,138 @@ class StyleProvider extends ChangeNotifier {
   QuoteStyle _style = const QuoteStyle();
   final ImagePicker _picker = ImagePicker();
   static const String _styleKey = 'quote_style';
+  static const String _savedStylesKey = 'quote_saved_styles';
+  final List<QuoteStyle> _undo = [];
+  final List<QuoteStyle> _redo = [];
+  List<QuoteStylePreset> _savedStyles = [];
+  Future<void> _pendingWrites = Future.value();
+  bool _editing = false;
+  bool _editSnapshotCaptured = false;
+
+  bool get canUndo => _undo.isNotEmpty;
+  bool get canRedo => _redo.isNotEmpty;
+  List<QuoteStylePreset> get savedStyles => List.unmodifiable(_savedStyles);
+
+  void beginEdit() {
+    _editing = true;
+    _editSnapshotCaptured = false;
+  }
+
+  void endEdit() {
+    _editing = false;
+    _editSnapshotCaptured = false;
+  }
+
+  void _rememberCurrentStyle() {
+    if (_editing && _editSnapshotCaptured) return;
+    _undo.add(_style);
+    if (_undo.length > 80) _undo.removeAt(0);
+    _redo.clear();
+    if (_editing) _editSnapshotCaptured = true;
+  }
+
+  void undo() {
+    endEdit();
+    if (!canUndo) return;
+    _redo.add(_style);
+    _style = _undo.removeLast();
+    notifyListeners();
+    _saveStyle();
+  }
+
+  void redo() {
+    endEdit();
+    if (!canRedo) return;
+    _undo.add(_style);
+    _style = _redo.removeLast();
+    notifyListeners();
+    _saveStyle();
+  }
+
+  void updateDesign(QuoteDesign design) {
+    _rememberCurrentStyle();
+    _style = _style.copyWith(design: design);
+    notifyListeners();
+    _saveStyle();
+  }
+
+  void setCustomGradient(List<Color>? colors, {double? angle}) {
+    _rememberCurrentStyle();
+    _style = _style.copyWith(
+      clearBackgroundImage: colors != null,
+      clearBackgroundGradient: true,
+      design: _style.design.copyWith(
+        gradientColors: colors,
+        clearGradient: colors == null,
+        gradientAngle: angle,
+      ),
+    );
+    notifyListeners();
+    _saveStyle();
+  }
+
+  Future<void> flushPendingChanges() => _pendingWrites;
+
+  Future<void> _queueWrite(Future<void> Function() action) {
+    final result = _pendingWrites.then((_) => action());
+    _pendingWrites = result.catchError((Object error, StackTrace stack) {
+      debugPrint('Error saving design: $error');
+    });
+    return result;
+  }
+
+  Future<void> saveNamedStyle(String name) async {
+    final clean = name.trim().characters.take(40).toString();
+    if (clean.isEmpty) return;
+    final index = _savedStyles.indexWhere(
+      (preset) => preset.name.toLowerCase() == clean.toLowerCase(),
+    );
+    final preset = QuoteStylePreset(
+      id: index < 0
+          ? 'user_${DateTime.now().microsecondsSinceEpoch}'
+          : _savedStyles[index].id,
+      name: clean,
+      style: _style,
+    );
+    if (index < 0) {
+      _savedStyles = [..._savedStyles, preset];
+    } else {
+      _savedStyles = [..._savedStyles]..[index] = preset;
+    }
+    notifyListeners();
+    await _saveNamedStyles();
+  }
+
+  void applySavedStyle(QuoteStylePreset preset) {
+    _rememberCurrentStyle();
+    _style = preset.style;
+    notifyListeners();
+    _saveStyle();
+  }
+
+  Future<void> deleteSavedStyle(String id) async {
+    _savedStyles = _savedStyles.where((preset) => preset.id != id).toList();
+    notifyListeners();
+    await _saveNamedStyles();
+  }
+
+  Future<void> _saveNamedStyles() {
+    final encoded = jsonEncode(
+      _savedStyles
+          .map(
+            (preset) => {
+              'id': preset.id,
+              'name': preset.name,
+              'style': preset.style.toJson(),
+            },
+          )
+          .toList(),
+    );
+    return _queueWrite(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_savedStylesKey, encoded);
+    });
+  }
 
   static const List<LinearGradient> predefinedGradients = [
     LinearGradient(
@@ -197,11 +392,92 @@ class StyleProvider extends ChangeNotifier {
     ),
   ];
 
+  static const List<QuoteStylePreset> presets = [
+    QuoteStylePreset(
+      id: 'editorial',
+      name: 'Editorial',
+      style: QuoteStyle(
+        fontFamily: 'Merriweather',
+        backgroundColor: Color(0xFFFAF8F5),
+        textColor: Color(0xFF1F2937),
+        contentPadding: 32.0,
+        lineHeight: 1.5,
+        letterSpacing: 0.2,
+        textAlign: TextAlign.left,
+        fontSize: 19.0,
+      ),
+    ),
+    QuoteStylePreset(
+      id: 'nocturno',
+      name: 'Nocturno',
+      style: QuoteStyle(
+        fontFamily: 'Montserrat',
+        backgroundColor: Color(0xFF161B22),
+        textColor: Color(0xFFF3F4F6),
+        contentPadding: 28.0,
+        lineHeight: 1.4,
+        letterSpacing: 0.3,
+        textAlign: TextAlign.center,
+        fontSize: 18.0,
+      ),
+    ),
+    QuoteStylePreset(
+      id: 'papel_calido',
+      name: 'Papel cálido',
+      style: QuoteStyle(
+        fontFamily: 'Merriweather',
+        backgroundColor: Color(0xFFF3E9D2),
+        textColor: Color(0xFF3E2F23),
+        contentPadding: 30.0,
+        lineHeight: 1.5,
+        letterSpacing: 0.1,
+        textAlign: TextAlign.center,
+        fontSize: 18.0,
+      ),
+    ),
+    QuoteStylePreset(
+      id: 'minimal',
+      name: 'Minimal',
+      style: QuoteStyle(
+        fontFamily: 'Lato',
+        backgroundColor: Colors.white,
+        textColor: Color(0xFF111827),
+        contentPadding: 24.0,
+        lineHeight: 1.35,
+        letterSpacing: 0.0,
+        textAlign: TextAlign.center,
+        fontSize: 17.5,
+      ),
+    ),
+  ];
+
   QuoteStyle get style => _style;
 
   // Load persisted style on initialization
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
+    final savedJson = prefs.getString(_savedStylesKey);
+    _savedStyles = [];
+    if (savedJson != null) {
+      try {
+        final items = jsonDecode(savedJson) as List;
+        for (final item in items) {
+          try {
+            _savedStyles.add(
+              QuoteStylePreset(
+                id: item['id'] as String,
+                name: item['name'] as String,
+                style: QuoteStyle.fromJson(
+                  item['style'] as Map<String, dynamic>,
+                ),
+              ),
+            );
+          } catch (_) {
+            /* Ignore a damaged preset without losing the others. */
+          }
+        }
+      } catch (_) {}
+    }
     final styleJson = prefs.getString(_styleKey);
     debugPrint('StyleProvider.init() - Loaded JSON: $styleJson');
     if (styleJson != null) {
@@ -211,8 +487,10 @@ class StyleProvider extends ChangeNotifier {
         if (_style.backgroundImagePath != null) {
           final file = File(_style.backgroundImagePath!);
           if (!file.existsSync()) {
-            debugPrint('StyleProvider.init() - Imagen de fondo guardada no encontrada, borrando ruta.');
-            _style = _style.copyWith(backgroundImagePath: null);
+            debugPrint(
+              'StyleProvider.init() - Imagen de fondo guardada no encontrada, borrando ruta.',
+            );
+            _style = _style.copyWith(clearBackgroundImage: true);
             // Persistimos la corrección para que no vuelva a fallar
             final prefs2 = await SharedPreferences.getInstance();
             await prefs2.setString(_styleKey, json.encode(_style.toJson()));
@@ -231,16 +509,13 @@ class StyleProvider extends ChangeNotifier {
   }
 
   // Save style to shared preferences
-  Future<void> _saveStyle() async {
-    try {
+  Future<void> _saveStyle() {
+    final encoded = jsonEncode(_style.toJson());
+    return _queueWrite(() async {
       final prefs = await SharedPreferences.getInstance();
-      final styleJson = json.encode(_style.toJson());
-      await prefs.setString(_styleKey, styleJson);
-      debugPrint('StyleProvider._saveStyle() - Saved: $styleJson');
+      await prefs.setString(_styleKey, encoded);
       await _syncStyleToWidget();
-    } catch (e) {
-      debugPrint('Error saving style: $e');
-    }
+    });
   }
 
   Future<void> _syncStyleToWidget() async {
@@ -279,7 +554,8 @@ class StyleProvider extends ChangeNotifier {
       await HomeWidget.updateWidget(
         name: 'QuoteWidgetProvider',
         androidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
-        qualifiedAndroidName: 'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
+        qualifiedAndroidName:
+            'com.inventustechstudio.pazhoy.QuoteWidgetProvider',
       );
       debugPrint('StyleProvider - Style synchronized to HomeWidget');
     } catch (e) {
@@ -289,18 +565,21 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Text Style ---
   void setFontFamily(String? font) {
-    _style = _style.copyWith(fontFamily: font);
+    _rememberCurrentStyle();
+    _style = _style.copyWith(fontFamily: font, clearFontFamily: font == null);
     notifyListeners();
     _saveStyle();
   }
 
   void setTextColor(Color color) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(textColor: color);
     notifyListeners();
     _saveStyle();
   }
 
   void setTextAlign(TextAlign align) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(textAlign: align);
     notifyListeners();
     _saveStyle();
@@ -308,6 +587,7 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Effects ---
   void setTextShadowColor(Color? color) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(
       textShadowColor: color,
       clearTextShadowColor: color == null,
@@ -317,12 +597,14 @@ class StyleProvider extends ChangeNotifier {
   }
 
   void setTextShadowBlur(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(textShadowBlur: value);
     notifyListeners();
     _saveStyle();
   }
 
   void setTextOutlineColor(Color? color) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(
       textOutlineColor: color,
       clearTextOutlineColor: color == null,
@@ -332,6 +614,7 @@ class StyleProvider extends ChangeNotifier {
   }
 
   void setTextOutlineWidth(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(textOutlineWidth: value);
     notifyListeners();
     _saveStyle();
@@ -339,13 +622,20 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Background ---
   void setBackgroundColor(Color color) {
-    _style = _style.copyWith(backgroundColor: color, clearBackgroundGradient: true);
+    _rememberCurrentStyle();
+    _style = _style.copyWith(
+      backgroundColor: color,
+      clearBackgroundGradient: true,
+      design: _style.design.copyWith(clearGradient: true),
+    );
     notifyListeners();
     _saveStyle();
   }
 
   void setBackgroundGradient(int? index) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(
+      design: _style.design.copyWith(clearGradient: true),
       backgroundGradient: index,
       clearBackgroundGradient: index == null,
     );
@@ -354,6 +644,7 @@ class StyleProvider extends ChangeNotifier {
   }
 
   void setOpacity(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(opacity: value);
     notifyListeners();
     _saveStyle();
@@ -377,15 +668,20 @@ class StyleProvider extends ChangeNotifier {
 
         // Verificar que el archivo copiado realmente existe antes de usarlo
         if (await File(newPath).exists()) {
+          _rememberCurrentStyle();
           _style = _style.copyWith(backgroundImagePath: newPath);
         } else {
           // Fallback: usar la ruta original si la copia falla
-          debugPrint('StyleProvider - Copia falló, usando ruta original: ${image.path}');
+          debugPrint(
+            'StyleProvider - Copia falló, usando ruta original: ${image.path}',
+          );
+          _rememberCurrentStyle();
           _style = _style.copyWith(backgroundImagePath: image.path);
         }
       } catch (e) {
         debugPrint('Error saving background image: $e');
         // Fallback: usar la ruta temporal original
+        _rememberCurrentStyle();
         _style = _style.copyWith(backgroundImagePath: image.path);
       }
       notifyListeners();
@@ -394,25 +690,11 @@ class StyleProvider extends ChangeNotifier {
   }
 
   void removeBackgroundImage() {
-    _style = QuoteStyle(
-      fontFamily: _style.fontFamily,
-      backgroundColor: _style.backgroundColor,
-      textColor: _style.textColor,
-      backgroundImagePath: null,
-      imageScale: 1.0,
+    _rememberCurrentStyle();
+    _style = _style.copyWith(
+      clearBackgroundImage: true,
+      imageScale: 1,
       imageAlignment: Alignment.center,
-      contentPadding: _style.contentPadding,
-      letterSpacing: _style.letterSpacing,
-      wordSpacing: _style.wordSpacing,
-      lineHeight: _style.lineHeight,
-      textAlign: _style.textAlign,
-      opacity: _style.opacity,
-      textShadowColor: _style.textShadowColor,
-      textShadowBlur: _style.textShadowBlur,
-      textOutlineColor: _style.textOutlineColor,
-      textOutlineWidth: _style.textOutlineWidth,
-      fontSize: _style.fontSize,
-      backgroundGradient: _style.backgroundGradient,
     );
     notifyListeners();
     _saveStyle();
@@ -420,18 +702,21 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Image Manipulation ---
   void setImageScale(double scale) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(imageScale: scale);
     notifyListeners();
     _saveStyle();
   }
 
   void setImageAlignment(Alignment align) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(imageAlignment: align);
     notifyListeners();
     _saveStyle();
   }
 
   void resetImageSettings() {
+    _rememberCurrentStyle();
     _style = _style.copyWith(imageScale: 1.0, imageAlignment: Alignment.center);
     notifyListeners();
     _saveStyle();
@@ -439,36 +724,61 @@ class StyleProvider extends ChangeNotifier {
 
   // --- Spacing ---
   void setContentPadding(double value) {
-    _style = _style.copyWith(contentPadding: value);
+    _rememberCurrentStyle();
+    _style = _style.copyWith(
+      contentPadding: value,
+      design: _style.design.copyWith(clearMargins: true),
+    );
     notifyListeners();
     _saveStyle();
   }
 
   void setLetterSpacing(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(letterSpacing: value);
     notifyListeners();
     _saveStyle();
   }
 
   void setWordSpacing(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(wordSpacing: value);
     notifyListeners();
     _saveStyle();
   }
 
   void setLineHeight(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(lineHeight: value);
     notifyListeners();
     _saveStyle();
   }
 
   void setFontSize(double value) {
+    _rememberCurrentStyle();
     _style = _style.copyWith(fontSize: value);
     notifyListeners();
     _saveStyle();
   }
 
+  // --- Format & Presets ---
+  void setAspectRatio(QuoteCardAspectRatio ratio) {
+    if (_style.aspectRatio == ratio) return;
+    _rememberCurrentStyle();
+    _style = _style.copyWith(aspectRatio: ratio);
+    notifyListeners();
+    _saveStyle();
+  }
+
+  void applyPreset(QuoteStylePreset preset) {
+    _rememberCurrentStyle();
+    _style = preset.style.copyWith(aspectRatio: _style.aspectRatio);
+    notifyListeners();
+    _saveStyle();
+  }
+
   void resetStyle() {
+    _rememberCurrentStyle();
     _style = const QuoteStyle();
     notifyListeners();
     _saveStyle();

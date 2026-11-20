@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/quote.dart';
 import '../providers/quotes_provider.dart';
+import 'reflection_history_page.dart';
 import '../widgets/quote_card.dart';
 import '../widgets/modern_style_editor.dart';
 
@@ -58,7 +59,8 @@ class QuoteDetailPage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.more_vert),
               tooltip: 'Más opciones',
-              onPressed: () => _showCustomActions(context, provider, currentQuote),
+              onPressed: () =>
+                  _showCustomActions(context, provider, currentQuote),
             ),
         ],
       ),
@@ -72,7 +74,10 @@ class QuoteDetailPage extends StatelessWidget {
                 Center(
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 14),
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF32505A).withValues(alpha: 0.10),
                       borderRadius: BorderRadius.circular(20),
@@ -83,7 +88,11 @@ class QuoteDetailPage extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.auto_awesome_outlined, size: 14, color: Color(0xFF32505A)),
+                        const Icon(
+                          Icons.auto_awesome_outlined,
+                          size: 14,
+                          color: Color(0xFF32505A),
+                        ),
                         const SizedBox(width: 6),
                         Text(
                           currentQuote.eventTitle!,
@@ -106,7 +115,8 @@ class QuoteDetailPage extends StatelessWidget {
                   child: QuoteCard(
                     quote: currentQuote,
                     isFavorite: isFav,
-                    onToggleFavorite: () => provider.toggleFavorite(currentQuote.id),
+                    onToggleFavorite: () =>
+                        provider.toggleFavorite(currentQuote.id),
                   ),
                 ),
               ),
@@ -126,7 +136,8 @@ class QuoteDetailPage extends StatelessWidget {
                   _buildActionButton(
                     icon: Icons.folder_outlined,
                     label: 'Guardar',
-                    onTap: () => _showCollectionsModal(context, provider, currentQuote),
+                    onTap: () =>
+                        _showCollectionsModal(context, provider, currentQuote),
                   ),
                   _buildActionButton(
                     icon: Icons.palette_outlined,
@@ -147,7 +158,22 @@ class QuoteDetailPage extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 36),
+              const SizedBox(height: 28),
+
+              // Reflexión privada (no afecta ni se exporta en la tarjeta)
+              _PrivateReflectionCard(quoteId: currentQuote.id),
+              TextButton.icon(
+                icon: const Icon(Icons.history),
+                label: const Text('Mis reflexiones por fecha'),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ReflectionHistoryPage(),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
 
               // Context & Source Details
               if (currentQuote.context != null || currentQuote.source != null)
@@ -171,36 +197,55 @@ class QuoteDetailPage extends StatelessWidget {
                       if (currentQuote.context != null) ...[
                         Row(
                           children: [
-                            Icon(Icons.info_outline, color: theme.colorScheme.primary, size: 20),
+                            Icon(
+                              Icons.info_outline,
+                              color: theme.colorScheme.primary,
+                              size: 20,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               'Contexto Histórico',
-                              style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                              style: textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
                         Text(
                           currentQuote.context!,
-                          style: textTheme.bodyMedium?.copyWith(height: 1.6, color: Colors.black87),
+                          style: textTheme.bodyMedium?.copyWith(
+                            height: 1.6,
+                            color: Colors.black87,
+                          ),
                         ),
-                        if (currentQuote.source != null) const Divider(height: 32),
+                        if (currentQuote.source != null)
+                          const Divider(height: 32),
                       ],
                       if (currentQuote.source != null) ...[
                         Row(
                           children: [
-                            Icon(Icons.menu_book, color: theme.colorScheme.primary, size: 20),
+                            Icon(
+                              Icons.menu_book,
+                              color: theme.colorScheme.primary,
+                              size: 20,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               'Fuente Literaria',
-                              style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                              style: textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
                         Text(
                           currentQuote.source!,
-                          style: textTheme.bodyMedium?.copyWith(color: Colors.black54, fontStyle: FontStyle.italic),
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: Colors.black54,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ],
                     ],
@@ -221,12 +266,18 @@ class QuoteDetailPage extends StatelessWidget {
                       );
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Frase fijada en el widget de la pantalla de inicio')),
+                          const SnackBar(
+                            content: Text(
+                              'Frase fijada en el widget de la pantalla de inicio',
+                            ),
+                          ),
                         );
                       }
                     } catch (e) {
                       if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No se pudo fijar: $e')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('No se pudo fijar: $e')),
+                        );
                       }
                     }
                   },
@@ -234,8 +285,13 @@ class QuoteDetailPage extends StatelessWidget {
                   label: const Text('Fijar en el widget'),
                   style: TextButton.styleFrom(
                     foregroundColor: theme.colorScheme.primary,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                 ),
               ),
@@ -266,13 +322,24 @@ class QuoteDetailPage extends StatelessWidget {
                 color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: Icon(icon, color: color, size: 22),
             ),
             const SizedBox(height: 8),
-            Text(label, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w500, color: color)),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w500,
+                color: color,
+              ),
+            ),
           ],
         ),
       ),
@@ -313,7 +380,10 @@ class QuoteDetailPage extends StatelessWidget {
                     children: [
                       const Text(
                         'Personalizar tarjeta',
-                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.check_rounded),
@@ -344,10 +414,16 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  void _showCollectionsModal(BuildContext context, QuotesProvider provider, Quote q) {
+  void _showCollectionsModal(
+    BuildContext context,
+    QuotesProvider provider,
+    Quote q,
+  ) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (ctx) {
         return SafeArea(
           child: StatefulBuilder(
@@ -360,9 +436,19 @@ class QuoteDetailPage extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.folder_off_outlined, size: 48, color: Colors.grey),
+                      const Icon(
+                        Icons.folder_off_outlined,
+                        size: 48,
+                        color: Colors.grey,
+                      ),
                       const SizedBox(height: 16),
-                      const Text('No tienes carpetas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const Text(
+                        'No tienes carpetas',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       const SizedBox(height: 8),
                       const Text(
                         'Crea carpetas en Explorar para organizar tus frases.',
@@ -385,7 +471,13 @@ class QuoteDetailPage extends StatelessWidget {
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(20),
-                    child: Text('Guardar en...', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    child: Text(
+                      'Guardar en...',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   Flexible(
                     child: ListView.builder(
@@ -396,16 +488,31 @@ class QuoteDetailPage extends StatelessWidget {
                         final hasQuote = c.quoteIds.contains(q.id);
                         return ListTile(
                           leading: Icon(Icons.folder, color: c.color),
-                          title: Text(c.name, style: const TextStyle(fontWeight: FontWeight.w500)),
+                          title: Text(
+                            c.name,
+                            style: const TextStyle(fontWeight: FontWeight.w500),
+                          ),
                           trailing: hasQuote
-                              ? const Icon(Icons.check_circle, color: Colors.green)
-                              : const Icon(Icons.circle_outlined, color: Colors.grey),
+                              ? const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                )
+                              : const Icon(
+                                  Icons.circle_outlined,
+                                  color: Colors.grey,
+                                ),
                           onTap: () async {
                             await provider.toggleQuoteInCollection(c.id, q.id);
                             if (context.mounted) {
                               Navigator.pop(ctx);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(hasQuote ? 'Frase eliminada de ${c.name}' : 'Frase guardada en ${c.name}')),
+                                SnackBar(
+                                  content: Text(
+                                    hasQuote
+                                        ? 'Frase eliminada de ${c.name}'
+                                        : 'Frase guardada en ${c.name}',
+                                  ),
+                                ),
                               );
                             }
                           },
@@ -423,10 +530,16 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  void _showCustomActions(BuildContext context, QuotesProvider provider, Quote q) {
+  void _showCustomActions(
+    BuildContext context,
+    QuotesProvider provider,
+    Quote q,
+  ) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
       builder: (_) {
         return SafeArea(
           child: Column(
@@ -442,7 +555,10 @@ class QuoteDetailPage extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
-                title: const Text('Eliminar frase', style: TextStyle(color: Colors.red)),
+                title: const Text(
+                  'Eliminar frase',
+                  style: TextStyle(color: Colors.red),
+                ),
                 onTap: () async {
                   Navigator.pop(context);
                   await _deleteCustomQuote(context, provider, q);
@@ -455,14 +571,23 @@ class QuoteDetailPage extends StatelessWidget {
     );
   }
 
-  Future<void> _deleteCustomQuote(BuildContext context, QuotesProvider provider, Quote q) async {
+  Future<void> _deleteCustomQuote(
+    BuildContext context,
+    QuotesProvider provider,
+    Quote q,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Eliminar frase'),
-        content: const Text('¿Seguro que quieres eliminar esta frase? Esta acción no se puede deshacer.'),
+        content: const Text(
+          '¿Seguro que quieres eliminar esta frase? Esta acción no se puede deshacer.',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancelar')),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancelar'),
+          ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
@@ -475,27 +600,219 @@ class QuoteDetailPage extends StatelessWidget {
       await provider.deleteCustomQuote(q.id);
       if (context.mounted) {
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Frase eliminada')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Frase eliminada')));
       }
     }
   }
 
   void _shareQuote(Quote q) {
-    final content = '"${q.text}"${q.author.isNotEmpty ? '\n— ${q.author}' : ''}${q.source != null ? '\n\nFuente: ${q.source}' : ''}';
-    SharePlus.instance.share(ShareParams(text: content.trim(), subject: 'Frase de PazHoy'));
+    final content =
+        '"${q.text}"${q.author.isNotEmpty ? '\n— ${q.author}' : ''}${q.source != null ? '\n\nFuente: ${q.source}' : ''}';
+    SharePlus.instance.share(
+      ShareParams(text: content.trim(), subject: 'Frase de PazHoy'),
+    );
   }
 
   Future<void> _copyQuote(BuildContext context, Quote q) async {
-    final content = '"${q.text}"${q.author.isNotEmpty ? '\n— ${q.author}' : ''}${q.source != null ? '\n\nFuente: ${q.source}' : ''}';
+    final content =
+        '"${q.text}"${q.author.isNotEmpty ? '\n— ${q.author}' : ''}${q.source != null ? '\n\nFuente: ${q.source}' : ''}';
     try {
       await Clipboard.setData(ClipboardData(text: content.trim()));
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Frase copiada al portapapeles')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Frase copiada al portapapeles')),
+        );
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No se pudo copiar: ${e.toString()}')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No se pudo copiar: ${e.toString()}')),
+        );
       }
     }
+  }
+}
+
+class _PrivateReflectionCard extends StatefulWidget {
+  final int quoteId;
+
+  const _PrivateReflectionCard({required this.quoteId});
+
+  @override
+  State<_PrivateReflectionCard> createState() => _PrivateReflectionCardState();
+}
+
+class _PrivateReflectionCardState extends State<_PrivateReflectionCard> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialText = context.read<QuotesProvider>().getReflection(
+      widget.quoteId,
+    );
+    _controller = TextEditingController(text: initialText);
+    _controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant _PrivateReflectionCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.quoteId != widget.quoteId) {
+      _controller.text = context.read<QuotesProvider>().getReflection(
+        widget.quoteId,
+      );
+    }
+  }
+
+  void _onTextChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save(QuotesProvider provider) async {
+    final text = _controller.text.trim();
+    await provider.saveReflection(widget.quoteId, text);
+    if (!mounted) return;
+    FocusScope.of(context).unfocus();
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          text.isEmpty
+              ? 'Reflexión privada eliminada'
+              : 'Reflexión privada guardada',
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final provider = context.watch<QuotesProvider>();
+    final savedText = provider.getReflection(widget.quoteId);
+    final currentTrimmed = _controller.text.trim();
+    final isDirty = currentTrimmed != savedText;
+    final hasSaved = savedText.isNotEmpty;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.lock_outline_rounded,
+                color: theme.colorScheme.primary,
+                size: 19,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Tu reflexión privada',
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              if (hasSaved && !isDirty)
+                Icon(
+                  Icons.check_circle_outline_rounded,
+                  size: 17,
+                  color: Colors.green.shade600,
+                ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Nota personal solo visible para ti. Nunca se incluirá al compartir o exportar la tarjeta.',
+            style: textTheme.bodySmall?.copyWith(color: Colors.black54),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _controller,
+            minLines: 2,
+            maxLines: 3,
+            maxLength: 240,
+            textCapitalization: TextCapitalization.sentences,
+            style: textTheme.bodyMedium?.copyWith(height: 1.45),
+            decoration: InputDecoration(
+              hintText: 'Escribe 1 o 2 líneas sobre lo que te inspira hoy...',
+              hintStyle: const TextStyle(color: Colors.black38, fontSize: 13.5),
+              filled: true,
+              fillColor: const Color(0xFFF9FAFB),
+              contentPadding: const EdgeInsets.all(14),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: theme.colorScheme.primary),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              if (hasSaved)
+                TextButton.icon(
+                  onPressed: () {
+                    _controller.clear();
+                    _save(provider);
+                  },
+                  icon: const Icon(Icons.delete_outline, size: 17),
+                  label: const Text('Borrar'),
+                  style: TextButton.styleFrom(foregroundColor: Colors.black54),
+                ),
+              const Spacer(),
+              FilledButton.icon(
+                onPressed: isDirty ? () => _save(provider) : null,
+                icon: const Icon(Icons.save_outlined, size: 17),
+                label: Text(
+                  isDirty ? 'Guardar' : (hasSaved ? 'Guardada' : 'Guardar'),
+                ),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

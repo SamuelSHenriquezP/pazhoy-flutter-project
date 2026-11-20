@@ -51,6 +51,17 @@ class _SettingsPageState extends State<SettingsPage> {
         hour: picked.hour,
         minute: picked.minute,
       );
+      try {
+        if (mounted) {
+          final quotesProvider = context.read<QuotesProvider>();
+          await NotificationService.instance.scheduleNextEventReminder(
+            quotesProvider.nextOrActiveEvent,
+            events: quotesProvider.events,
+          );
+        }
+      } catch (e) {
+        debugPrint('Error reprogramando recordatorio de temporada: $e');
+      }
     }
   }
 
@@ -67,6 +78,17 @@ class _SettingsPageState extends State<SettingsPage> {
         hour: _notifTime.hour,
         minute: _notifTime.minute,
       );
+      try {
+        if (mounted) {
+          final quotesProvider = context.read<QuotesProvider>();
+          await NotificationService.instance.scheduleNextEventReminder(
+            quotesProvider.nextOrActiveEvent,
+            events: quotesProvider.events,
+          );
+        }
+      } catch (e) {
+        debugPrint('Error programando recordatorio de temporada: $e');
+      }
       if (mounted) setState(() => _notifsEnabled = true);
       return;
     }
@@ -78,7 +100,9 @@ class _SettingsPageState extends State<SettingsPage> {
       debugPrint('Error cancelando notificaciones: $e\n$st');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No se pudo desactivar las notificaciones')),
+          const SnackBar(
+            content: Text('No se pudo desactivar las notificaciones'),
+          ),
         );
       }
     }
@@ -96,8 +120,8 @@ class _SettingsPageState extends State<SettingsPage> {
             mode == 'daily'
                 ? 'El widget mostrará la frase del día'
                 : mode == 'favorites'
-                    ? 'El widget rotará entre tus favoritos'
-                    : 'Modo de frase fijada activado',
+                ? 'El widget rotará entre tus favoritos'
+                : 'Modo de frase fijada activado',
           ),
         ),
       );
@@ -139,12 +163,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 const Divider(),
                 const _SectionHeader(title: 'Widget de pantalla de inicio'),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   child: Text(
                     'Elige qué mostrará el widget de PazHoy en tu pantalla de inicio.',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
                 RadioGroup<String>(
@@ -159,7 +186,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       const RadioListTile<String>(
                         title: Text('Frase del día'),
-                        subtitle: Text('Muestra la frase más reciente publicada'),
+                        subtitle: Text(
+                          'Muestra la frase más reciente publicada',
+                        ),
                         secondary: Icon(Icons.wb_sunny_outlined),
                         value: 'daily',
                       ),
@@ -176,7 +205,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       if (_widgetMode == 'pinned')
                         const RadioListTile<String>(
                           title: Text('Frase fijada'),
-                          subtitle: Text('Fijada manualmente desde la pantalla de detalle'),
+                          subtitle: Text(
+                            'Fijada manualmente desde la pantalla de detalle',
+                          ),
                           secondary: Icon(Icons.push_pin_outlined),
                           value: 'pinned',
                         ),
@@ -202,9 +233,9 @@ class _PremiumCard extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const SupportPage()),
-          );
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const SupportPage()));
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
@@ -238,9 +269,9 @@ class _PremiumCard extends StatelessWidget {
                     Text(
                       isPremium ? 'Colaborador Premium' : 'Apoya PazHoy',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -248,16 +279,15 @@ class _PremiumCard extends StatelessWidget {
                           ? 'Gracias por hacer posible esta app.'
                           : 'Conviértete en colaborador y obtén extras.',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
-                          ),
+                        color: colorScheme.onPrimaryContainer.withValues(
+                          alpha: 0.8,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              Icon(
-                Icons.chevron_right,
-                color: colorScheme.primary,
-              ),
+              Icon(Icons.chevron_right, color: colorScheme.primary),
             ],
           ),
         ),
@@ -277,10 +307,10 @@ class _SectionHeader extends StatelessWidget {
       child: Text(
         title.toUpperCase(),
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1.2,
+        ),
       ),
     );
   }
@@ -294,7 +324,9 @@ class _ThemeTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.light_mode),
       title: const Text('Modo claro fijo'),
-      subtitle: const Text('La aplicación usa siempre modo claro y mantiene los colores tal como están.'),
+      subtitle: const Text(
+        'La aplicación usa siempre modo claro y mantiene los colores tal como están.',
+      ),
     );
   }
 }
