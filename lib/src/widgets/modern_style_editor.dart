@@ -3,9 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/style_provider.dart';
 import 'advanced_style_editor.dart';
-import '../providers/premium_provider.dart';
-import '../services/ad_service.dart';
-import '../pages/support_page.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 TextStyle _safeGetFont(String family, [TextStyle? textStyle]) {
@@ -328,15 +325,12 @@ class _TextSubmenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<StyleProvider>();
-    final isPremium = context.watch<PremiumProvider>().isPremium;
-    final freeFonts = [
+    final fonts = [
       'Lato',
       'Roboto',
       'Merriweather',
       'Montserrat',
       'Oswald',
-    ];
-    final premiumFonts = [
       'Playfair Display',
       'Dancing Script',
       'Pacifico',
@@ -346,8 +340,6 @@ class _TextSubmenu extends StatelessWidget {
       'Great Vibes',
       'Cormorant Garamond',
     ];
-
-    final fonts = [...freeFonts, ...premiumFonts];
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -370,69 +362,11 @@ class _TextSubmenu extends StatelessWidget {
             itemBuilder: (context, index) {
               final font = fonts[index];
               final isSelected = provider.style.fontFamily == font;
-              final isPremiumFont = premiumFonts.contains(font);
 
               return ChoiceChip(
-                label: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(font, style: _safeGetFont(font)),
-                    if (isPremiumFont && !isPremium) ...[
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.lock_outline,
-                        size: 14,
-                        color: isSelected ? Colors.white : Colors.amber,
-                      ),
-                    ],
-                  ],
-                ),
+                label: Text(font, style: _safeGetFont(font)),
                 selected: isSelected,
-                onSelected: (_) {
-                  if (isPremiumFont && !isPremium) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        backgroundColor: Colors.white,
-                        title: const Text(
-                          'Fuente Premium',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        content: const Text(
-                          'Las tipografías elegantes son exclusivas para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlas!',
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text(
-                              'Cancelar',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                          FilledButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const SupportPage(),
-                                ),
-                              );
-                            },
-                            style: FilledButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              foregroundColor: Colors.white,
-                            ),
-                            child: const Text('Apoyar'),
-                          ),
-                        ],
-                      ),
-                    );
-                    return;
-                  }
-                  provider.setFontFamily(font);
-                },
+                onSelected: (_) => provider.setFontFamily(font),
                 showCheckmark: false,
                 selectedColor: Colors.black,
                 labelStyle: TextStyle(
@@ -544,12 +478,9 @@ class _BackgroundSubmenu extends StatefulWidget {
 }
 
 class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
-  bool _isLoadingAd = false;
-
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<StyleProvider>();
-    final isPremium = context.watch<PremiumProvider>().isPremium;
     final hasImage = provider.style.backgroundImagePath != null;
 
     return ListView(
@@ -559,26 +490,9 @@ class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
           children: [
             Expanded(
               child: FilledButton.icon(
-                onPressed: _isLoadingAd
-                    ? null
-                    : () {
-                        setState(() => _isLoadingAd = true);
-                        AdService.instance.showRewardedAd(() {
-                          if (mounted) setState(() => _isLoadingAd = false);
-                          provider.pickBackgroundImage();
-                        });
-                      },
-                icon: _isLoadingAd
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : const Icon(Icons.image),
-                label: const Text('Galería (Ver Video)'),
+                onPressed: provider.pickBackgroundImage,
+                icon: const Icon(Icons.image),
+                label: const Text('Elegir imagen de la galería'),
                 style: FilledButton.styleFrom(backgroundColor: Colors.black),
               ),
             ),
@@ -612,57 +526,13 @@ class _BackgroundSubmenuState extends State<_BackgroundSubmenu> {
         ),
         const SizedBox(height: 16),
         const Text(
-          'Degradados Premium',
+          'Degradados',
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         _GradientPickerRow(
           selectedIndex: provider.style.backgroundGradient,
-          onGradientChanged: (index) {
-            if (!isPremium && index != null) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  backgroundColor: Colors.white,
-                  title: const Text(
-                    'Degradados Premium',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  content: const Text(
-                    'Los hermosos fondos con degradado son exclusivos para nuestros colaboradores. ¡Apoya PazHoy para desbloquearlos!',
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    FilledButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const SupportPage(),
-                          ),
-                        );
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text('Apoyar'),
-                    ),
-                  ],
-                ),
-              );
-              return;
-            }
-            provider.setBackgroundGradient(index);
-          },
+          onGradientChanged: provider.setBackgroundGradient,
         ),
         const SizedBox(height: 16),
         Row(
